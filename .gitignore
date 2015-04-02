@@ -1,0 +1,7 @@
+# Mac OSX files
+*.DS_Store
+
+# Binaries
+*.class
+*.exe
+
