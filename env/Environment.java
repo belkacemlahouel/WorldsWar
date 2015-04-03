@@ -2,7 +2,7 @@ package env;
 
 import math.MyPoint2D;
 
-public class Environment {
+public abstract class Environment {
 	
 	public static void main(String[] args) {
 		
@@ -38,40 +38,12 @@ public class Environment {
 		return grid[x][y];
 	}
 	
-	public void move(Movable o, Direction dir) {
-		if (!movePossible(o, dir))
-			return;
-			
-		MyPoint2D cur = o.getPosition();
-		WorldObject tmp = grid[(int) cur.getX()][(int) cur.getY()].getObject();
-		grid[(int) cur.getX()][(int) cur.getY()].addObject(null);
-		cur.setLocation(cur.getX()+dir.dx, cur.getY()+dir.dy);
-		grid[(int) cur.getX()][(int) cur.getY()].addObject(tmp);
-	}
-	
-	private boolean movePossible(Movable o, Direction dir) {
-		MyPoint2D cur = o.getPosition();
-		int newX, newY;
-		newX = (int) cur.getX()+dir.dx;
-		newY = (int) cur.getY()+dir.dy;
-		return (newX >= 0 && newX < WIDTH) && (newY >= 0 && newY < HEIGHT) && getCell(newX, newY).isEmpty();
-	}
-	
-	public void printEnvironment() {
-		System.out.println("ENVIRONMENT:");
-		
-		for (int i = 0; i < WIDTH; ++i) {
-			for (int j = 0; j < HEIGHT; ++j) {
-				if (!getCell(i, j).isEmpty()) {
-					WorldObject o = getCell(i, j).getObject();
-					if (o != null && !o.toString().isEmpty()) {
-						System.out.println("\t(" + i + ", " + j + ") " + o.toString());
-					}
-				}
-			}
-		}
-	}
-	
 	/***/
 	
+	public abstract void applyInfluences();
+	public abstract void solveConflicts();
+	public abstract void doStep();
+	public abstract void move(Movable o, MyPoint2D end);
+	public abstract void printEnvironment();
+	protected abstract boolean movePossible(Movable o, MyPoint2D end);
 }

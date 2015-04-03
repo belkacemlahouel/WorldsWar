@@ -23,3 +23,15 @@ enum FoodType {
 	POWER;
 	// TODO Fill this list up
 }
+
+interface Perishable {
+	// TODO Add a count down method?
+}
+
+interface Obstacle {
+	// TODO
+}
+
+/*
+ * Wall, Water, Tree, Rocks, AntFood, Meat, TermiteFood, etc
+ */
