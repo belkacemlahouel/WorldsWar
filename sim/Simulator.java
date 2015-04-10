@@ -41,7 +41,7 @@ public class Simulator {
 	
 	public void doStep() {
 		for (Agent agt : agents) {
-			agt.play();
+			agt.live();
 		}
 		gui.repaint();
 	}

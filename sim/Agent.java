@@ -9,5 +9,6 @@ public abstract class Agent {
 	}
 	
 	public abstract Body getBody();
-	public abstract void play();
+	public abstract void live();
+	public abstract boolean killMe();
 }
