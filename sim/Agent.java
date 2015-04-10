@@ -11,4 +11,6 @@ public abstract class Agent {
 	public abstract Body getBody();
 	public abstract void live();
 	public abstract boolean killMe();
+	
+	/* do they know in which team they belong? */
 }
