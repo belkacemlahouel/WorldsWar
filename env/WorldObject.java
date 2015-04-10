@@ -12,3 +12,9 @@ interface Movable {
 	public abstract void setPosition(MyPoint2D pos);
 	public abstract MyPoint2D getPosition();
 }
+
+interface Perceivable {
+	
+	public abstract void getInformation();
+	public abstract void getMotionInformation();
+}

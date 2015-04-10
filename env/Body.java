@@ -8,7 +8,7 @@ public abstract class Body extends WorldObject implements Movable {
 	private MyPoint2D pos;
 	private Frustrum f;
 	private Direction dir;
-		
+	
 	public Body(Environment env, Direction dir) {
 		this.env = env;
 		pos = null;
@@ -22,23 +22,30 @@ public abstract class Body extends WorldObject implements Movable {
 		return dir;
 	}
 	
+	/**
+	 * @return current position
+	 */
 	public MyPoint2D getPosition() {
 		return pos;
 	}
 	
+	/**
+	 * @param pos: new position of the body
+	 */
 	public void setPosition(MyPoint2D pos) {
 		this.pos = pos;
 	}
 	
+	/**
+	 * @return current frustrum
+	 */
 	public Frustrum getFrustrum() {
 		return f;
 	}
 	
-	public void newFrustrum() {
-		f = new FrustrumCircleN(this, env, 1);
-	}
-	
 	/***/
+	
+	public abstract void newFrustrum();
 	
 	public abstract void move(MyPoint2D end);
 	
@@ -47,6 +54,6 @@ public abstract class Body extends WorldObject implements Movable {
 	public abstract int getStrength();
 	public abstract int getSpeed();
 	public abstract int getPerceptionDistance();
-	public abstract int putInformation();
+	// public abstract int putInformation();
 	public abstract int getMoveDistance();
 }
