@@ -6,10 +6,21 @@ The entities are autonomous (agents).
 *** AUTHORS
 VI51 (Virtual Life Simulation) Project, UTBM (University of Technology of Belfort-Montbéliard)
 
+{firstname}.{lastname}[at]utbm.fr
+
 Belkacem Lahouel
 Maxime Bourgeois
 Romain Dorier
 Zéphyr Suty
+
+*** DIRECTORIES
+parser/ contains parsers and readers implemented
+env/ (stands for environment) contains the environment model
+gui/ contains the user interface (big-black-box style)
+sim/ (stands for simulator) contains the simulator "Application" class and agents
+info/ contains informations and manuals
+math/ contains general functions/methods implementing maths
+res/ (stands for resources) contains resources (mainly for the user interface) or eg. configuration files
 
 *** TECHNICALITIES
 You may add an alias for this repository's address:
@@ -37,9 +48,8 @@ With Eclipse IDE:
 Regarding Java versions, we will use Java 7 (JDK 1.7).
 We may use Java 8 (JDK 1.8) if you want to use multi-inheritance.
 
-About pushes:
+*** PUSHING RULES
 (1) Do not push in master for no good reason.
 (2) Work on you own branch.
 (3) Only push source code in Github (no executables!).
 (4) Try to document your methods.
-
