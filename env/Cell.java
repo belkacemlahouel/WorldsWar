@@ -1,22 +1,29 @@
 package env;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Cell {
 	
-	private WorldObject object;
+	private List<WorldObject> objects;
 
 	public Cell() {
-		object = null;
+		objects = new ArrayList<WorldObject>();
 	}
 	
 	public boolean isEmpty() {
-		return object == null;
+		return objects.isEmpty();
 	}
 	
-	public WorldObject getObject() {
-		return object;
+	public List<WorldObject> getObjects() {
+		return objects;
 	}
 	
 	public void addObject(WorldObject o) {
-		object = o;
+		objects.add(o);
+	}
+	
+	public void removeObject(WorldObject o) {
+		objects.remove(o);
 	}
 }

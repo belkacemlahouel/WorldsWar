@@ -1,6 +1,6 @@
 package sim;
 
-import env.Environment;
+import env.environment.Environment;
 import gui.GUI;
 
 public class Simulator {
@@ -31,9 +31,9 @@ public class Simulator {
 	private GUI gui;
 	
 	public Simulator(int nbGhosts, int width, int height) {
-		env = new Environment(width, height);
+		// env = new Environment(width, height); // TODO Find a solution to instantiate the Environment
 		
-		// TODO
+		// TODO Fill this main up
 		
 		gui = new GUI(env);
 		gui.setVisible(true);
@@ -41,7 +41,7 @@ public class Simulator {
 	
 	public void doStep() {
 		for (Agent agt : agents) {
-			agt.play();
+			agt.live();
 		}
 		gui.repaint();
 	}
