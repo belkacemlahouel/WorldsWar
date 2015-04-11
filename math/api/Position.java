@@ -1,6 +1,6 @@
 package math.api;
 
-public interface Position {
+public interface Position extends Comparable {
 	
 	int getX();
 	int getY();
