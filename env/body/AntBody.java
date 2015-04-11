@@ -1,7 +1,7 @@
 package env.body;
 
 import env.Direction;
-import env.Environment;
+import env.environment.Environment;
 import math.MyPoint2D;
 
 public class AntBody extends Body {

@@ -1,5 +1,7 @@
 package env;
 
+/* what the fuck is an Information at the end of the day? */
+
 public abstract class Information {
 	
 	/**
@@ -29,10 +31,17 @@ public abstract class Information {
 	public abstract int strength();
 }
 
+abstract class Percept {
+	
+	public abstract int getSpeed();
+	public abstract int getDirection();
+}
+
 enum InformationType {
 	SEXUAL,
 	FIGHT,
-	FOOD;
+	FOOD,
+	GENERAL;
 	// TODO Fill this list up
 }
 

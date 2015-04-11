@@ -1,6 +1,6 @@
 package sim;
 
-import env.Environment;
+import env.environment.Environment;
 import gui.GUI;
 
 public class Simulator {

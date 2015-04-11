@@ -1,6 +1,6 @@
 package sim;
 
-import env.Body;
+import env.body.Body;
 
 public abstract class Agent {
 

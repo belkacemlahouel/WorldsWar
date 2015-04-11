@@ -5,9 +5,9 @@ import java.util.Iterator;
 import java.util.List;
 
 import math.MyPoint2D;
-import env.Environment;
 import env.WorldObject;
 import env.body.Body;
+import env.environment.Environment;
 
 public class FrustrumCrossN extends Frustrum {
 	

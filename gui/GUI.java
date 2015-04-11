@@ -2,7 +2,7 @@ package gui;
 
 import javax.swing.JFrame;
 
-import env.Environment;
+import env.environment.Environment;
 
 public class GUI extends JFrame {
 

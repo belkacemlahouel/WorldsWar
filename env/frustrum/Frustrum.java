@@ -2,9 +2,9 @@ package env.frustrum;
 
 import java.util.Iterator;
 
-import env.Environment;
 import env.WorldObject;
 import env.body.Body;
+import env.environment.Environment;
 
 public abstract class Frustrum {
 	

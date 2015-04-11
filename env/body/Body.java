@@ -1,9 +1,9 @@
 package env.body;
 
 import env.Direction;
-import env.Environment;
 import env.WorldObject;
 import env.api.Movable;
+import env.environment.Environment;
 import env.frustrum.Frustrum;
 import math.MyPoint2D;
 

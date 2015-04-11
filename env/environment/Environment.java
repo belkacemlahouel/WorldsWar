@@ -1,15 +1,10 @@
-package env;
+package env.environment;
 
+import env.Cell;
+import env.api.Movable;
 import math.MyPoint2D;
 
 public abstract class Environment {
-	
-	public static void main(String[] args) {
-		
-		// TODO Tests
-	}
-	
-	/***/
 	
 	private Cell[][] grid;
 	private final int WIDTH, HEIGHT;
