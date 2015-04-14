@@ -39,6 +39,5 @@ public abstract class Environment {
 	public abstract void solveConflicts();
 	public abstract void doStep();
 	public abstract void move(Movable o, MyPoint2D end);
-	public abstract void printEnvironment();
 	protected abstract boolean movePossible(Movable o, MyPoint2D end);
 }

@@ -35,15 +35,8 @@ public class Ground extends Environment {
 	}
 
 	@Override
-	public void printEnvironment() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
 	protected boolean movePossible(Movable o, MyPoint2D end) {
 		// TODO Auto-generated method stub
 		return false;
 	}
-
 }
