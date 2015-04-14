@@ -19,10 +19,8 @@ import gui.GUI;
 public class AgentBodyGUI {
 	public JPanel container;
 	public Body agentBody;
-	public String species;
 	public ImageIcon bodyRepr;
-	public int posX;
-	public int posY;
+
 	
 	/*
 	 * Constructor of the class AgentBodyGUI
@@ -31,38 +29,29 @@ public class AgentBodyGUI {
 	{
 		agentBody = body;
 		container = new JPanel();
+		MyPoint2D coordinates = agentBody.getPosition();
 		
-		//initial positions for the differents species.
-		int POSX_INIT_ANT = 0;
-		int POSY_INIT_ANT = 0;
-		int POSX_INIT_TERMITE = 100;
-		int POSY_INIT_TERMITE = 100;
-		int POSX_INIT_SPIDER = 50;
-		int POSY_INIT_SPIDER = 50;
+		int posX = coordinates.getX();
+		int posY = coordinates.getY();
 		
 		if(species.equalsIgnoreCase("Ant"))
 		{
-			bodyRepr = new ImageIcon("src/ressource/gui/ant.png");
-			posX = POSX_INIT_ANT;
-			posY = POSY_INIT_ANT;
+			bodyRepr = new ImageIcon("src/res/gui/ant.png");
 		}
 		else if(species.equalsIgnoreCase("Ant"))
 		{
-			bodyRepr = new ImageIcon("src/ressource/gui/termite.png");
-			posX = POSX_INIT_TERMITE;
-			posY = POSY_INIT_TERMITE;
+			bodyRepr = new ImageIcon("src/res/gui/termite.png");
 		}
 		else
 		{
 			//TODO create the spider.png file.
-			bodyRepr = new ImageIcon("src/ressource/gui/spider.png");
-			posX = POSX_INIT_SPIDER;
-			posY = POSY_INIT_SPIDER;
+			bodyRepr = new ImageIcon("src/res/gui/spider.png");
 		}
 		
 		// print the panel in the GUI and add the representation in the panel
 		container.add(new JLabel(bodyRepr));
 		container.setSize(10, 10);
+		container.setLocation(posX,posY);
 		gui.add(container);
 		
 		container.setLocation(posX,posY);
