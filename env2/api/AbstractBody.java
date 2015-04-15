@@ -10,6 +10,7 @@ public abstract class AbstractBody extends AbstractMobileWorldObject {
 	
 	/**
 	 * TODO To be decided later...
+	 * Position? Cell? Environment? TODO
 	 */
 	
 	public abstract Direction getDirection();
