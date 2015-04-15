@@ -1,5 +1,6 @@
 package env2.api;
 
+import math.MyPoint2D;
 import env2.type.Direction;
 import env2.type.EffectType;
 
@@ -14,7 +15,7 @@ public abstract class AbstractBody extends AbstractMobileWorldObject {
 	 */
 	
 	public abstract AbstractEnvironment getEnvironment();
-	public abstract Position getPosition();
+	public abstract MyPoint2D getPosition();
 	
 	public abstract Direction getDirection();
 	
