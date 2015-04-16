@@ -9,3 +9,12 @@ public abstract class AbstractCell {
 	public abstract void removeObject(AbstractWorldObject o);
 	public abstract void addObject(AbstractWorldObject o);
 }
+
+// TODO move in another class file
+abstract class AbstractCellPortal {
+	
+	public abstract boolean isPortal();
+	// public abstract int getPortalEnvironmentIdx();
+	public abstract AbsractEnvironment getPortalEnvironment();
+	public abstract MyPoint2D getPortalArrivalPosition();
+}
