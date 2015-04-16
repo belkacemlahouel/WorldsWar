@@ -25,7 +25,7 @@ public class AgentBodyGUI {
 	/*
 	 * Constructor of the class AgentBodyGUI
 	 */
-	public AgentBodyGUI(String species, GUI gui, Body body)
+	public AgentBodyGUI(String species, GUI gui, AbstractBody body)
 	{
 		agentBody = body;
 		container = new JPanel();
