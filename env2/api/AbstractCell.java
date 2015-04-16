@@ -8,6 +8,4 @@ public abstract class AbstractCell {
 	public abstract List<AbstractWorldObject> getObjects();
 	public abstract void removeObject(AbstractWorldObject o);
 	public abstract void addObject(AbstractWorldObject o);
-	public abstract boolean isPortal();
-	public abstract int getPortalEnvironmentIdx();
 }
