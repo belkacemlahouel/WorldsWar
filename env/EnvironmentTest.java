@@ -1,7 +1,6 @@
 package env;
 
-import env.environment.Environment;
-import env.environment.EnvironmentGround;
+import env.environment.Ground;
 
 public class EnvironmentTest {
 
@@ -9,7 +8,7 @@ public class EnvironmentTest {
 		
 		System.out.println("Hey world!");
 		
-		Environment env = new EnvironmentGround(10, 7);
+		new Ground(10, 7);
 		
 		System.out.println("Bye world!");
 	}
