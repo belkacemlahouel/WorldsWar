@@ -11,14 +11,14 @@ import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
 import math.MyPoint2D;
-import env.Body;
+import env2.api.AbstractBody;
 import gui.GUI;
 
 
 
 public class AgentBodyGUI {
 	public JPanel container;
-	public Body agentBody;
+	public AbstractBody agentBody;
 	public ImageIcon bodyRepr;
 
 	
