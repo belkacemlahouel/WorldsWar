@@ -10,14 +10,19 @@ import env2.type.Direction;
 import env2.type.FrustrumType;
 
 public abstract class ClassicBody extends AbstractBody {
+	
+	private final float CREATION_TIME;
+	protected final int TRIBE_ID = 0;
 
 	private AbstractFrustrum myfrustrum;
 	private AbstractEnvironment myenv;
 	private Direction mydir;
 	private MyPoint2D mypos;
-	private int mylife;
+	protected int mylife;
 	
-	public ClassicBody(AbstractEnvironment e, Direction dir, MyPoint2D pos) {
+	public ClassicBody(AbstractEnvironment e, Direction dir, MyPoint2D pos, float TIME) {
+		CREATION_TIME = TIME;
+		
 		myenv = e;
 		mydir = dir;
 		mypos = pos;
@@ -81,5 +86,9 @@ public abstract class ClassicBody extends AbstractBody {
 	public void move(AbstractEnvironment newenv, MyPoint2D newpos) {
 		newenv.getCell(newpos.getX(), newpos.getY()).addObject(this);
 		myenv.getCell(mypos.getX(), mypos.getY()).removeObject(this);
+	}
+	
+	public int getAge(float TIME) {
+		return (int) (TIME - CREATION_TIME);
 	}
 }
