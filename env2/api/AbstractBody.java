@@ -46,4 +46,9 @@ public abstract class AbstractBody extends AbstractMobileWorldObject {
 	public abstract boolean isFriend(AbstractBody b);
 	
 	// Should we put the colony here or in the Agent side? TODO Ask prof!
+	
+	// Annother idea is to put only a tribe index so that everyone cannot access his friends,
+	// But if the Body perceives them, it can say when judging from its appearence if they are friends/not.
+	// I think this would be best to put this in the Agent part, but for now I do it this way.
+	public abstract int getTribeID();
 }
