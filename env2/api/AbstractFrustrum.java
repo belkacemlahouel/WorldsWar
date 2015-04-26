@@ -2,19 +2,15 @@ package env2.api;
 
 import java.util.Iterator;
 
-import env.WorldObject;
-import env.body.Body;
-import env.environment.Environment;
-
 public abstract class AbstractFrustrum {
 	
-	protected Body b;
-	protected Environment e;
+	protected AbstractBody b;
+	protected AbstractEnvironment e;
 	
-	public AbstractFrustrum(Body b, Environment e) {
+	public AbstractFrustrum(AbstractBody b, AbstractEnvironment e) {
 		this.b = b;
 		this.e = e;
 	}
 
-	public abstract Iterator<WorldObject> objects();
+	public abstract Iterator<AbstractWorldObject> objects();
 }

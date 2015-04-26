@@ -5,38 +5,38 @@ import java.util.Iterator;
 import java.util.List;
 
 import math.MyPoint2D;
-import env.WorldObject;
-import env.body.Body;
-import env.environment.Environment;
+import env2.api.AbstractBody;
+import env2.api.AbstractEnvironment;
 import env2.api.AbstractFrustrum;
+import env2.api.AbstractWorldObject;
 
 public class FrustrumCrossN extends AbstractFrustrum {
 	
 	protected final int radius;
-	protected Iterator<WorldObject> objects;
+	protected Iterator<AbstractWorldObject> objects;
 	
-	public FrustrumCrossN(Body b, Environment e, int radius) {
+	public FrustrumCrossN(AbstractBody b, AbstractEnvironment e, int radius) {
 		super(b, e);
 		this.radius = radius;
 		objects = new CrossIteratorN(b.getPosition());
 	}
 	
-	public FrustrumCrossN(Body b, Environment e) {
+	public FrustrumCrossN(AbstractBody b, AbstractEnvironment e) {
 		super(b, e);
 		radius = 1;
 		objects = new CrossIteratorN(b.getPosition());
 	}
 	
-	public Iterator<WorldObject> objects() {
+	public Iterator<AbstractWorldObject> objects() {
 		return objects;
 	}
 	
-	private class CrossIteratorN implements Iterator<WorldObject> {
+	private class CrossIteratorN implements Iterator<AbstractWorldObject> {
 		
 		private int x, y;
 		private int ex, ey;
 		private int mx, my;
-		private List<WorldObject> next;
+		private List<AbstractWorldObject> next;
 		
 		public CrossIteratorN(MyPoint2D pos) {
 			mx = pos.getX();
@@ -47,14 +47,14 @@ public class FrustrumCrossN extends AbstractFrustrum {
 			ex = Math.min(e.getWidth()-1, x+2*radius);
 			ey = Math.min(e.getHeight()-1, y+2*radius);
 			
-			next = new ArrayList<WorldObject>();
+			next = new ArrayList<AbstractWorldObject>();
 		}
 
 		public boolean hasNext() {
 			return x <= ex && y <= ey;
 		}
 
-		public WorldObject next() {
+		public AbstractWorldObject next() {
 			if (next.size() < 2) { // FIXME at 1 or 0 elements we should search again? Because of return get(0)
 				do {
 					if (x < ex) next.addAll(e.getCell(x, my).getObjects()); // FIXME Check this computation
