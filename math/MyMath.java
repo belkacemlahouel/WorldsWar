@@ -26,4 +26,17 @@ public class MyMath {
 			}
 		}
 	}
+	
+	public static int clamp(int x, int min, int max){
+		if(x >= max)	return max;
+		if(x <= min)	return min;
+		
+		return x;
+	}
+	public static double clamp(double x, double min, double max){
+		if(x >= max)	return max;
+		if(x <= min)	return min;
+		
+		return x;
+	}
 }
