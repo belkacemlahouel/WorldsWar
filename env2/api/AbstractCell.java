@@ -1,6 +1,7 @@
 package env2.api;
 
 import java.util.List;
+import math.MyPoint2D;
 
 public abstract class AbstractCell {
 
@@ -15,6 +16,6 @@ abstract class AbstractCellPortal {
 	
 	public abstract boolean isPortal();
 	// public abstract int getPortalEnvironmentIdx();
-	public abstract AbsractEnvironment getPortalEnvironment();
+	public abstract AbstractEnvironment getPortalEnvironment();
 	public abstract MyPoint2D getPortalArrivalPosition();
 }
