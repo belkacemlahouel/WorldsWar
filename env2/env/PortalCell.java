@@ -6,8 +6,12 @@ import env2.api.InterfacePortal;
 
 public class PortalCell extends Cell implements InterfacePortal {
 	
-	private AbstractEnvironment arrivalEnv;
-	private MyPoint2D arrivalPos;
+	private final AbstractEnvironment arrivalEnv;
+	private final MyPoint2D arrivalPos;
+	
+	/* should I allow people to create a portal cell with no portal?
+	 * Really...?
+	 */
 	
 	public PortalCell() {
 		super();
@@ -20,7 +24,7 @@ public class PortalCell extends Cell implements InterfacePortal {
 		this.arrivalEnv = arrivalEnv;
 		this.arrivalPos = arrivalPos;
 	}
-
+	
 	public boolean isPortal() {
 		return arrivalEnv != null;
 	}
@@ -32,5 +36,4 @@ public class PortalCell extends Cell implements InterfacePortal {
 	public MyPoint2D getArrivalPosition() {
 		return arrivalPos;
 	}
-
 }

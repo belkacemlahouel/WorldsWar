@@ -7,7 +7,7 @@ public class Ground extends AbstractEnvironment {
 	
 	/*** attributes ***/
 	
-	private AbstractCell[][] grid;
+	protected AbstractCell[][] grid;
 	private final int WIDTH, HEIGHT;
 	
 	public Ground(int width, int height) {
