@@ -25,4 +25,8 @@ public class Cell extends AbstractCell {
 	public void addObject(AbstractWorldObject o) {
 		objects.add(o);
 	}
+	
+	public boolean isPortal() {
+		return false;
+	}
 }
