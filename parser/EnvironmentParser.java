@@ -3,37 +3,24 @@ package parser;
 import java.io.IOException;
 import java.nio.file.Paths;
 import java.nio.file.Path;
+import java.util.List;
 import java.util.Scanner;
 
-/**
- * The structure of the file parsed is the following
- * globalSize=int*int	//the size of the global environment
- * global=char[]		//char[] is an array of char, where e means earth (for a cell of earth), and w means water
- * antSize=int*int		//size of the cave of the ants
- * ant=char[]			//char[] is an array of char, where w means wall, and t means tunnel
- * termiteSize=2*2		//size of the cave of the termites
- * termite=char[]		//char[] is an array of char, where w means wall, and t means tunnel
- * portals=[g,0,1
- * ressources=
- */
+
 class EnvironmentParser {
 	
 	private Path fFilePath;
-	private char globalEnv[][];
-	private char AntsCave[][];
-	private char TermitesCave[][];
-	private int portals[];
-	private char ressources[];
+	private List<Integer> envsHeight;
+	private List<Integer> envsWidth;
+	private List<String> tribes;
+	private List<PortalInfo> portals;
+	private List<ResourceInfo> resources;
+	private List<BodyInfo> bodies;
 	
 	
 	public EnvironmentParser()
 	{
 	    fFilePath = null;
-	    globalEnv = null;
-	    AntsCave = null;
-	    TermitesCave =null;
-	    portals = null;
-	    ressources = null;
 	}
 	
 	/**
@@ -43,11 +30,6 @@ class EnvironmentParser {
 	public EnvironmentParser(String fileName)
 	{
 	    fFilePath = Paths.get(fileName);
-	    globalEnv = null;
-	    AntsCave = null;
-	    TermitesCave =null;
-	    portals = null;
-	    ressources = null;
 	}
 	
 	
@@ -69,28 +51,35 @@ class EnvironmentParser {
 	 */
 	public void parseLine(String line)
 	{
+		String value;
+		
 		//use a second Scanner to parse the content of each line 
 	    Scanner scanner = new Scanner(line);
 	    scanner.useDelimiter("=");
-	    if (scanner.hasNext()){
+	    if (scanner.hasNext())
+	    {
 	      //assumes the line has a certain structure
-	      String type = scanner.next();
-	      if(type.equals("name"))
-	      {
-	    	  String value = scanner.next();
-	    	  System.out.println("My name is "+ value );
-	      }
-	      else
-	      {
-	    	  String value = scanner.next();
-	    	  System.out.println("I am in the "+ value );
-	      }
+	      String type = scanner.next();	      
+	      value = scanner.next();
+	      
+	      System.out.println(type +" is ");
 	      
 	    }
-	    else {
-	    	System.out.println("Invalid or empty line !");
+	    else
+	    {
+	    	value = "";
 	    }
 	    
+	    //--------------------
+	    Scanner valueScanner = new Scanner(value);
+	    valueScanner.useDelimiter(" ");
+	    while(valueScanner.hasNext())
+		{
+	    	System.out.println(" ("+ valueScanner.next() + ") ");
+		}
+	    valueScanner.close();
+	    //-------------
+	      
 	    scanner.close();
 	}
 }
