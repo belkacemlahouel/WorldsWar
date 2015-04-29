@@ -17,7 +17,7 @@ public class Ground extends AbstractEnvironment {
 		grid = new AbstractCell[WIDTH][HEIGHT];
 		for (int i = 0; i < WIDTH; ++i) {
 			for (int j = 0; j < HEIGHT; ++j) {
-				grid[i][j] = new Cell(); // TODO change the "new" call
+				grid[i][j] = new Cell();
 			}
 		}
 	}
@@ -31,8 +31,7 @@ public class Ground extends AbstractEnvironment {
 	}
 	
 	public AbstractCell getCell(int x, int y) {
-		// return grid[x][y]; // TODO check that
-		return null;
+		return grid[x][y];
 	}
 	
 	/*** additionnal methods ***/
