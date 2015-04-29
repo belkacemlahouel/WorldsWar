@@ -7,24 +7,31 @@ public class Ground extends AbstractEnvironment {
 	
 	/*** attributes ***/
 	
-	/*** overriden methods ***/
-
-	@Override
-	public AbstractCell getCell(int x, int y) {
-		// TODO Auto-generated method stub
-		return null;
+	protected AbstractCell[][] grid;
+	private final int WIDTH, HEIGHT;
+	
+	public Ground(int width, int height) {
+		WIDTH = width;
+		HEIGHT = height;
+		
+		grid = new AbstractCell[WIDTH][HEIGHT];
+		for (int i = 0; i < WIDTH; ++i) {
+			for (int j = 0; j < HEIGHT; ++j) {
+				grid[i][j] = new Cell();
+			}
+		}
 	}
-
-	@Override
+	
 	public int getWidth() {
-		// TODO Auto-generated method stub
-		return 0;
+		return WIDTH;
 	}
-
-	@Override
+	
 	public int getHeight() {
-		// TODO Auto-generated method stub
-		return 0;
+		return HEIGHT;
+	}
+	
+	public AbstractCell getCell(int x, int y) {
+		return grid[x][y];
 	}
 	
 	/*** additionnal methods ***/

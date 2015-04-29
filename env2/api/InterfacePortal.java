@@ -2,9 +2,9 @@ package env2.api;
 
 import math.MyPoint2D;
 
-public abstract class AbstractPortal extends AbstractCell {
+public interface InterfacePortal {
 	
 	public abstract boolean isPortal();
-	public abstract AbstractEnvironment getEnvironment();
+	public abstract AbstractEnvironment getArrivalEnvironment();
 	public abstract MyPoint2D getArrivalPosition();
 }
