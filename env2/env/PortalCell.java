@@ -5,23 +5,32 @@ import env2.api.AbstractEnvironment;
 import env2.api.InterfacePortal;
 
 public class PortalCell extends Cell implements InterfacePortal {
+	
+	private AbstractEnvironment arrivalEnv;
+	private MyPoint2D arrivalPos;
+	
+	public PortalCell() {
+		super();
+		arrivalEnv = null;
+		arrivalPos = null;
+	}
+	
+	public PortalCell(AbstractEnvironment arrivalEnv, MyPoint2D arrivalPos) {
+		super();
+		this.arrivalEnv = arrivalEnv;
+		this.arrivalPos = arrivalPos;
+	}
 
-	@Override
 	public boolean isPortal() {
-		// TODO Auto-generated method stub
-		return false;
+		return arrivalEnv != null;
 	}
 
-	@Override
 	public AbstractEnvironment getArrivalEnvironment() {
-		// TODO Auto-generated method stub
-		return null;
+		return arrivalEnv;
 	}
 
-	@Override
 	public MyPoint2D getArrivalPosition() {
-		// TODO Auto-generated method stub
-		return null;
+		return arrivalPos;
 	}
 
 }

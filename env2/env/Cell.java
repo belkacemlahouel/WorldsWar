@@ -1,5 +1,6 @@
 package env2.env;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import env2.api.AbstractCell;
@@ -7,22 +8,21 @@ import env2.api.AbstractWorldObject;
 
 public class Cell extends AbstractCell {
 
-	@Override
+	private List<AbstractWorldObject> objects;
+	
+	public Cell() {
+		objects = new ArrayList<AbstractWorldObject>();
+	}
+	
 	public List<AbstractWorldObject> getObjects() {
-		// TODO Auto-generated method stub
-		return null;
+		return objects;
 	}
 
-	@Override
 	public void removeObject(AbstractWorldObject o) {
-		// TODO Auto-generated method stub
-		
+		objects.remove(o);
 	}
 
-	@Override
 	public void addObject(AbstractWorldObject o) {
-		// TODO Auto-generated method stub
-		
+		objects.add(o);
 	}
-
 }
