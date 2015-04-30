@@ -8,9 +8,8 @@ import math.MyMath;
 import math.MyPoint2D;
 import env2.api.AbstractBody;
 import env2.api.AbstractEnvironment;
-import env2.api.AbstractWorldObject;
 import env2.api.Morphable;
-import env2.pheromones.Pheromone;
+import env2.pheromones.AbstractPheromone;
 
 public class Environment {
 
@@ -49,6 +48,11 @@ public class Environment {
 		}
 	}
 	
+	/* I don't think we are going to use this method this doesn't seem really needed
+	 * the environment does not decide to remove or add an object
+	 * except when the WO is a pheromone, and in this case
+	 */
+	
 	/* public boolean add (AbstractWorldObject o) {
 		AbstractEnvironment e = o.getEnvironment();
 		MyPoint2D pos = o.getPosition();
@@ -72,28 +76,17 @@ public class Environment {
 		return false;
 	} */
 	
-	public boolean remove(Pheromone o) {
+	public boolean remove(AbstractPheromone o) {
 		AbstractEnvironment e = o.getEnvironment();
 		MyPoint2D pos = o.getPosition();
-		System.err.println(e!=null);
+		System.err.println(e != null);
 		
-		if (e != null && this.grounds.contains(e)) {
-			if (MyMath.isIn(pos.getX(), pos.getY(), e.getWidth(), e.getHeight())) {
-				if (e.getCell(pos.getX(), pos.getY()).removeObject(o)) {
-					if (o instanceof AbstractBody) {
-						this.bodies.remove((AbstractBody) o);
-					}
-					return true;
-				}
-			}
+		if (e != null && this.grounds.contains(e) && MyMath.isIn(pos.getX(), pos.getY(), e.getWidth(), e.getHeight())) {
+			return (e.getCell(pos.getX(), pos.getY()).removeObject(o));
 		}
 		
 		return false;
 	}
-	
-	/* I don't think we are going to use those methods
-	 * the environment does not decide to remove or add an object
-	 */
 	
 	public AbstractEnvironment getEnvironment(int i) {
 		if (i < grounds.size())

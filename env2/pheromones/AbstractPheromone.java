@@ -4,18 +4,16 @@ import math.MyPoint2D;
 import env2.api.AbstractEnvironment;
 import env2.api.AbstractWorldObject;
 import env2.api.Morphable;
-import env2.env.Environment;
 import env2.type.WorldObjectType;
 
-public class Pheromone extends AbstractWorldObject implements Morphable {
+public abstract class AbstractPheromone extends AbstractWorldObject implements Morphable {
 
-	int count;
+	private int count;
 	
-	MyPoint2D position;
-	AbstractEnvironment environment;
-	Environment globalEnv;
+	private MyPoint2D position;
+	private AbstractEnvironment environment;
 	
-	public Pheromone(int count, MyPoint2D pos, AbstractEnvironment e) {
+	public AbstractPheromone(int count, MyPoint2D pos, AbstractEnvironment e) {
 		this.count = count;
 		position = pos;
 		this.environment = e;
@@ -30,7 +28,7 @@ public class Pheromone extends AbstractWorldObject implements Morphable {
 	}
 
 	public void tac() {
-		count --;
+		--count;
 	}
 	
 	public int getCount() {
@@ -38,22 +36,26 @@ public class Pheromone extends AbstractWorldObject implements Morphable {
 	}
 	
 	public boolean morph() {
-		System.out.println("delete");
+		System.err.println("delete");
+		// TODO Implement that
 		return true;
 	}
 	
-	public String toString() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	public abstract String toString();
 
 	public WorldObjectType getType() {
-		// TODO Auto-generated method stub
-		return null;
+		return WorldObjectType.PHEROMONE;
 	}
 
 	public boolean isPerceivable() {
-		// TODO Auto-generated method stub
+		return true;
+	}
+
+	public boolean tic() {
+		tac();
+		if (getCount() <= 0) {
+			return this.morph();
+		}
 		return false;
 	}
 }
