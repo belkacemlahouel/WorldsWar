@@ -6,5 +6,6 @@ public enum WorldObjectType {
 	TESTBODY,
 	SUGAR,
 	MEAT,
-	ROCK;
+	ROCK,
+	PHEROMONE;
 }
