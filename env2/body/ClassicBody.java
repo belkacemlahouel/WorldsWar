@@ -83,9 +83,18 @@ public abstract class ClassicBody extends AbstractBody {
 	 * (non-Javadoc)
 	 * @see env2.api.AbstractMobileWorldObject#move(env2.api.AbstractCell)
 	 */
-	public void move(AbstractEnvironment newenv, MyPoint2D newpos) {
-		newenv.getCell(newpos.getX(), newpos.getY()).addObject(this);
-		myenv.getCell(mypos.getX(), mypos.getY()).removeObject(this);
+	public boolean move(AbstractEnvironment newenv, MyPoint2D newpos) {
+		
+		if(newenv != null){
+			if (newpos.getX() >= 0 && newpos.getX() < newenv.getWidth() && newpos.getY() >= 0 && newpos.getY() < newenv.getHeight()){
+				newenv.getCell(newpos.getX(), newpos.getY()).addObject(this);
+				myenv.getCell(mypos.getX(), mypos.getY()).removeObject(this);
+				this.mypos = newpos;
+				return true;
+			}
+		}
+		return false;
+		
 	}
 	
 	public int getAge(float TIME) {

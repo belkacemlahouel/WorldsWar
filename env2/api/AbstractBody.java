@@ -16,9 +16,6 @@ public abstract class AbstractBody extends AbstractMobileWorldObject {
 	 * Position? Cell? Environment? TODO
 	 */
 	
-	public abstract AbstractEnvironment getEnvironment();
-	public abstract MyPoint2D getPosition();
-	
 	public abstract Direction getDirection();
 	
 	// get current variables
