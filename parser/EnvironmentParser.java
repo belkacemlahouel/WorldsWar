@@ -18,8 +18,8 @@ class EnvironmentParser {
 	//contains the informations about tribes in HashMap<Id, TribeType>
 	private HashMap<Integer,String> tribes =new HashMap<Integer,String>();
 	private List<PortalInfo> portals  = new ArrayList<PortalInfo>();
-	private List<ResourceInfo> resources;
-	private List<BodyInfo> bodies;
+	private List<ResourceInfo> resources = new ArrayList<ResourceInfo>();
+	private List<BodyInfo> bodies = new ArrayList<BodyInfo>();
 	
 	
 	public EnvironmentParser()
@@ -59,7 +59,7 @@ class EnvironmentParser {
 		String value;
 		String type;
 		String param;
-		int j;
+		int j,k;
 		
 		//use a second Scanner to parse the content of each line 
 	    Scanner scanner = new Scanner(line);
@@ -117,8 +117,70 @@ class EnvironmentParser {
 	    			portals.add(portal);
 	    			break;
 	    			
+	    		case "BODY":
+	    			BodyInfo body = new BodyInfo();
+	    			body.type = param;
+	    			k=0;
+	    			while(valueScanner.hasNext())
+	    			{
+	    				++k;
+	    				if(k==1)
+	    				{
+	    					body.function = valueScanner.next();
+	    				}
+	    				else if(k==2)
+	    				{
+	    					body.tribeId = Integer.parseInt(valueScanner.next());
+	    				}
+	    				else if(k==3)
+	    				{
+	    					body.env = Integer.parseInt(valueScanner.next());
+	    				}
+	    				else if(k==4)
+	    				{
+	    					body.pos[0] = Integer.parseInt(valueScanner.next());
+	    				}
+	    				else if(k==5)
+	    				{
+	    					body.pos[1] = Integer.parseInt(valueScanner.next());
+	    				}
+	    				else
+	    				{
+	    					body.quantity = Integer.parseInt(valueScanner.next());
+	    				}
+	    			}
+	    			bodies.add(body);
+	    			break;
+	    			
+	    		case "RESOURCE":
+	    			ResourceInfo resource = new ResourceInfo();
+	    			resource.type = param;
+	    			k=0;
+	    			while(valueScanner.hasNext())
+	    			{
+	    				++k;
+	    				if(k==1)
+	    				{
+	    					resource.env = Integer.parseInt(valueScanner.next());
+	    				}
+	    				else if(k==2)
+	    				{
+	    					resource.posX = Integer.parseInt(valueScanner.next());
+	    				}
+	    				else if(k==3)
+	    				{
+	    					resource.posY = Integer.parseInt(valueScanner.next());
+	    				}
+	    				else
+	    				{
+	    					resource.quantity = Integer.parseInt(valueScanner.next());
+	    				}
+	    			}
+	    			resources.add(resource);
+	    			break;
+	    			
 	    		default :
-	    			System.out.println("No such choice");
+	    			break;
 	    	}
 	    	++j;		
 		}
@@ -153,6 +215,18 @@ class EnvironmentParser {
 		for(int i = 0; i < portals.size(); i++)
 		{
 			portals.get(i).printInfos();
+		}
+		
+		//print the bodies
+		for(int i = 0; i < bodies.size(); i++)
+		{
+			bodies.get(i).printInfos();
+		}
+		
+		//print the resources
+		for(int i = 0; i < resources.size(); i++)
+		{
+			resources.get(i).printInfos();
 		}
 	}
 }
