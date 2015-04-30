@@ -13,7 +13,7 @@ class Main {
 		System.out.println("Hello !");
 		
 		datas.parseEnvDatas();
+		datas.print();
 		
-		System.out.println(datas);
 	}
 }

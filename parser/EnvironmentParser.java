@@ -3,17 +3,21 @@ package parser;
 import java.io.IOException;
 import java.nio.file.Paths;
 import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.HashMap;
 
 
 class EnvironmentParser {
 	
 	private Path fFilePath;
-	private List<Integer> envsHeight;
-	private List<Integer> envsWidth;
-	private List<String> tribes;
-	private List<PortalInfo> portals;
+	//contains the height and width of all the environments classified by their order of appearance in the data file.
+	private List<Integer> envsHeight  = new ArrayList<Integer>();
+	private List<Integer> envsWidth  = new ArrayList<Integer>();
+	//contains the informations about tribes in HashMap<Id, TribeType>
+	private HashMap<Integer,String> tribes =new HashMap<Integer,String>();
+	private List<PortalInfo> portals  = new ArrayList<PortalInfo>();
 	private List<ResourceInfo> resources;
 	private List<BodyInfo> bodies;
 	
@@ -45,6 +49,7 @@ class EnvironmentParser {
 		}
 	}
 	
+	
 	/**
 	 * Treat a specific line.
 	 * @param line, the line to parse.
@@ -52,6 +57,9 @@ class EnvironmentParser {
 	public void parseLine(String line)
 	{
 		String value;
+		String type;
+		String param;
+		int j;
 		
 		//use a second Scanner to parse the content of each line 
 	    Scanner scanner = new Scanner(line);
@@ -59,27 +67,92 @@ class EnvironmentParser {
 	    if (scanner.hasNext())
 	    {
 	      //assumes the line has a certain structure
-	      String type = scanner.next();	      
+	      type = scanner.next();	      
 	      value = scanner.next();
 	      
-	      System.out.println(type +" is ");
+	      //System.out.println(type +" is ");
 	      
 	    }
 	    else
 	    {
 	    	value = "";
+	    	type = "";
 	    }
 	    
-	    //--------------------
+	    //use a third line to parse the parameters in value.
 	    Scanner valueScanner = new Scanner(value);
 	    valueScanner.useDelimiter(" ");
+	    j=0;
 	    while(valueScanner.hasNext())
 		{
-	    	System.out.println(" ("+ valueScanner.next() + ") ");
+	    	param = valueScanner.next();
+
+	    	switch (type) {
+	    		case "ENVIRONMENT" :
+	    			if(j%2 != 0)
+	    			{
+	    				envsWidth.add(Integer.parseInt(param));
+	    			}
+	    			else
+	    			{
+	    				envsHeight.add(Integer.parseInt(param));
+	    			}
+	    			break;
+	    		
+	    		case "TRIBE" :
+	    			String tribeType = param;
+	    			int id = Integer.parseInt(valueScanner.next());
+	    			tribes.put(id, tribeType);
+	    			break;
+	    			
+	    		case "PORTAL":
+	    			PortalInfo portal = new PortalInfo();
+	    			portal.env1 = Integer.parseInt(param);
+	    			portal.posEnv1[0] = Integer.parseInt(valueScanner.next());
+	    			portal.posEnv1[1] = Integer.parseInt(valueScanner.next());
+	    			valueScanner.next();
+	    			portal.env2 = Integer.parseInt(valueScanner.next());
+	    			portal.posEnv2[0] = Integer.parseInt(valueScanner.next());
+	    			portal.posEnv2[1] = Integer.parseInt(valueScanner.next());
+	    			portals.add(portal);
+	    			break;
+	    			
+	    		default :
+	    			System.out.println("No such choice");
+	    	}
+	    	++j;		
 		}
 	    valueScanner.close();
 	    //-------------
 	      
 	    scanner.close();
+	}
+	
+	
+	/**
+	 * Print the result of the parsing process.
+	 */
+	void print()
+	{
+		//print the environments
+		for(int i = 0; i < envsHeight.size(); i++)
+		{
+            System.out.println("Environment "+ (i+1) + " is " + envsHeight.get(i) + "*" + envsWidth.get(i));
+        }
+		
+		//print the different tribes.
+		for(int i = 0; i <= tribes.size(); i++)
+		{
+			if(tribes.containsKey(i))
+			{
+				System.out.println(tribes.get(i)+i);
+			}
+		}
+		
+		//print the portals
+		for(int i = 0; i < portals.size(); i++)
+		{
+			portals.get(i).printInfos();
+		}
 	}
 }
