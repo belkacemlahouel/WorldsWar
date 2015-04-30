@@ -1,6 +1,7 @@
 package env2.env;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import math.MyPoint2D;
@@ -26,17 +27,26 @@ public class Environment {
 	}
 	
 	public void go(){
-		boolean bool = true;;
+		boolean bool = true;
+		Iterator <Morphable> it;
+		Morphable m;
 		while(bool){
+			
 			for(AbstractBody b : bodies){
 				bool = b.move(b.getEnvironment(), new MyPoint2D(b.getPosition().getX() + 1, b.getPosition().getY()) );
 				System.out.println("x = " + b.getPosition().getX() + " y = " + b.getPosition().getY());
 			}
 			
-			for(Morphable m : morph){
-				m.tic();
+			it = morph.iterator();
+			while(it.hasNext()){
+				m = it.next();
+				if (m.tic()){
+					it.remove();
+					this.remove((AbstractWorldObject) m);
+				}
 				System.out.println(m.getCount());
 			}
+			
 		}
 	}
 	
@@ -44,10 +54,11 @@ public class Environment {
 		
 		AbstractEnvironment e = o.getEnvironment();
 		MyPoint2D pos = o.getPosition();
-		System.out.println(e!=null);
 		if( e != null && this.grounds.contains(e)){
 			if(pos.getX() >= 0 && pos.getX() < e.getWidth() && pos.getY() >= 0 && pos.getY() < e.getHeight() ){
+				
 				e.getCell(pos.getX(), pos.getY()).addObject(o);
+				
 				if(o instanceof AbstractBody){
 					this.bodies.add((AbstractBody) o);
 				}
@@ -64,7 +75,25 @@ public class Environment {
 		
 	}
 	
-	//public boolean remove 
+	public boolean remove (AbstractWorldObject o){
+		AbstractEnvironment e = o.getEnvironment();
+		MyPoint2D pos = o.getPosition();
+		System.out.println(e!=null);
+		if( e != null && this.grounds.contains(e)){
+			if(pos.getX() >= 0 && pos.getX() < e.getWidth() && pos.getY() >= 0 && pos.getY() < e.getHeight() ){
+				if (e.getCell(pos.getX(), pos.getY()).removeObject(o)){
+					if(o instanceof AbstractBody){
+						this.bodies.remove((AbstractBody) o);
+					}
+						
+					
+					
+					return true;
+				}
+			}
+		}
+		return false;
+	}
 	
 	public AbstractEnvironment getEnvironment(int i){
 		return this.grounds.get(i);

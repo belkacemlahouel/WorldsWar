@@ -4,6 +4,7 @@ import math.MyPoint2D;
 import env2.api.AbstractEnvironment;
 import env2.api.AbstractWorldObject;
 import env2.api.Morphable;
+import env2.env.Environment;
 import env2.type.WorldObjectType;
 
 public class Pheromones extends AbstractWorldObject implements Morphable{
@@ -12,6 +13,7 @@ public class Pheromones extends AbstractWorldObject implements Morphable{
 	
 	MyPoint2D position;
 	AbstractEnvironment environment;
+	Environment globalEnv;
 	
 	public Pheromones(int count, MyPoint2D pos, AbstractEnvironment e){
 		this.count = count;
@@ -36,8 +38,8 @@ public class Pheromones extends AbstractWorldObject implements Morphable{
 	}
 	@Override
 	public boolean morph() {
-		System.out.println("test");
-		return false;
+		System.out.println("delete");
+		return true;
 	}
 	
 	
