@@ -110,6 +110,30 @@ public class MyVector2D {
 	}
 	
 	/**
+	 * plus operation for vectors
+	 */
+	
+	public MyVector2D plus(MyVector2D w) {
+		return new MyVector2D(dx+w.dx, dy+w.dy);
+	}
+	
+	/**
+	 * minus operation for vectors
+	 */
+	
+	public MyVector2D minus(MyVector2D w) {
+		return new MyVector2D(dx-w.dx, dy-w.dy);
+	}
+	
+	/**
+	 * scalar multiplication (scaling) for vectors
+	 */
+	
+	public MyVector2D times(float lambda) {
+		return new MyVector2D(lambda*dx, lambda*dy);
+	}
+	
+	/**
 	 * Main test function
 	 */
 	
