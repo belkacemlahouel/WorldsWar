@@ -1,12 +1,13 @@
 package gui;
 
-import env.environment.Environment;
-import env.environment.EnvironmentGround;
+import env2.env.Ground;
 
 public class MainGUI {
 
 	public static void main(String[] args) {		
-		Environment env = new EnvironmentGround(50, 50);
-		GUI window = new GUI(env);
+		Ground env = new Ground(50, 50);
+		// GUI window = new GUI(env);
+		
+		// TODO Check all the code regarding GUI to work with env2/
 	}
 }
