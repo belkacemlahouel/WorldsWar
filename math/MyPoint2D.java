@@ -39,6 +39,24 @@ public class MyPoint2D implements Comparable<MyPoint2D> {
 	public String toString() {
 		return "(" + x + ", " + y + ")";
 	}
+	
+	/**
+	 * plus operation with a vector
+	 * be careful this is a vector of integers
+	 */
+	
+	public MyPoint2D plus(MyVector2D w) {
+		return new MyPoint2D((int) w.getDx() + x, (int) w.getDy() + y);
+	}
+	
+	/**
+	 * minus operation with a point
+	 * be careful this is a vector of integers
+	 */
+	
+	public MyPoint2D minus(MyVector2D w) {
+		return new MyPoint2D((int) -w.getDx() + x, (int) -w.getDy() + y);
+	}
 
 	public int compareTo(MyPoint2D o) {
 		if (o.x == x) {
