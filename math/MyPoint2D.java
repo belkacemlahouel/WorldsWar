@@ -57,6 +57,14 @@ public class MyPoint2D implements Comparable<MyPoint2D> {
 	public MyPoint2D minus(MyVector2D w) {
 		return new MyPoint2D((int) -w.getDx() + x, (int) -w.getDy() + y);
 	}
+	
+	/**
+	 * classic equality test
+	 */
+	
+	public boolean equals(MyPoint2D p) {
+		return p.x == x && p.y == y;
+	}
 
 	public int compareTo(MyPoint2D o) {
 		if (o.x == x) {

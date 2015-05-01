@@ -15,6 +15,14 @@ public class MyVector2D {
 	}
 	
 	/**
+	 * construction of the vector ab
+	 */
+	
+	public MyVector2D(MyPoint2D a, MyPoint2D b) {
+		new MyVector2D(b.getX()-a.getX(), b.getY()-a.getY());
+	}
+	
+	/**
 	 * classic getter
 	 */
 	
@@ -131,6 +139,14 @@ public class MyVector2D {
 	
 	public MyVector2D times(float lambda) {
 		return new MyVector2D(lambda*dx, lambda*dy);
+	}
+	
+	/**
+	 * classic equality test
+	 */
+	
+	public boolean equals(MyVector2D w) {
+		return w.dx == dx && w.dy == dy;
 	}
 	
 	/**
