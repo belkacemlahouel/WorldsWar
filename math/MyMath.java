@@ -96,7 +96,8 @@ public class MyMath {
 		Intersection res = MyMath.intersection(new MyPoint2D(-1, 0),
 												new MyVector2D(1, 0),
 												new MyPoint2D(0, -1),
-												new MyVector2D(0, 1)); // TODO
+												new MyVector2D(0, 1));
+		System.out.println("Intersection: " + res);
 		System.out.println("Bye World!");
 	}
 }

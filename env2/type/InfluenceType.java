@@ -2,9 +2,7 @@ package env2.type;
 
 public enum InfluenceType {
 	MOTION,
-	ATTACK,
-	CURE,
-	PICK,
-	PUT,
+	ATTACK_CURE,
+	PICK_PUT,
 	EAT;
 }
