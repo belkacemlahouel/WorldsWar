@@ -9,4 +9,8 @@ public class Intersection {
 		this.time = time;
 		position = new MyPoint2D(x, y);
 	}
+	
+	public String toString() {
+		return "(" + time + ", at " + position.toString() + ")";
+	}
 }
