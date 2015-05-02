@@ -11,6 +11,6 @@ public class Intersection {
 	}
 	
 	public String toString() {
-		return "(" + time + ", at " + position.toString() + ")";
+		return "(in " + time + "s, in" + position.toString() + ")";
 	}
 }

@@ -91,4 +91,8 @@ public abstract class ClassicBody extends AbstractBody {
 	public int getAge(float TIME) {
 		return (int) (TIME - CREATION_TIME);
 	}
+	
+	public void applyLifeVariation(int var) {
+		mylife += var;
+	}
 }
