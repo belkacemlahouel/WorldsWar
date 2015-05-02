@@ -7,4 +7,12 @@ public enum EffectType {
 	GOOD,
 	BAD,
 	NEUTRAL;
+	
+	// Other idea: using the modified characteristic to characterize the Effect.
+	/**
+	 * POWER,
+	 * LIFE,
+	 * ...
+	 */
+	
 }
