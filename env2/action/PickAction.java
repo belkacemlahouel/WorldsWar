@@ -20,6 +20,7 @@ public class PickAction extends AbstractAction {
 	public PickAction(InterfaceGatherer body, AbstractResource resource, int qty) {
 		picker = body;
 		picked = resource;
+		this.qty = qty;
 	}
 
 	public void doAction() {
