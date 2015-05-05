@@ -1,7 +1,7 @@
 package parser;
 
 class ResourceInfo{
-	String type;
+	ConfParameters type;
 	int env;
 	int posX;
 	int posY;

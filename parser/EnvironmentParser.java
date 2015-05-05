@@ -119,14 +119,14 @@ class EnvironmentParser {
 	    			
 	    		case BODY:
 	    			BodyInfo body = new BodyInfo();
-	    			body.type = param;
+	    			body.type = ConfParameters.getByValue(param);
 	    			k=0;
 	    			while(valueScanner.hasNext())
 	    			{
 	    				++k;
 	    				if(k==1)
 	    				{
-	    					body.function = valueScanner.next();
+	    					body.function = ConfParameters.getByValue(valueScanner.next());
 	    				}
 	    				else if(k==2)
 	    				{
@@ -154,7 +154,7 @@ class EnvironmentParser {
 	    			
 	    		case RES:
 	    			ResourceInfo resource = new ResourceInfo();
-	    			resource.type = param;
+	    			resource.type = ConfParameters.getByValue(param);
 	    			k=0;
 	    			while(valueScanner.hasNext())
 	    			{
