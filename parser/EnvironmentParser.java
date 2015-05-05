@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 import java.util.HashMap;
+import parser.ConfParameters;
 
 
 class EnvironmentParser {
@@ -59,6 +60,7 @@ class EnvironmentParser {
 		String value;
 		String type;
 		String param;
+		ConfParameters parameter = null;;
 		int j,k;
 		
 		//use a second Scanner to parse the content of each line 
@@ -67,11 +69,9 @@ class EnvironmentParser {
 	    if (scanner.hasNext())
 	    {
 	      //assumes the line has a certain structure
-	      type = scanner.next();	      
-	      value = scanner.next();
-	      
-	      //System.out.println(type +" is ");
-	      
+	      type = scanner.next();
+	      parameter = ConfParameters.getByValue(type);
+	      value = scanner.next();	      
 	    }
 	    else
 	    {
@@ -79,7 +79,7 @@ class EnvironmentParser {
 	    	type = "";
 	    }
 	    
-	    //use a third line to parse the parameters in value.
+	    //use a third scanner to parse the parameters in value.
 	    Scanner valueScanner = new Scanner(value);
 	    valueScanner.useDelimiter(" ");
 	    j=0;
@@ -87,8 +87,8 @@ class EnvironmentParser {
 		{
 	    	param = valueScanner.next();
 
-	    	switch (type) {
-	    		case "ENVIRONMENT" :
+	    	switch (parameter) {
+	    		case ENV :
 	    			if(j%2 != 0)
 	    			{
 	    				envsWidth.add(Integer.parseInt(param));
@@ -99,13 +99,13 @@ class EnvironmentParser {
 	    			}
 	    			break;
 	    		
-	    		case "TRIBE" :
+	    		case TRIBE :
 	    			String tribeType = param;
 	    			int id = Integer.parseInt(valueScanner.next());
 	    			tribes.put(id, tribeType);
 	    			break;
 	    			
-	    		case "PORTAL":
+	    		case PORTAL:
 	    			PortalInfo portal = new PortalInfo();
 	    			portal.env1 = Integer.parseInt(param);
 	    			portal.posEnv1[0] = Integer.parseInt(valueScanner.next());
@@ -117,7 +117,7 @@ class EnvironmentParser {
 	    			portals.add(portal);
 	    			break;
 	    			
-	    		case "BODY":
+	    		case BODY:
 	    			BodyInfo body = new BodyInfo();
 	    			body.type = param;
 	    			k=0;
@@ -152,7 +152,7 @@ class EnvironmentParser {
 	    			bodies.add(body);
 	    			break;
 	    			
-	    		case "RESOURCE":
+	    		case RES:
 	    			ResourceInfo resource = new ResourceInfo();
 	    			resource.type = param;
 	    			k=0;
