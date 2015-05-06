@@ -229,4 +229,23 @@ class EnvironmentParser {
 			resources.get(i).printInfos();
 		}
 	}
+	
+	
+	/**
+	 * Getter on the list of integer containing the height of the environments.
+	 * @return envsHeight
+	 */
+	public List<Integer> getEnvsHeight()
+	{
+		return envsHeight;
+	}
+	
+	/**
+	 * Getter on the list of integer containing the width of the environments.
+	 * @return envsWidth
+	 */
+	public List<Integer> getEnvsWidth()
+	{
+		return envsWidth;
+	}
 }
