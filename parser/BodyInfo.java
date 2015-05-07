@@ -1,8 +1,8 @@
 package parser;
 
 class BodyInfo{
-	String type;
-	String function;
+	ConfParameters type;
+	ConfParameters function;
 	int tribeId;
 	int env;
 	int pos[] = new int[2];
