@@ -11,19 +11,22 @@ import env2.type.Direction;
 import env2.type.EffectType;
 import env2.type.WorldObjectType;
 
-public final class TestBody extends ClassicBody {
-	
+public final class TestBody extends ClassicBody 
+{	
 	private List<AbstractResource> transported;
-	private int occupied;
+	private int occupiedCapacity;
 
 	public TestBody(AbstractEnvironment e, Direction dir, MyPoint2D pos, float TIME) {
 		super(e, dir, pos, TIME);
 		transported = new ArrayList<AbstractResource>();
-		occupied = 0;
+		occupiedCapacity = 0;
 	}
 
 	public int getCapacity() {
 		return 10;
+	}
+	public int getEatingSpeed() {
+		return 5;
 	}
 
 	public int getReach() {
@@ -36,6 +39,10 @@ public final class TestBody extends ClassicBody {
 
 	protected int getStdSpeed() {
 		return 1;
+	}
+	@Override
+	protected int getStdStrength() {
+		return 2;
 	}
 
 	// TODO We may make the capacities change in function of the Body age for more realism
@@ -55,22 +62,26 @@ public final class TestBody extends ClassicBody {
 	protected int getRndLifeLoss() {
 		return 2;
 	}
+	@Override
+	protected int getRndStrength() {
+		return 1;
+	}
 
 	public void eat(AbstractResource o, int qty) {
 		int tmp_qty = qty;
-		if (tmp_qty + occupied > getCapacity())
-			tmp_qty = getCapacity() - occupied;
-		transported.add(o.pick(tmp_qty));
+		if (tmp_qty + occupiedCapacity > getEatingSpeed())
+			tmp_qty = getCapacity() - occupiedCapacity;
+		o.pick(tmp_qty);
 		
 		switch(getEffect(o)) {
 			case GOOD:
-				mylife += 10;
+				mylife += tmp_qty*10;
 				return;
 			case BAD:
-				mylife -= 10;
+				mylife -= tmp_qty*10;
 				return;
 			default:
-				mylife += 2;
+				mylife += tmp_qty*2;
 				return;
 		}
 	}
@@ -99,7 +110,7 @@ public final class TestBody extends ClassicBody {
 	}
 
 	public int getOccupiedCapacity() {
-		return occupied;
+		return occupiedCapacity;
 	}
 
 	@Override
