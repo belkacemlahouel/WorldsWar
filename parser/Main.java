@@ -1,14 +1,10 @@
 package parser;
 
-import parser.EnvironmentParser;
-import env.Direction;
-import env.body.AntBody;
-import env.environment.Environment;
-import env.environment.Ground;
-import gui.AgentBodyGUI;
-import gui.GUI;
-
 import java.io.IOException;
+
+import env2.api.AbstractEnvironment;
+import env2.env.Ground;
+import gui.GUI;
 
 class Main {
 	
@@ -21,7 +17,7 @@ class Main {
 		datas.parseEnvDatas();
 		datas.print();
 		
-		Ground env = new Ground(datas.getEnvsHeight().get(0), datas.getEnvsWidth().get(0));
+		AbstractEnvironment env = new Ground(datas.getEnvsHeight().get(0), datas.getEnvsWidth().get(0));
 		//Ground env = new Ground(10, 10);
 		GUI gui = new GUI(env);
 		
