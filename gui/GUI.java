@@ -1,6 +1,6 @@
 package gui;
 
-import env.environment.Environment;
+import env2.api.AbstractEnvironment;
 import gui.window.SimpleFrame;
 import gui.window.Viewport;
 
@@ -13,16 +13,16 @@ public class GUI extends SimpleFrame
 	public static final int defaultFrameHeight = 600;
 	
 	/* Attributes */
-	private Environment env;
+	private AbstractEnvironment env;
 	private Viewport viewport;
 
 	private GUIController controller;
 
 	/* Constructors */
-	public GUI(Environment e) {		
+	public GUI(AbstractEnvironment e) {		
 		this(e, defaultFrameWidth, defaultFrameHeight);	
 	}	
-	public GUI(Environment e, int frameWidth, int frameHeight) {	
+	public GUI(AbstractEnvironment e, int frameWidth, int frameHeight) {	
 		super("GUI Frame", frameWidth, frameHeight); //$NON-NLS-1$
 		
 		this.env = e;	

@@ -1,6 +1,6 @@
 package sim;
 
-import env.environment.Environment;
+import env2.api.AbstractEnvironment;
 import gui.GUI;
 
 public class Simulator {
@@ -27,7 +27,7 @@ public class Simulator {
 	/***/
 	
 	private Agent[] agents;
-	private Environment env;
+	private AbstractEnvironment env;
 	private GUI gui;
 	
 	public Simulator(int nbGhosts, int width, int height) {

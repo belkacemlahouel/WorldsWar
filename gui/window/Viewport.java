@@ -6,10 +6,11 @@ import java.awt.Graphics;
 import javax.swing.JPanel;
 
 import math.MyMath;
-import env.Cell;
-import env.environment.Environment;
+import env2.api.AbstractCell;
+import env2.api.AbstractEnvironment;
 
-public class Viewport extends JPanel{
+public class Viewport extends JPanel
+{
 	private static final long serialVersionUID = 706657421606903524L;
 
 	/* Constants */
@@ -27,7 +28,7 @@ public class Viewport extends JPanel{
 	private static final int defaultViewportZoomSpeed = 1;
 	
 	/* Attributes */ 
-	private Environment env;	
+	private AbstractEnvironment env;	
 	
 	private Color cellBackgroundColor;	
 	private int cellPixelSize;	
@@ -38,21 +39,21 @@ public class Viewport extends JPanel{
 	private int viewportWidth;
 	
 	/* Constructors */ 
-	public Viewport(Environment e) {
+	public Viewport(AbstractEnvironment e) {
 		this(e, defaultViewportPosX, defaultViewportPosY, 
 				defaultViewportWidth, defaultViewportHeight, 
 				defaultCellPixelSize, defaultCellBackgroundColor);
 	}	
-	public Viewport(Environment e, int x, int y) {		
+	public Viewport(AbstractEnvironment e, int x, int y) {		
 		this(e, x, y, defaultViewportWidth, defaultViewportHeight, defaultCellPixelSize, defaultCellBackgroundColor);
 	}	
-	public Viewport(Environment e, int x, int y, int width, int height) {		
+	public Viewport(AbstractEnvironment e, int x, int y, int width, int height) {		
 		this(e, x, y, width, height, defaultCellPixelSize, defaultCellBackgroundColor);
 	}	
-	public Viewport(Environment e, int x, int y, int width, int height, int cellPixelSize) {		
+	public Viewport(AbstractEnvironment e, int x, int y, int width, int height, int cellPixelSize) {		
 		this(e, x, y, width, height, cellPixelSize, defaultCellBackgroundColor);
 	}	
-	public Viewport(Environment e, int x, int y, int width, int height, int cellPixelSize, Color cellBgColor) {		
+	public Viewport(AbstractEnvironment e, int x, int y, int width, int height, int cellPixelSize, Color cellBgColor) {		
 		super();				
 		assert(e != null);
 		
@@ -111,7 +112,7 @@ public class Viewport extends JPanel{
 	     int endCellY = Math.min(this.env.getHeight(), (int) Math.floor((float)endY/this.cellPixelSize));
 
 	     /* Temporary variables */
-	     Cell tmpCell;
+	     AbstractCell tmpCell;
 	     int tmpCellX, tmpCellY;
 	     
 	     /* Display */
@@ -130,8 +131,8 @@ public class Viewport extends JPanel{
 			     g.fillRect(tmpCellX, tmpCellY, this.cellPixelSize, this.cellPixelSize);
 
 		    	 /* Background of the rectangle */
-		    	 if(!tmpCell.isEmpty())		g.setColor(Color.CYAN); 	
-		    	 else						g.setColor(this.cellBackgroundColor); 
+		    	 if(!tmpCell.getObjects().isEmpty())	g.setColor(Color.CYAN); 	
+		    	 else									g.setColor(this.cellBackgroundColor); 
 		    	 
 		    	 if(i == 0 && j == 0)	g.setColor(Color.RED); 
 		    	 
