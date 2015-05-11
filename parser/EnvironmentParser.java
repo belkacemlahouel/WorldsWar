@@ -248,4 +248,13 @@ class EnvironmentParser {
 	{
 		return envsWidth;
 	}
+	
+	/**
+	 * Getter on the list of bodies.
+	 * @return bodies
+	 */
+	public List<BodyInfo> getBodies()
+	{
+		return bodies;
+	}
 }
