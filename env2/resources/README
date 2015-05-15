@@ -1,0 +1,54 @@
+This README file is here to help you understand what is done with
+RESOURCES/EFFECTS in this project.
+It contains some ENVIRONMENT rules.
+
+*** About EFFECTS
+EFFECTS are about what happens to the Entity when it eats some
+of this resource, even though this resource might be used for construction... (Enhancement)
+
+Even if we code enum to store effects for each kind of resource,
+we need to have to have the eat method overidden for each kind of food.
+This information only helps us to speed up the decicion process.
+
+To each EFFECT we link a grade [-2, 2]:
+	- VERYBAD
+	- BAD
+	- NEUTRAL
+	- GOOD
+	- VERYGOOD
+
+-----------------------------------------------------
+-----------------------------------------------------
+-----------------------------------------------------
+
+*** ROCK
+Nobody needs ROCKS. For everybody, the EFFECT is: NEUTRAL.
+This is our test resource.
+
+*** WOOD
+TERMITES need WOOD as food. The EFFECT is: VERYGOOD.
+The others do not seek WOOD. The EFFECT is: NEUTRAL.
+
+*** LEAF
+TERMITES enjoy leaves. GOOD
+ANTS might take leaves. GOOD
+Some SPIDERS eat leaves. GOOD
+
+*** MEAT
+SPIDERS seek MEAT, very much. The EFFECT is: VERYGOOD.
+ANTS seek MEAT, sometimes (in fact, some species). The EFFECT is GOOD.
+TERMITES do not need MEAT. The EFFECT is NEUTRAL.
+
+*** SUGAR
+ANTS love suger: the EFFECT is VERYGOOD
+The others don't care. NEUTRAL
+
+*** FRUIT
+ANTS like fruits: the effect is GOOD
+the others don't care.
+
+*** POISON
+Generally, we assume there might be POISON. The EFFECT is VERYBAD (for all).
+
+*** GAS
+We also assume there might be gas, which EFFECT is BAD (for all).
