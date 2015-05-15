@@ -85,7 +85,7 @@ public abstract class ClassicBody extends AbstractBody {
 	 */
 	public boolean move(AbstractEnvironment newenv, MyPoint2D newpos) {
 		
-		if(newenv != null){
+		/* if(newenv != null){
 			if (newpos.getX() >= 0 && newpos.getX() < newenv.getWidth() && newpos.getY() >= 0 && newpos.getY() < newenv.getHeight()){
 				newenv.getCell(newpos.getX(), newpos.getY()).addObject(this);
 				myenv.getCell(mypos.getX(), mypos.getY()).removeObject(this);
@@ -93,8 +93,14 @@ public abstract class ClassicBody extends AbstractBody {
 				return true;
 			}
 		}
-		return false;
 		
+		return false; */
+		
+		
+		// I prefer this method to avoid unecessary tests...
+		newenv.getCell(newpos.getX(), newpos.getY()).addObject(this);
+		myenv.getCell(mypos.getX(), mypos.getY()).removeObject(this);
+		return true;
 	}
 	
 	public int getAge(float TIME) {
