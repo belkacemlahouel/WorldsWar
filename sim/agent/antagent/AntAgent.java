@@ -1,7 +1,7 @@
 package sim.agent.antagent;
 
 import env2.body.antbody.AntBody;
-import sim.AbstractAgent;
+import sim.agent.AbstractAgent;
 
 public class AntAgent extends AbstractAgent {
 

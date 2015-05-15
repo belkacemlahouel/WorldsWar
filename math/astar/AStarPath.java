@@ -3,7 +3,7 @@ package math.astar;
 import java.util.ArrayList;
 import java.util.List;
 
-import sim.AbstractAgent;
+import sim.agent.AbstractAgent;
 import math.MyMath;
 import math.Path;
 import math.api.Evaluator;

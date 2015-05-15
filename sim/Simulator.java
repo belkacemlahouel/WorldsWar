@@ -1,5 +1,6 @@
 package sim;
 
+import sim.agent.AbstractAgent;
 import env2.env.Environment;
 import env2.env.Ground;
 import gui.GUI;

@@ -1,4 +1,4 @@
-package sim;
+package sim.agent;
 
 import env2.api.AbstractBody;
 import env2.type.Time;
