@@ -1,5 +1,7 @@
 package env2.env;
 
+import java.util.NoSuchElementException;
+
 import env2.api.AbstractEnvironment;
 
 /**
@@ -22,5 +24,12 @@ public class Environment {
 	
 	public AbstractEnvironment get(int i) {
 		return grounds[i];
+	}
+	
+	public void set(int i, AbstractEnvironment env) {
+		if (i >= grounds.length)
+			throw new NoSuchElementException("Index specified is beyond array size.");
+		
+		grounds[i] = env;
 	}
 }

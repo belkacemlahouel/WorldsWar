@@ -1,6 +1,7 @@
 package sim;
 
 import env2.api.AbstractBody;
+import env2.type.Time;
 
 public abstract class AbstractAgent {
 	
@@ -29,9 +30,15 @@ public abstract class AbstractAgent {
 	
 	/**
 	 * Decision process inside
+	 * There is this default version, which can be overidden if need be
 	 * @return boolean: should the agent kill himself?
 	 */
-	public abstract boolean killMe();
+	public boolean killMe() {
+		if (body.getCurrentLife() < 0 || body.getAge(Time.TIME) > body.getMaxAge())
+			return true;
+		
+		return false;
+	}
 	
 	/**
 	 * So agents can know if they belong in the same team or not

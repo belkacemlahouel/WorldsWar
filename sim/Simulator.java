@@ -1,6 +1,7 @@
 package sim;
 
-import env2.api.AbstractEnvironment;
+import env2.env.Environment;
+import env2.env.Ground;
 import gui.GUI;
 
 public class Simulator {
@@ -27,15 +28,31 @@ public class Simulator {
 	/***/
 	
 	private AbstractAgent[] agents;
-	private AbstractEnvironment env;
+	private Environment envs;
 	private GUI gui;
 	
+	/*
+	 * TODO
+	 * Insertion of a call to the parser in this constructor...
+	 */
+	
 	public Simulator(int nbGhosts, int width, int height) {
-		// env = new Environment(width, height); // TODO Find a solution to instantiate the Environment
 		
-		// TODO Fill this main up
+		/*
+		 * Environments instanciation
+		 */
+		envs = new Environment(1);
+		envs.set(0, new Ground(10, 10));
 		
-		gui = new GUI(env);
+		/*
+		 * Agents and their bodies
+		 */
+		
+		/*
+		 * Resources put in the environment
+		 */
+		
+		gui = new GUI(envs.get(0));
 		gui.setVisible(true);
 	}
 	
