@@ -26,7 +26,7 @@ public class Simulator {
 
 	/***/
 	
-	private Agent[] agents;
+	private AbstractAgent[] agents;
 	private AbstractEnvironment env;
 	private GUI gui;
 	
@@ -40,7 +40,7 @@ public class Simulator {
 	}
 	
 	public void doStep() {
-		for (Agent agt : agents) {
+		for (AbstractAgent agt : agents) {
 			agt.live();
 		}
 		gui.repaint();
