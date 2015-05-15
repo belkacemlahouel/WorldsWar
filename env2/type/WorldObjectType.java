@@ -25,7 +25,10 @@ public enum WorldObjectType {
 	POISON,
 	GAS,
 	// PARTICULAR TYPES (INFORMATION THROUGH PHEROMONES...)
-	PHEROMONE;
+	PHEROMONE,
+		DANGERPHEROMONE,
+		FIGHTPHEROMONE,
+		FOODPHEROMONE;
 	
 	/*
 	 * These methods are useful to test if
@@ -34,6 +37,11 @@ public enum WorldObjectType {
 	 * 
 	 * Can be food returns if this resource can be eaten by a given specie.
 	 */
+	
+	public static boolean isPheromone(WorldObjectType type) {
+		return (type.ordinal() >= PHEROMONE.ordinal() &&
+				type.ordinal() <= FOODPHEROMONE.ordinal());
+	}
 	
 	public static boolean canBeFood(WorldObjectType type) {
 		return (type.ordinal() >= ROCK.ordinal() &&
