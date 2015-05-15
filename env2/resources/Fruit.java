@@ -3,7 +3,7 @@ package env2.resources;
 import env2.api.AbstractResource;
 import env2.type.WorldObjectType;
 
-public class Fruit extends AbstractResource {
+public final class Fruit extends AbstractResource {
 
 	@Override
 	public int getQuantity() {
