@@ -3,8 +3,7 @@ package math;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import env.Direction;
+import env2.type.Direction;
 
 public class MyMath {
 
