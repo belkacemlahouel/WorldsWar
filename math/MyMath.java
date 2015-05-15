@@ -29,16 +29,16 @@ public class MyMath {
 		}
 	}
 	
-	public static int clamp(int x, int min, int max){
-		if(x >= max)	return max;
-		if(x <= min)	return min;
+	public static int clamp(int x, int min, int max) {
+		if(x >= max)		return max;
+		else if(x <= min)	return min;
 		
 		return x;
 	}
 	
-	public static double clamp(double x, double min, double max){
-		if(x >= max)	return max;
-		if(x <= min)	return min;
+	public static double clamp(double x, double min, double max) {
+		if(x >= max)		return max;
+		else if(x <= min)	return min;
 		
 		return x;
 	}
@@ -147,6 +147,14 @@ public class MyMath {
 				return new Intersection(TX, X, Y);
 			}
 		}
+	}
+	
+	/**
+	 * allows us to check if (posX, posY) is in [0, MAX_X[ x [0, MAX_Y[
+	 */
+	public static boolean isIn(int posX, int posY, int MAX_X, int MAX_Y) {
+		return posX >= 0 && posX < MAX_X &&
+				posY >= 0 && posY < MAX_Y;
 	}
 	
 	/**

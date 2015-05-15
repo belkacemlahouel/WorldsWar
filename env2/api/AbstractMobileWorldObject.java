@@ -4,5 +4,5 @@ import math.MyPoint2D;
 
 public abstract class AbstractMobileWorldObject extends AbstractWorldObject {
 
-	public abstract void move(AbstractEnvironment e, MyPoint2D newpos);
+	public abstract boolean move(AbstractEnvironment e, MyPoint2D newpos);
 }

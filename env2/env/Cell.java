@@ -18,8 +18,8 @@ public class Cell extends AbstractCell {
 		return objects;
 	}
 
-	public void removeObject(AbstractWorldObject o) {
-		objects.remove(o);
+	public boolean removeObject(AbstractWorldObject o) {
+		return objects.remove(o);
 	}
 
 	public void addObject(AbstractWorldObject o) {
