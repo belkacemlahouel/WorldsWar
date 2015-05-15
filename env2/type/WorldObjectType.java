@@ -23,7 +23,9 @@ public enum WorldObjectType {
 	SUGAR,
 	FRUIT,
 	POISON,
-	GAS;
+	GAS,
+	// PARTICULAR TYPES (INFORMATION THROUGH PHEROMONES...)
+	PHEROMONE;
 	
 	/*
 	 * These methods are useful to test if

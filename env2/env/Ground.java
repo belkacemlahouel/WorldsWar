@@ -34,5 +34,7 @@ public class Ground extends AbstractEnvironment {
 		return grid[x][y];
 	}
 	
+	
+	
 	/*** additionnal methods ***/
 }
