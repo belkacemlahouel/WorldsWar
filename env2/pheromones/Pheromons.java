@@ -1,4 +1,4 @@
-package env2.pheromons;
+package env2.pheromones;
 
 class Pheromons {
 	private PheromonsType type;
