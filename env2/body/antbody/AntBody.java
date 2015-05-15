@@ -1,9 +1,10 @@
-package env2.body;
+package env2.body.antbody;
 
 import math.MyPoint2D;
 import env2.api.AbstractEnvironment;
 import env2.api.AbstractResource;
 import env2.api.AbstractWorldObject;
+import env2.body.ClassicBody;
 import env2.type.Direction;
 import env2.type.EffectType;
 import env2.type.WorldObjectType;
