@@ -1,4 +1,4 @@
-package sim.agent;
+package sim.agent.antagent;
 
 import env2.body.antbody.AntBody;
 import sim.AbstractAgent;
