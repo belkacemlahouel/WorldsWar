@@ -106,7 +106,7 @@ public final class TestBody extends ClassicBody
 	}
 
 	public WorldObjectType getType() {
-		return WorldObjectType.TESTBODY;
+		return WorldObjectType.ANTBODY; // TODO This should not be here
 	}
 
 	public int getOccupiedCapacity() {
