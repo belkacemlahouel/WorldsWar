@@ -1,11 +1,11 @@
-package sim.agent.antagent;
+package sim.agent.termiteagent;
 
-import env2.body.antbody.AntBody;
+import env2.body.termitebody.TermiteBody;
 import sim.AbstractAgent;
 
-public class AntAgent extends AbstractAgent {
+public class TermiteAgent extends AbstractAgent {
 
-	public AntAgent(AntBody b, int ID) {
+	public TermiteAgent(TermiteBody b, int ID) {
 		super(b, ID);
 	}
 
