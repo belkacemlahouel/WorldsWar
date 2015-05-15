@@ -11,6 +11,8 @@ public class AntAgent extends AbstractAgent {
 
 	/**
 	 * Here is the whole decision process to implement
+	 * Default behavior for all agents controlling this type of body
+	 * But this should be overidden when possible
 	 */
 	public void live() {
 		// TODO
