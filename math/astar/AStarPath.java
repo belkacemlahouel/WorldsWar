@@ -3,7 +3,7 @@ package math.astar;
 import java.util.ArrayList;
 import java.util.List;
 
-import sim.Agent;
+import sim.AbstractAgent;
 import math.MyMath;
 import math.Path;
 import math.api.Evaluator;
@@ -14,9 +14,9 @@ public class AStarPath implements AStarHeuristic, Evaluator {
 	private Position start, end;
 	private Path ans;
 	private List<AStarNode> open, closed;
-	private Agent agt;
+	private AbstractAgent agt;
 	
-	public AStarPath(Agent agt, Position start, Position end) {
+	public AStarPath(AbstractAgent agt, Position start, Position end) {
 		this.start = start;
 		this.end = end;
 		
