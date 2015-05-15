@@ -119,4 +119,22 @@ public class AntBody extends ClassicBody {
 		return null;
 	}
 
+	@Override
+	public boolean isBaby() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public int bodySize() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int maxBodySize() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
 }

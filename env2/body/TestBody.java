@@ -11,8 +11,7 @@ import env2.type.Direction;
 import env2.type.EffectType;
 import env2.type.WorldObjectType;
 
-public final class TestBody extends ClassicBody 
-{	
+public final class TestBody extends ClassicBody {	
 	private List<AbstractResource> transported;
 	private int occupiedCapacity;
 
@@ -116,5 +115,23 @@ public final class TestBody extends ClassicBody
 	@Override
 	public int getMaxAge() {
 		return 300;
+	}
+
+	@Override
+	public boolean isBaby() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public int bodySize() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int maxBodySize() {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 }
