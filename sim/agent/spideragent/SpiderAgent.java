@@ -1,7 +1,7 @@
 package sim.agent.spideragent;
 
 import env2.api.AbstractBody;
-import sim.AbstractAgent;
+import sim.agent.AbstractAgent;
 
 public class SpiderAgent extends AbstractAgent {
 

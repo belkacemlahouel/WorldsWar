@@ -3,7 +3,7 @@ package env2.resources;
 import env2.api.AbstractResource;
 import env2.type.WorldObjectType;
 
-public class Meat extends AbstractResource {
+public final class Meat extends AbstractResource {
 
 	@Override
 	public int getQuantity() {

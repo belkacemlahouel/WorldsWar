@@ -1,7 +1,7 @@
 package sim.agent.termiteagent;
 
 import env2.body.termitebody.TermiteBody;
-import sim.AbstractAgent;
+import sim.agent.AbstractAgent;
 
 public class TermiteAgent extends AbstractAgent {
 
