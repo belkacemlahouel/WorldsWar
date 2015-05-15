@@ -12,8 +12,8 @@ import env2.api.AbstractBody;
 
 public class AttackCureAction extends AbstractAction {
 	
-	public AbstractBody attacked;
-	public int dmg;
+	protected AbstractBody attacked;
+	protected int dmg;
 	
 	public AttackCureAction(AbstractBody attacked, int dmg) {
 		this.attacked = attacked;
