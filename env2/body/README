@@ -1,0 +1,33 @@
+THIS README FILE EXPLAINS BODY CARACTERISTICS, AND THE CORRESPONDING METHODS.
+SOME ENVIRONMENT LAWS ARE DETAILLED HERE.
+
+------------------------------------------------------------------------------
+
+******************************* CHARACTERISTICS ******************************
+
+private final int TRANSPORT_CAPA;			// Max weight that could be carried
+private final int EATING_CAPA;				// Max weight that could be eaten at once
+private final int MOVING_REACH;				// Max number of cases to be crossed at once
+private final int VISION_REACH;				// Max vision distance (nb of cases) linked with Frustrum def
+
+private final int STRENGTH;					// Strength, in a given unit
+private final int MAX_AGE;					// Max age of the given entity, in seconds
+private final int MAX_LIFE;					// Max life for a given entity, in vitality points
+private final int LIFE_LOSS;				// Regular life loss, at each turn
+private final int CREATION_TIME;			// Time of creation, in seconds
+private final int ADULT_AGE;				// Time starting from which the body is no longer a baby, in seconds
+private final int TRIBE_ID;					// Tribe ID to help our guys to recognize pheromones and friends
+private final int MAX_BODY_SIZE;			// Maximum body size, in % (between 0 and 100)
+private final FrustrumType FRUSTRUM_TYPE; 	// Type of frustrum for this entity.
+
+private final HashMap<WorldObjectType, EffectType> EFFECTS;
+											// Effects for each kind of Food
+
+private Collection<AbstractResource> mycargo;
+											// Current transported resources for this body
+private AbstractFrustrum myfrustrum;		// Current frustrum
+private AbstractEnvironment myenv;			// Current environment
+private Direction mydir;					// Current direction of this body
+private MyPoint2D mypos;					// Current position of this body
+private int mylife;							// Current remaining life of this body
+private int mysize;							// Current size of this body (%)
