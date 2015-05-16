@@ -11,8 +11,7 @@ import env2.type.WorldObjectType;
 
 public class AntBody extends ClassicBody {
 
-	public AntBody(AbstractEnvironment e, Direction dir, MyPoint2D pos,
-			float TIME) {
+	public AntBody(AbstractEnvironment e, Direction dir, MyPoint2D pos, float TIME) {
 		super(e, dir, pos, TIME);
 		// TODO Auto-generated constructor stub
 	}

@@ -80,26 +80,17 @@ public abstract class ClassicBody extends AbstractBody {
 	 * (influences solving/distance checking etc)
 	 * hence, you should not forget to erase the current frustrum
 	 * 
+	 * if (newenv != null &&
+	 * 		newpos.getX() >= 0 && newpos.getX() < newenv.getWidth() &&
+	 * 		newpos.getY() >= 0 && newpos.getY() < newenv.getHeight())
+	 * 
 	 * (non-Javadoc)
 	 * @see env2.api.AbstractMobileWorldObject#move(env2.api.AbstractCell)
 	 */
 	public boolean move(AbstractEnvironment newenv, MyPoint2D newpos) {
-		
-		/* if(newenv != null){
-			if (newpos.getX() >= 0 && newpos.getX() < newenv.getWidth() && newpos.getY() >= 0 && newpos.getY() < newenv.getHeight()){
-				newenv.getCell(newpos.getX(), newpos.getY()).addObject(this);
-				myenv.getCell(mypos.getX(), mypos.getY()).removeObject(this);
-				this.mypos = newpos;
-				return true;
-			}
-		}
-		
-		return false; */
-		
-		
-		// I prefer this method to avoid unecessary tests...
 		newenv.getCell(newpos.getX(), newpos.getY()).addObject(this);
 		myenv.getCell(mypos.getX(), mypos.getY()).removeObject(this);
+		mypos = newpos;
 		return true;
 	}
 	
