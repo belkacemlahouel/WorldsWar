@@ -5,11 +5,24 @@ SOME ENVIRONMENT LAWS ARE DETAILLED HERE.
 
 ******************************* CHARACTERISTICS ******************************
 
+THESE VARIABLES ARE STORED IN THE BODY. FINAL ATTRIBUTES NEVER CHANGE. WE
+SPECIFY THEM WHEN CALLING CONSTRUCTOR. RANDOM VALUES ARE STORED IN
+ABSTRACTBODY TO SIMPLIFY THINGS. RANDOM VALUES INTRODUCE OFFSETS. NOT ALL
+ATTRIBUTES NEED THIS KIND OF OFFSET. AS AN ENHANCEMENT, WE MAY CHANGE SOME OF
+THESE VALUES IN INHERITING CLASSES.
+
+THSE RANDOM VALUES (OFFSETS) ARE CALLED ONLY AT CONSTRUCTION. IT IS NOT FAIR,
+AS ONE HIT MIGHT BE SLIGHTLY MORE EFFICIENT AS THE NEXT ONE. TO SOLVE THIS,
+WE SHOULD ADD RANDOM VALUES IN THE INFLUENCE SOLVER. SO THAT AT EACH STEP,
+ANOTHER OFFSET IS APPLIED, MAKING THE SMILUATION MORE REALISTIC.
+
+------------------------------------------------------------------------------
+
 private final int TRANSPORT_CAPA;			// Max weight that could be carried
 private final int EATING_CAPA;				// Max weight that could be eaten at once
 private final int MOVING_REACH;				// Max number of cases to be crossed at once
 private final int VISION_REACH;				// Max vision distance (nb of cases) linked with Frustrum def
-
+private final int DEFENSE;					// Defense, in a given unit: resistance to applied damage
 private final int STRENGTH;					// Strength, in a given unit
 private final int MAX_AGE;					// Max age of the given entity, in seconds
 private final int MAX_LIFE;					// Max life for a given entity, in vitality points
@@ -31,3 +44,47 @@ private Direction mydir;					// Current direction of this body
 private MyPoint2D mypos;					// Current position of this body
 private int mylife;							// Current remaining life of this body
 private int mysize;							// Current size of this body (%)
+
+************************************* USE ************************************
+
+NORMALLY, WE SHOULD NOT HAVE TO CALL ALL POSSIBLE GETTERS, BECAUSE THESE
+STORED INFORMATION ARE ONLY HERE FOR THE BODY AND ITS CORRESPONDING AGENT
+(INNER ACCESS ONLY).
+
+BUT WE PROVIDE ALL INTERESTING GETTERS. SO YOU CAN USE THEM AS IT PLEASES YOU.
+
+WHEN WE CALL THE INFLUENCE SOLVER, IT WILL ASK FOR SOME OF THESE ATTRIBUTES,
+SUCH AS DEFENSE, TO COMPUTE THE ACTUAL LIFE VARIATION TO APPLY. THAT'S WHY
+THEY ARE FINALLY USEFUL.
+
+THE BODY CAN EAT SOMETHING, IF IT IS ON THE SAME POSITION; MEANING THIS WORKS
+IF THE BODY CARRIES IT, OR IF IT IS ON THE FLOOR. WE HAVE TO GIVE THE METHOD
+THE CONTAINING DATA-STRUCTURE SO THAT WE REMOVE SOME OF THIS RESOURCE.
+
+------------------------------------------------------------------------------
+
+BUILD NEW FRUSTRUM
+IS FRIEND
+APPLY LIFE VARIATION: DOESN'T CARE ABOUT LIFE DEFENSE
+EAT: FOR EACH KIND OF RESOURCE
+PRODUCE PHEROMONE: FOR EACH KIND OF PHEROMONE
+IS BABY
+
+GET CURRENT FRUSTRUM
+GET ENVIRONMENT
+GET POSITION
+GET DIRECTION
+GET VISION REACH
+GET MOVING REACH
+GET EATING CAPA
+GET TRANSPORT CAPA
+GET STRENGTH
+GET DEFENSE
+GET MAX LIFE
+GET MAX AGE
+GET SIZE
+
+************************************* TODO ***********************************
+
+ABSTRACT BODY SHOULD IMPLEMENT MORPHABLE.
+ENHANCEMENT: CAPACITY = MIN{VOLUME, WEIGHT, NB_ELEM} WHEN CARRYING SOMETHING
