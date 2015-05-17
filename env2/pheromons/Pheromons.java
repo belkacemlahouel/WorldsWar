@@ -95,7 +95,7 @@ class Pheromons {
 				newPos.add(-1,0);
 				surface.put(newPos,1);
 				
-				surface.put(position,1);
+				surface.put(position,2);
 				
 				newPos = position;
 				newPos.add(1,0);
