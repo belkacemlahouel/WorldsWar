@@ -7,10 +7,8 @@ import env2.type.Direction;
 
 public final class AntMotherBody extends AntBody implements InterfaceMother {
 
-	public AntMotherBody(AbstractEnvironment e, Direction dir, MyPoint2D pos,
-			float TIME) {
-		super(e, dir, pos, TIME);
-		// TODO Auto-generated constructor stub
+	public AntMotherBody(int TIME, int tribe_id, AbstractEnvironment env, Direction dir, MyPoint2D pos) {
+		super(TIME, tribe_id, env, dir, pos);
 	}
 
 	@Override
@@ -18,5 +16,4 @@ public final class AntMotherBody extends AntBody implements InterfaceMother {
 		// TODO Auto-generated method stub
 		
 	}
-
 }

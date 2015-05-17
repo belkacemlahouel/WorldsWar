@@ -3,6 +3,8 @@ package math;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
+
 import env2.type.Direction;
 
 public class MyMath {
@@ -155,6 +157,18 @@ public class MyMath {
 	public static boolean isIn(int posX, int posY, int MAX_X, int MAX_Y) {
 		return posX >= 0 && posX < MAX_X &&
 				posY >= 0 && posY < MAX_Y;
+	}
+	
+	/**
+	 * random number generation using Knuth implementation in Java libraries
+	 * uniform distribution
+	 * since the method returns integers, there might be probability glitches...
+	 * @param min bound (inclusive)
+	 * @param max bound (exclusive)
+	 * @return random number in [min, max[
+	 */
+	public static int random(int min, int max) {
+		return new Random().nextInt(max-min) + min;
 	}
 	
 	/**

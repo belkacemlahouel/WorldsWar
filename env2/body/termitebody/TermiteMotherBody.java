@@ -7,9 +7,9 @@ import env2.type.Direction;
 
 public final class TermiteMotherBody extends TermiteBody implements InterfaceMother {
 
-	public TermiteMotherBody(AbstractEnvironment e, Direction dir,
-			MyPoint2D pos, float TIME) {
-		super(e, dir, pos, TIME);
+	public TermiteMotherBody(int TIME, int tribe_id, AbstractEnvironment env,
+			Direction dir, MyPoint2D pos) {
+		super(TIME, tribe_id, env, dir, pos);
 		// TODO Auto-generated constructor stub
 	}
 
@@ -18,5 +18,5 @@ public final class TermiteMotherBody extends TermiteBody implements InterfaceMot
 		// TODO Auto-generated method stub
 		
 	}
-
+	
 }

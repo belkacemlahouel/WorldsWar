@@ -8,9 +8,9 @@ import env2.type.Direction;
 
 public class TermiteUndertakerBody extends TermiteBody implements InterfaceUndertaker {
 
-	public TermiteUndertakerBody(AbstractEnvironment e, Direction dir,
-			MyPoint2D pos, float TIME) {
-		super(e, dir, pos, TIME);
+	public TermiteUndertakerBody(int TIME, int tribe_id,
+			AbstractEnvironment env, Direction dir, MyPoint2D pos) {
+		super(TIME, tribe_id, env, dir, pos);
 		// TODO Auto-generated constructor stub
 	}
 
@@ -19,5 +19,4 @@ public class TermiteUndertakerBody extends TermiteBody implements InterfaceUnder
 		// TODO Auto-generated method stub
 		
 	}
-
 }
