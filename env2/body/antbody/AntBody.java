@@ -5,14 +5,7 @@ import java.util.HashMap;
 import math.MyPoint2D;
 import env2.api.AbstractBody;
 import env2.api.AbstractEnvironment;
-import env2.resources.Fruit;
-import env2.resources.Gas;
-import env2.resources.Leaf;
-import env2.resources.Meat;
-import env2.resources.Poison;
-import env2.resources.Rock;
-import env2.resources.Sugar;
-import env2.resources.Wood;
+import env2.api.AbstractResource;
 import env2.type.Direction;
 import env2.type.EffectType;
 import env2.type.FrustrumType;
@@ -66,38 +59,38 @@ public class AntBody extends AbstractBody {
 	 * @see env2.api.AbstractBody#applyEffectsForEating(env2.api.AbstractResource, int)
 	 */
 	
-	public void applyEffectsForEating(Rock o, int qty) {
+	public void applyEffectsForEatingRock(AbstractResource o, int qty) {
 		// Nothing to do, the effect is neutral
 	}
 	
-	public void applyEffectsForEating(Wood o, int qty) {
+	public void applyEffectsForEatingWood(AbstractResource o, int qty) {
 		// Nothing to do, the effect is neutral
 	}
 	
-	public void applyEffectsForEating(Leaf o, int qty) {
+	public void applyEffectsForEatingLeaf(AbstractResource o, int qty) {
 		applyLifeVariation(qty);
 	}
 	
-	public void applyEffectsForEating(Meat o, int qty) {
+	public void applyEffectsForEatingMeat(AbstractResource o, int qty) {
 		applyStrengthVariation(qty);
 	}
 	
-	public void applyEffectsForEating(Sugar o, int qty) {
+	public void applyEffectsForEatingSugar(AbstractResource o, int qty) {
 		applyLifeVariation(qty * 2);
 		applyStrengthVariation(qty * 4);
 	}
 	
-	public void applyEffectsForEating(Fruit o, int qty) {
+	public void applyEffectsForEatingFruit(AbstractResource o, int qty) {
 		applyLifeVariation(qty * 4);
 		applyStrengthVariation(qty * 2);
 	}
 	
-	public void applyEffectsForEating(Poison o, int qty) {
+	public void applyEffectsForEatingPoison(AbstractResource o, int qty) {
 		applyLifeVariation(qty * -2);
 		applyStrengthVariation(qty * -2);
 	}
 	
-	public void applyEffectsForEating(Gas o, int qty) {
+	public void applyEffectsForEatingGas(AbstractResource o, int qty) {
 		applyLifeVariation(qty * -1);
 	}
 	

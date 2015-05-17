@@ -8,14 +8,6 @@ import math.MyMath;
 import math.MyPoint2D;
 import env2.frustrum.FrustrumCircleN;
 import env2.frustrum.FrustrumCrossN;
-import env2.resources.Fruit;
-import env2.resources.Gas;
-import env2.resources.Leaf;
-import env2.resources.Meat;
-import env2.resources.Poison;
-import env2.resources.Rock;
-import env2.resources.Sugar;
-import env2.resources.Wood;
 import env2.type.Direction;
 import env2.type.EffectType;
 import env2.type.FrustrumType;
@@ -163,14 +155,53 @@ public abstract class AbstractBody extends AbstractMobileWorldObject {
 	 * INSIDE THIS METHOD, WE ONLY CHECK AND APPLY THE EFFECTS
 	 * AFTER EATING THIS MUCH OF THIS RESOURCE
 	 */
-	public abstract void applyEffectsForEating(Rock o, int qty);
-	public abstract void applyEffectsForEating(Wood o, int qty);
-	public abstract void applyEffectsForEating(Leaf o, int qty);
-	public abstract void applyEffectsForEating(Meat o, int qty);
-	public abstract void applyEffectsForEating(Sugar o, int qty);
-	public abstract void applyEffectsForEating(Fruit o, int qty);
-	public abstract void applyEffectsForEating(Poison o, int qty);
-	public abstract void applyEffectsForEating(Gas o, int qty);
+	public void applyEffectsForEating(AbstractResource o, int qty) {
+		switch(o.getType()) {
+		case ROCK:
+			applyEffectsForEatingRock(o, qty);
+			break;
+			
+		case WOOD:
+			applyEffectsForEatingWood(o, qty);
+			break;
+			
+		case LEAF:
+			applyEffectsForEatingLeaf(o, qty);
+			break;
+			
+		case MEAT:
+			applyEffectsForEatingMeat(o, qty);
+			break;
+			
+		case SUGAR:
+			applyEffectsForEatingSugar(o, qty);
+			break;
+			
+		case FRUIT:
+			applyEffectsForEatingFruit(o, qty);
+			break;
+			
+		case POISON:
+			applyEffectsForEatingPoison(o, qty);
+			break;
+			
+		case GAS:
+			applyEffectsForEatingGas(o, qty);
+			break;
+			
+		default:
+			return;
+		}
+	}
+	
+	public abstract void applyEffectsForEatingRock(AbstractResource o, int qty);
+	public abstract void applyEffectsForEatingWood(AbstractResource o, int qty);
+	public abstract void applyEffectsForEatingLeaf(AbstractResource o, int qty);
+	public abstract void applyEffectsForEatingMeat(AbstractResource o, int qty);
+	public abstract void applyEffectsForEatingSugar(AbstractResource o, int qty);
+	public abstract void applyEffectsForEatingFruit(AbstractResource o, int qty);
+	public abstract void applyEffectsForEatingPoison(AbstractResource o, int qty);
+	public abstract void applyEffectsForEatingGas(AbstractResource o, int qty);
 	
 	/*
 	 * These methods create a corresponding pheromone and place it on the cell
