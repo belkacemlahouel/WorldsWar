@@ -11,7 +11,7 @@ import env2.type.EffectType;
 import env2.type.FrustrumType;
 import env2.type.WorldObjectType;
 
-public class AntBody extends AbstractBody {
+public abstract class AntBody extends AbstractBody {
 	
 	private final static HashMap<WorldObjectType, EffectType> MYEFFECTS;
 	
