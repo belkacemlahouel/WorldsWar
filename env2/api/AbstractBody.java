@@ -1,5 +1,6 @@
 package env2.api;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 
@@ -88,7 +89,10 @@ public abstract class AbstractBody extends AbstractMobileWorldObject {
 							int tribe_id,
 							int max_body_size,
 							FrustrumType frustrum_type,
-							HashMap<WorldObjectType, EffectType> effects) {
+							HashMap<WorldObjectType, EffectType> effects,
+							AbstractEnvironment env,
+							Direction dir,
+							MyPoint2D pos) {
 		
 		TRANSPORT_CAPA = transport_capa + MyMath.random(-DELTA_TRANSPORT_CAPA/100 * transport_capa, DELTA_TRANSPORT_CAPA/100 * transport_capa);
 		EATING_CAPA = eating_capa + MyMath.random(-DELTA_EATING_CAPA/100 * eating_capa, DELTA_EATING_CAPA/100 * eating_capa);
@@ -105,6 +109,14 @@ public abstract class AbstractBody extends AbstractMobileWorldObject {
 		MAX_BODY_SIZE = max_body_size;
 		FRUSTRUM_TYPE = frustrum_type;
 		EFFECTS = effects;
+		
+		myenv = env;
+		mydir = dir;
+		mypos = pos;
+		
+		mylife = MAX_LIFE;
+		mycargo = new ArrayList<>();
+		myfrustrum = null;
 	}
 	
 	/*************************************************************************
@@ -179,6 +191,8 @@ public abstract class AbstractBody extends AbstractMobileWorldObject {
 	 *************************************************************************/
 	
 	public AbstractFrustrum getCurrentFrustrum() {
+		if (myfrustrum == null)
+			buildNewFrustrum();
 		return myfrustrum;
 	}
 	
