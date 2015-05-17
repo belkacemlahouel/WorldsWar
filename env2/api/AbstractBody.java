@@ -58,8 +58,6 @@ public abstract class AbstractBody extends AbstractMobileWorldObject {
 	private final int TRIBE_ID;					// Tribe ID to help our guys to recognize pheromones and friends
 	private final int MAX_BODY_SIZE;			// Maximum body size, in % (between 0 and 100)
 	private final FrustrumType FRUSTRUM_TYPE; 	// Type of frustrum for this entity.
-
-	private final HashMap<WorldObjectType, EffectType> EFFECTS;
 	
 	/*
 	 * For-use attributes.
@@ -89,7 +87,6 @@ public abstract class AbstractBody extends AbstractMobileWorldObject {
 							int tribe_id,
 							int max_body_size,
 							FrustrumType frustrum_type,
-							HashMap<WorldObjectType, EffectType> effects,
 							AbstractEnvironment env,
 							Direction dir,
 							MyPoint2D pos) {
@@ -108,7 +105,6 @@ public abstract class AbstractBody extends AbstractMobileWorldObject {
 		TRIBE_ID = tribe_id;
 		MAX_BODY_SIZE = max_body_size;
 		FRUSTRUM_TYPE = frustrum_type;
-		EFFECTS = effects;
 		
 		myenv = env;
 		mydir = dir;
@@ -212,8 +208,16 @@ public abstract class AbstractBody extends AbstractMobileWorldObject {
 		return mylife;
 	}
 	
+	/*
+	 * Must be redefined in each child...
+	 * Because each child should have its own list of Effects...
+	 */
+	protected abstract HashMap<WorldObjectType, EffectType> getEffects();
+	
 	public EffectType getEffect(AbstractWorldObject o) {
-		return EFFECTS.get(o.getType());
+		if (getEffects().containsKey(o.getType()))
+			return getEffects().get(o.getType());
+		return EffectType.NEUTRAL;
 	}
 	
 	public int getTransportCapacity() {
