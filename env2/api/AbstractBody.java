@@ -68,6 +68,7 @@ public abstract class AbstractBody extends AbstractMobileWorldObject {
 	private Direction mydir;
 	private MyPoint2D mypos;
 	private int mylife;
+	private int bonusstrength;
 	
 	/**
 	 * Constructor to be used by all inheriting classes.
@@ -111,6 +112,7 @@ public abstract class AbstractBody extends AbstractMobileWorldObject {
 		mypos = pos;
 		
 		mylife = MAX_LIFE;
+		bonusstrength = 0;
 		mycargo = new ArrayList<>();
 		myfrustrum = null;
 	}
@@ -138,6 +140,12 @@ public abstract class AbstractBody extends AbstractMobileWorldObject {
 		mylife += var;
 		if (mylife > MAX_LIFE)
 			mylife = var;
+	}
+	
+	public void applyStrengthVariation(int var) {
+		bonusstrength += var;
+		if (getStrength() < 0)
+			bonusstrength = -STRENGTH;
 	}
 	
 	/*
@@ -237,7 +245,7 @@ public abstract class AbstractBody extends AbstractMobileWorldObject {
 	}
 	
 	public int getStrength() {
-		return STRENGTH;
+		return STRENGTH + bonusstrength;
 	}
 	
 	public int getDefense() {
