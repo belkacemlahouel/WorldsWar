@@ -1,140 +1,141 @@
 package env2.body.termitebody;
 
+import java.util.HashMap;
+
 import math.MyPoint2D;
+import env2.api.AbstractBody;
 import env2.api.AbstractEnvironment;
 import env2.api.AbstractResource;
-import env2.api.AbstractWorldObject;
-import env2.body.ClassicBody;
 import env2.type.Direction;
 import env2.type.EffectType;
+import env2.type.FrustrumType;
 import env2.type.WorldObjectType;
 
-public class TermiteBody extends ClassicBody {
+public class TermiteBody extends AbstractBody {
 
-	public TermiteBody(AbstractEnvironment e, Direction dir, MyPoint2D pos,
-			float TIME) {
-		super(e, dir, pos, TIME);
-		// TODO Auto-generated constructor stub
+	private final static HashMap<WorldObjectType, EffectType> MYEFFECTS;
+	
+	static {
+		MYEFFECTS = new HashMap<WorldObjectType, EffectType>();
+		MYEFFECTS.put(WorldObjectType.ROCK, EffectType.NEUTRAL);
+		MYEFFECTS.put(WorldObjectType.WOOD, EffectType.VERYGOOD);
+		MYEFFECTS.put(WorldObjectType.LEAF, EffectType.GOOD);
+		MYEFFECTS.put(WorldObjectType.MEAT, EffectType.NEUTRAL);
+		MYEFFECTS.put(WorldObjectType.SUGAR, EffectType.NEUTRAL);
+		MYEFFECTS.put(WorldObjectType.FRUIT, EffectType.NEUTRAL);
+		MYEFFECTS.put(WorldObjectType.POISON, EffectType.VERYBAD);
+		MYEFFECTS.put(WorldObjectType.GAS, EffectType.BAD);
+	}
+	
+	public TermiteBody(int TIME,
+					int tribe_id,
+					AbstractEnvironment env,
+					Direction dir,
+					MyPoint2D pos) {
+		
+		super(5,						// transport_capa
+				1,						// eating_capa
+				2,						// moving_reach
+				5,						// vision_reach
+				2,						// strength
+				2,						// defense
+				10,						// adult_age
+				70,						// max_age
+				100, 					// max_life
+				2,						// life_loss
+				TIME,					// creation_time
+				tribe_id,				// tribe_id
+				80,						// max_body_size
+				FrustrumType.CIRCLE,	// frustrum_type
+				env,					// env
+				dir,					// dir
+				pos);					// pos
 	}
 
-	@Override
-	public int getCapacity() {
-		// TODO Auto-generated method stub
-		return 0;
+	/*
+	 * Rules regarding the digestion of each kind of food
+	 * 
+	 * (non-Javadoc)
+	 * @see env2.api.AbstractBody#applyEffectsForEating(env2.api.AbstractResource, int)
+	 */
+	
+	public void applyEffectsForEatingRock(AbstractResource o, int qty) {
+		// Nothing to do, the effect is neutral
 	}
+	
+	public void applyEffectsForEatingWood(AbstractResource o, int qty) {
+		applyLifeVariation(qty * 5);
+		applyStrengthVariation(qty);
+	}
+	
+	public void applyEffectsForEatingLeaf(AbstractResource o, int qty) {
+		applyLifeVariation(qty * 3);
+		applyStrengthVariation(qty);
+	}
+	
+	public void applyEffectsForEatingMeat(AbstractResource o, int qty) {
+		// Nothing to do, the effect is neutral
+	}
+	
+	public void applyEffectsForEatingSugar(AbstractResource o, int qty) {
+		// Nothing to do, the effect is neutral
+	}
+	
+	public void applyEffectsForEatingFruit(AbstractResource o, int qty) {
+		// Nothing to do, the effect is neutral
+	}
+	
+	public void applyEffectsForEatingPoison(AbstractResource o, int qty) {
+		applyLifeVariation(qty * -2);
+		applyStrengthVariation(qty * -2);
+	}
+	
+	public void applyEffectsForEatingGas(AbstractResource o, int qty) {
+		applyLifeVariation(qty * -1);
+	}
+	
+	/*
+	 * Pheromones management.
+	 * We put here the rules regarding pheromones creation, for each specie.
+	 * TODO Pheromones parameters when instanciating
+	 * 
+	 * (non-Javadoc)
+	 * @see env2.api.AbstractBody#producePheromoneDanger()
+	 */
 
 	@Override
-	public int getEatingSpeed() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public int getReach() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	protected int getStdLifeLoss(float CURRENT_TIME) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	protected int getStdMaxLife() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	protected int getStdSpeed() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	protected int getStdStrength() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	protected int getRndLifeLoss() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	protected int getRndMaxLife() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	protected int getRndSpeed() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	protected int getRndStrength() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public void eat(AbstractResource o, int qty) {
+	public void producePheromoneDanger() {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	protected EffectType getEffect(AbstractWorldObject o) {
+	public void producePheromoneAttack() {
 		// TODO Auto-generated method stub
-		return null;
+		
 	}
 
 	@Override
-	public int getMaxAge() {
+	public void producePheromoneFood() {
 		// TODO Auto-generated method stub
-		return 0;
+		
 	}
-
-	@Override
-	public int getOccupiedCapacity() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public int getTribeID() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
+	
+	/*
+	 * Classic getType method.
+	 * And getEffects since we cannot store them easily in AbstractBody.
+	 * 
+	 * (non-Javadoc)
+	 * @see env2.api.AbstractWorldObject#getType()
+	 */
 
 	@Override
 	public WorldObjectType getType() {
-		// TODO Auto-generated method stub
-		return null;
+		return WorldObjectType.TERMITEBODY;
 	}
 
 	@Override
-	public boolean isBaby() {
-		// TODO Auto-generated method stub
-		return false;
+	protected HashMap<WorldObjectType, EffectType> getEffects() {
+		return MYEFFECTS;
 	}
-
-	@Override
-	public int bodySize() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public int maxBodySize() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
 }
