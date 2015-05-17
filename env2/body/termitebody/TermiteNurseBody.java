@@ -8,9 +8,9 @@ import env2.type.Direction;
 
 public final class TermiteNurseBody extends TermiteBody implements InterfaceNurse {
 
-	public TermiteNurseBody(AbstractEnvironment e, Direction dir,
-			MyPoint2D pos, float TIME) {
-		super(e, dir, pos, TIME);
+	public TermiteNurseBody(int TIME, int tribe_id, AbstractEnvironment env,
+			Direction dir, MyPoint2D pos) {
+		super(TIME, tribe_id, env, dir, pos);
 		// TODO Auto-generated constructor stub
 	}
 
@@ -18,6 +18,24 @@ public final class TermiteNurseBody extends TermiteBody implements InterfaceNurs
 	public void cure(AbstractBody o) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public int getStdCure() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int getRndCure() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int getTotCure() {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 }

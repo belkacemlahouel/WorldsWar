@@ -8,9 +8,9 @@ import env2.type.Direction;
 
 public final class TermiteSoldierBody extends TermiteBody implements InterfaceSoldier {
 
-	public TermiteSoldierBody(AbstractEnvironment e, Direction dir,
-			MyPoint2D pos, float TIME) {
-		super(e, dir, pos, TIME);
+	public TermiteSoldierBody(int TIME, int tribe_id, AbstractEnvironment env,
+			Direction dir, MyPoint2D pos) {
+		super(TIME, tribe_id, env, dir, pos);
 		// TODO Auto-generated constructor stub
 	}
 
