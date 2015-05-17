@@ -21,7 +21,7 @@ public class EatAction {
 
 	public void doAction() {
 		AbstractResource newresource = resource.pick(qty);
-		eater.eat(newresource, qty);
+		eater.applyEffectsForEating(newresource, qty);
 		if (resource.getQuantity() <= 0)
 			container.remove(resource);
 	}
