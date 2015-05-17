@@ -3,6 +3,7 @@ package env2.api;
 import java.util.Collection;
 import java.util.HashMap;
 
+import math.MyMath;
 import math.MyPoint2D;
 import env2.frustrum.FrustrumCircleN;
 import env2.frustrum.FrustrumCrossN;
@@ -27,11 +28,11 @@ public abstract class AbstractBody extends AbstractMobileWorldObject {
 	private static final int DELTA_TRANSPORT_CAPA = 10; // %
 	private static final int DELTA_EATING_CAPA = 10;	// %
 	private static final int DELTA_STRENGTH = 15;		// %
+	private static final int DELTA_DEFENSE = 15;		// %
 	private static final int DELTA_MAX_AGE = 20;		// %
+	private static final int DELTA_ADULT_AGE = 25;		// %
 	private static final int DELTA_MAX_LIFE = 10;		// %
 	private static final int DELTA_LIFE_LOSS = 5;		// %
-	private static final int DELTA_ADULT_AGE = 25;		// %
-	private static final int DELTA_DEFENSE = 15;		// %
 	
 	/*
 	 * Final attrbiutes for all bodies: characteristics.
@@ -49,10 +50,10 @@ public abstract class AbstractBody extends AbstractMobileWorldObject {
 	private final int STRENGTH;					// Strength, in a given unit
 	private final int DEFENSE;					// Defense, in a given unit: resistance to applied damage
 	private final int MAX_AGE;					// Max age of the given entity, in seconds
+	private final int ADULT_AGE;				// Time starting from which the body is no longer a baby, in seconds
 	private final int MAX_LIFE;					// Max life for a given entity, in vitality points
 	private final int LIFE_LOSS;				// Regular life loss, at each turn
 	private final int CREATION_TIME;			// Time of creation, in seconds
-	private final int ADULT_AGE;				// Time starting from which the body is no longer a baby, in seconds
 	private final int TRIBE_ID;					// Tribe ID to help our guys to recognize pheromones and friends
 	private final int MAX_BODY_SIZE;			// Maximum body size, in % (between 0 and 100)
 	private final FrustrumType FRUSTRUM_TYPE; 	// Type of frustrum for this entity.
@@ -73,8 +74,37 @@ public abstract class AbstractBody extends AbstractMobileWorldObject {
 	 * Constructor to be used by all inheriting classes.
 	 * For internal use only.
 	 */
-	protected AbstractBody() {
-		// TODO Constructor with all final attributes initialized (at least)
+	protected AbstractBody(int transport_capa,
+							int eating_capa,
+							int moving_reach,
+							int vision_reach,
+							int strength,
+							int defense,
+							int adult_age,
+							int max_age,
+							int max_life,
+							int life_loss,
+							int creation_time,
+							int tribe_id,
+							int max_body_size,
+							FrustrumType frustrum_type,
+							HashMap<WorldObjectType, EffectType> effects) {
+		
+		TRANSPORT_CAPA = transport_capa + MyMath.random(-DELTA_TRANSPORT_CAPA/100 * transport_capa, DELTA_TRANSPORT_CAPA/100 * transport_capa);
+		EATING_CAPA = eating_capa + MyMath.random(-DELTA_EATING_CAPA/100 * eating_capa, DELTA_EATING_CAPA/100 * eating_capa);
+		MOVING_REACH = moving_reach;
+		VISION_REACH = vision_reach;
+		STRENGTH = strength + MyMath.random(-DELTA_STRENGTH/100 * strength, DELTA_STRENGTH/100 * strength);
+		DEFENSE = defense + MyMath.random(-DELTA_DEFENSE/100 * defense, DELTA_DEFENSE/100 * defense);
+		ADULT_AGE = adult_age + MyMath.random(-DELTA_ADULT_AGE/100 * adult_age, DELTA_ADULT_AGE/100 * adult_age);
+		MAX_AGE = max_age + MyMath.random(-DELTA_MAX_AGE/100 * max_age, DELTA_MAX_AGE/100 * max_age);
+		MAX_LIFE = max_life + MyMath.random(-DELTA_MAX_LIFE/100 * max_life, DELTA_MAX_LIFE/100 * max_life);
+		LIFE_LOSS = life_loss + MyMath.random(-DELTA_LIFE_LOSS/100 * life_loss, DELTA_LIFE_LOSS/100 * life_loss);
+		CREATION_TIME = creation_time;
+		TRIBE_ID = tribe_id;
+		MAX_BODY_SIZE = max_body_size;
+		FRUSTRUM_TYPE = frustrum_type;
+		EFFECTS = effects;
 	}
 	
 	/*************************************************************************
