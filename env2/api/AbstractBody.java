@@ -8,6 +8,14 @@ import math.MyMath;
 import math.MyPoint2D;
 import env2.frustrum.FrustrumCircleN;
 import env2.frustrum.FrustrumCrossN;
+import env2.resources.Fruit;
+import env2.resources.Gas;
+import env2.resources.Leaf;
+import env2.resources.Meat;
+import env2.resources.Poison;
+import env2.resources.Rock;
+import env2.resources.Sugar;
+import env2.resources.Wood;
 import env2.type.Direction;
 import env2.type.EffectType;
 import env2.type.FrustrumType;
@@ -155,7 +163,14 @@ public abstract class AbstractBody extends AbstractMobileWorldObject {
 	 * INSIDE THIS METHOD, WE ONLY CHECK AND APPLY THE EFFECTS
 	 * AFTER EATING THIS MUCH OF THIS RESOURCE
 	 */
-	public abstract void applyEffectsForEating(AbstractResource o, int qty);
+	public abstract void applyEffectsForEating(Rock o, int qty);
+	public abstract void applyEffectsForEating(Wood o, int qty);
+	public abstract void applyEffectsForEating(Leaf o, int qty);
+	public abstract void applyEffectsForEating(Meat o, int qty);
+	public abstract void applyEffectsForEating(Sugar o, int qty);
+	public abstract void applyEffectsForEating(Fruit o, int qty);
+	public abstract void applyEffectsForEating(Poison o, int qty);
+	public abstract void applyEffectsForEating(Gas o, int qty);
 	
 	/*
 	 * These methods create a corresponding pheromone and place it on the cell
