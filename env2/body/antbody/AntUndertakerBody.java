@@ -8,9 +8,8 @@ import env2.type.Direction;
 
 public final class AntUndertakerBody extends AntBody implements InterfaceUndertaker {
 
-	public AntUndertakerBody(AbstractEnvironment e, Direction dir,
-			MyPoint2D pos, float TIME) {
-		super(e, dir, pos, TIME);
+	public AntUndertakerBody(int TIME, int tribe_id, AbstractEnvironment env, Direction dir, MyPoint2D pos) {
+		super(TIME, tribe_id, env, dir, pos);
 		// TODO Auto-generated constructor stub
 	}
 
@@ -19,5 +18,4 @@ public final class AntUndertakerBody extends AntBody implements InterfaceUnderta
 		// TODO Auto-generated method stub
 		
 	}
-
 }

@@ -1,5 +1,6 @@
 package env2.body.antbody;
 
+import math.MyMath;
 import math.MyPoint2D;
 import env2.api.AbstractEnvironment;
 import env2.api.AbstractResource;
@@ -14,16 +15,19 @@ import env2.type.Direction;
 
 public final class AntGathererBody extends AntBody implements InterfaceGatherer {
 
-	public AntGathererBody(AbstractEnvironment e, Direction dir, MyPoint2D pos,
-			float TIME) {
-		super(e, dir, pos, TIME);
-		// TODO Auto-generated constructor stub
+	public AntGathererBody(int TIME, int tribe_id, AbstractEnvironment env, Direction dir, MyPoint2D pos) {
+		super(TIME, tribe_id, env, dir, pos);
 	}
 
-	@Override
+	/*
+	 * We assume the quantity provided in this method comes from the InfluenceSolver
+	 * Hence, we should never go pass our capacity
+	 * 
+	 * (non-Javadoc)
+	 * @see env2.api.InterfaceGatherer#take(env2.api.AbstractResource, int)
+	 */
 	public void take(AbstractResource o, int qty) {
 		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
@@ -33,21 +37,17 @@ public final class AntGathererBody extends AntBody implements InterfaceGatherer 
 	}
 
 	@Override
-	public int getStdTakeQty() {
-		// TODO Auto-generated method stub
-		return 0;
+	public final int getStdTakeQty() {
+		return 2;
 	}
 
 	@Override
-	public int getRndTakeQty() {
-		// TODO Auto-generated method stub
-		return 0;
+	public final int getRndTakeQty() {
+		return 1;
 	}
 
 	@Override
 	public int getTotTakeQty() {
-		// TODO Auto-generated method stub
-		return 0;
+		return getStdTakeQty() + MyMath.random(-getRndTakeQty(), getRndTakeQty());
 	}
-
 }
