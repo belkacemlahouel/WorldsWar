@@ -1,67 +1,246 @@
 package env2.api;
 
+import java.util.Collection;
+import java.util.HashMap;
+
 import math.MyPoint2D;
+import env2.frustrum.FrustrumCircleN;
+import env2.frustrum.FrustrumCrossN;
 import env2.type.Direction;
 import env2.type.EffectType;
 import env2.type.FrustrumType;
-import env2.type.Time;
+import env2.type.WorldObjectType;
 
 public abstract class AbstractBody extends AbstractMobileWorldObject {
+	
+	/*
+	 * Offsets introduction with these variables representing
+	 * absolute errors on the corresponding variables.
+	 * 
+	 * WARNING
+	 * Definition in % so that we keep same errors on all
+	 * types of bodies.
+	 * 
+	 * They're here for the moment, but as another enhancement
+	 * we might redefine them.
+	 */
+	private static final int DELTA_TRANSPORT_CAPA = 10; // %
+	private static final int DELTA_EATING_CAPA = 10;	// %
+	private static final int DELTA_STRENGTH = 15;		// %
+	private static final int DELTA_MAX_AGE = 20;		// %
+	private static final int DELTA_MAX_LIFE = 10;		// %
+	private static final int DELTA_LIFE_LOSS = 5;		// %
+	private static final int DELTA_ADULT_AGE = 25;		// %
+	private static final int DELTA_DEFENSE = 15;		// %
+	
+	/*
+	 * Final attrbiutes for all bodies: characteristics.
+	 * Definition inside following in-line comments.
+	 * 
+	 * We assume everything is defined with integers.
+	 * Actually, it doesn't change anything:
+	 * 		the complexity is less important,
+	 * 		and it's nothing but a hidden scaling.
+	 */
+	private final int TRANSPORT_CAPA;			// Max weight that could be carried
+	private final int EATING_CAPA;				// Max weight that could be eaten at once
+	private final int MOVING_REACH;				// Max number of cases to be crossed at once
+	private final int VISION_REACH;				// Max vision distance (nb of cases) linked with Frustrum def
+	private final int STRENGTH;					// Strength, in a given unit
+	private final int DEFENSE;					// Defense, in a given unit: resistance to applied damage
+	private final int MAX_AGE;					// Max age of the given entity, in seconds
+	private final int MAX_LIFE;					// Max life for a given entity, in vitality points
+	private final int LIFE_LOSS;				// Regular life loss, at each turn
+	private final int CREATION_TIME;			// Time of creation, in seconds
+	private final int ADULT_AGE;				// Time starting from which the body is no longer a baby, in seconds
+	private final int TRIBE_ID;					// Tribe ID to help our guys to recognize pheromones and friends
+	private final int MAX_BODY_SIZE;			// Maximum body size, in % (between 0 and 100)
+	private final FrustrumType FRUSTRUM_TYPE; 	// Type of frustrum for this entity.
 
-	public abstract void buildNewFrustrum(FrustrumType type);
-	public abstract AbstractFrustrum getCurrentFrustrum();
+	private final HashMap<WorldObjectType, EffectType> EFFECTS;
+	
+	/*
+	 * For-use attributes.
+	 */
+	private Collection<AbstractResource> mycargo;
+	private AbstractFrustrum myfrustrum;
+	private AbstractEnvironment myenv;
+	private Direction mydir;
+	private MyPoint2D mypos;
+	private int mylife;
 	
 	/**
-	 * TODO To be decided later...
-	 * Position? Cell? Environment? TODO
+	 * Constructor to be used by all inheriting classes.
+	 * For internal use only.
 	 */
+	protected AbstractBody() {
+		// TODO Constructor with all final attributes initialized (at least)
+	}
 	
-	public abstract AbstractEnvironment getEnvironment();
-	public abstract MyPoint2D getPosition();	
-	public abstract Direction getDirection();
+	/*************************************************************************
+	 * For-use methods: Tools.
+	 *************************************************************************/
+	
+	public void buildNewFrustrum() {
+		switch(FRUSTRUM_TYPE) {
+		case CROSS:
+			myfrustrum = new FrustrumCrossN(this, myenv, getVisionReach());
+			break;
+			
+		default:
+			myfrustrum = new FrustrumCircleN(this, myenv, getVisionReach());
+		}
+	}
+	
+	public boolean isFriend(AbstractBody b) {
+		return b.TRIBE_ID == TRIBE_ID;
+	}
+	
+	public void applyLifeVariation(int var) {
+		mylife += var;
+		if (mylife > MAX_LIFE)
+			mylife = var;
+	}
+	
+	/*
+	 * This method should be overriden with all possible resource.
+	 * The effect is hard-coded inside for each kind of body.
+	 * 
+	 * INSIDE THIS METHOD, WE ONLY CHECK AND APPLY THE EFFECTS
+	 * AFTER EATING THIS MUCH OF THIS RESOURCE
+	 */
+	public abstract void applyEffectsForEating(AbstractResource o, int qty);
+	
+	/*
+	 * These methods create a corresponding pheromone and place it on the cell
+	 * then, the pheromone spreads...
+	 * 
+	 * TODO: add some parameters to these pheromones methods (qty, ...)
+	 */
+	public abstract void producePheromoneDanger();
+	public abstract void producePheromoneAttack();
+	public abstract void producePheromoneFood();
+	
+	public boolean isBaby(float TIME) {
+		return getAge(TIME) < ADULT_AGE;
+	}
+	
+	/* this method only takes care of moving the body to the arrival case
+	 * nothing else is done here
+	 * (influences solving/distance checking etc)
+	 * hence, you should not forget to erase the current frustrum
+	 * 
+	 * if (newenv != null &&
+	 * 		newpos.getX() >= 0 && newpos.getX() < newenv.getWidth() &&
+	 * 		newpos.getY() >= 0 && newpos.getY() < newenv.getHeight())
+	 * 
+	 * (non-Javadoc)
+	 * @see env2.api.AbstractMobileWorldObject#move(env2.api.AbstractCell)
+	 */
+	public boolean move(AbstractEnvironment newenv, MyPoint2D newpos) {
+		newenv.getCell(newpos.getX(), newpos.getY()).addObject(this);
+		myenv.getCell(mypos.getX(), mypos.getY()).removeObject(this);
+		mypos = newpos;
+		return true;
+	}
+	
+	/*************************************************************************
+	 * Getters and setters.
+	 *************************************************************************/
+	
+	public AbstractFrustrum getCurrentFrustrum() {
+		return myfrustrum;
+	}
+	
+	public AbstractEnvironment getEnvironment() {
+		return myenv;
+	}
+	
+	public MyPoint2D getPosition() {
+		return mypos;
+	}
+
+	public Direction getDirection() {
+		return mydir;
+	}
+	
+	public int getLife() {
+		return mylife;
+	}
+	
+	public EffectType getEffect(AbstractWorldObject o) {
+		return EFFECTS.get(o.getType());
+	}
+	
+	public int getTransportCapacity() {
+		return TRANSPORT_CAPA;
+	}
+	
+	public int getEatingCapacity() {
+		return EATING_CAPA;
+	}
+	
+	public int getMovingReach() {
+		return MOVING_REACH;
+	}
+	
+	public int getVisionReach() {
+		return VISION_REACH;
+	}
+	
+	public int getStrength() {
+		return STRENGTH;
+	}
+	
+	public int getDefense() {
+		return DEFENSE;
+	}
+	
+	public int getMaxAge() {
+		return MAX_AGE;
+	}
+	
+	public int getAge(float TIME) {
+		return (int) (TIME - CREATION_TIME);
+	}
+	
+	public boolean isPerceivable() {
+		return true;
+	}
+	
+	/*
+	 * Size of this body at TIME seconds
+	 * size between 10% to 100% of MAX_BODY_SIZE
+	 */
+	public int getSize(float TIME) {
+		if (!isBaby(TIME))
+			return 100;
 		
-	// get current variables
-	public abstract int getCapacity();
-	public abstract int getCurrentLife();
-	public abstract int getEatingSpeed();
-	public abstract int getReach();
+		int t = getAge(TIME)/ADULT_AGE;
+		return (int) (t * (0.1 * MAX_BODY_SIZE) + (1-t) * (MAX_BODY_SIZE));
+	}
 	
-	// constants above which we apply random rules
-	protected abstract int getStdLifeLoss(float CURRENT_TIME);
-	protected abstract int getStdMaxLife();
-	protected abstract int getStdSpeed();
-	protected abstract int getStdStrength();
+	public int getLifeLoss() {
+		return LIFE_LOSS;
+	}
 	
-	// random part to be implemented, +- X at maximum
-	protected abstract int getRndLifeLoss();
-	protected abstract int getRndMaxLife();
-	protected abstract int getRndSpeed();
-	protected abstract int getRndStrength();
+	public Collection<AbstractResource> getCargo() {
+		return mycargo;
+	}
 	
-	// total quantities, API for the user
-	public int getTotMaxLife() 		{ return getStdMaxLife() + getRndMaxLife(); }
-	public int getTotSpeed() 		{ return getStdSpeed() + getRndSpeed(); }
-	public int getTotLifeLoss() 	{ return getStdLifeLoss(Time.TIME) + getRndLifeLoss(); } // FIXME TIME Cst access?
+	/*************************************************************************
+	 * Main method: tests...
+	 * 
+	 * Test for interpolation formula: seems OK.
+	 *************************************************************************/
 	
-	// action methods
-	public abstract void applyLifeVariation(int var);
-	public abstract void eat(AbstractResource o, int qty);
-	
-	protected abstract EffectType getEffect(AbstractWorldObject o);
-	public abstract int getAge(float TIME);
-	public abstract int getMaxAge();
-	public abstract boolean isFriend(AbstractBody b);
-	
-	public abstract int getOccupiedCapacity();
-	
-	// Should we put the colony here or in the Agent side? TODO Ask prof!
-	
-	// Annother idea is to put only a tribe index so that everyone cannot access his friends,
-	// But if the Body perceives them, it can say when judging from its appearence if they are friends/not.
-	// I think this would be best to put this in the Agent part, but for now I do it this way.
-	public abstract int getTribeID();
-	
-	public abstract boolean isBaby();
-	public abstract int bodySize();
-	public abstract int maxBodySize();
+	public static void main(String[] args) {
+		int AGE = 0;
+		int ADULT_AGE = 15;
+		int MAX_BODY_SIZE = 80;
+		
+		int t = AGE/ADULT_AGE;
+		int interpsize = (int) ((1-t) * (0.1 * MAX_BODY_SIZE) + (t) * (MAX_BODY_SIZE));
+		System.out.println("INTERP SIZE: " + interpsize);
+	}
 }

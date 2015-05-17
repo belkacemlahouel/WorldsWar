@@ -20,7 +20,8 @@ public class EatAction {
 	}
 
 	public void doAction() {
-		eater.eat(resource, qty);
+		AbstractResource newresource = resource.pick(qty);
+		eater.eat(newresource, qty);
 		if (resource.getQuantity() <= 0)
 			container.remove(resource);
 	}
