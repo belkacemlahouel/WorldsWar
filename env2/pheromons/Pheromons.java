@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import env2.api.AbstractBody;
 import env2.api.AbstractEnvironment;
 import math.MyPoint2D;
 
@@ -112,5 +113,27 @@ class Pheromons {
 				newPos = position;
 				newPos.add(1,-1);
 				surface.put(newPos,1);
+	}
+	
+	/**
+	 * Check if a body can detect a pheromon.
+	 * @param body, the agent's body that can potentialy feel the pheromon.
+	 * @return true, if the body can detect the pheromon.
+	 */
+	public boolean isDetected(AbstractBody body)
+	{
+		MyPoint2D pos = body.getPosition();
+		int id = body.getTribeID();
+		
+		//check if the body is part of the tribe that put the pheromon at this place.
+		if(id != tribeId)
+		{
+			return false;
+		}
+		else
+		{
+			//check if the body is in the area to feel the pheromon.
+			return this.surface.containsKey(pos);
+		}
 	}
 }
