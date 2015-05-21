@@ -3,7 +3,8 @@ package env2.pheromones;
 public enum PheromonsType {
   DANGER("DANGER"),
   FIGHT("FIGHT"),
-  FOOD("FOOD");
+  FOOD("FOOD"),
+  CAVE("CAVE");
   
   private String name = "";
   
