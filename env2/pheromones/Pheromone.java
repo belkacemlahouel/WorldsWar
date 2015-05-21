@@ -21,7 +21,7 @@ import math.MyPoint2D;
  * X X X
  * Where O is the position of the pheromon.
  */
-public class Pheromons extends AbstractWorldObject{
+public class Pheromone extends AbstractWorldObject{
 	private WorldObjectType type;
 	private int remainingTime;
 	private AbstractEnvironment env;
@@ -30,7 +30,7 @@ public class Pheromons extends AbstractWorldObject{
 	private MyPoint2D pos;
 	private float power;
 	
-	Pheromons(WorldObjectType pType, AbstractEnvironment environment, int id, MyPoint2D position, float pow)
+	Pheromone(WorldObjectType pType, AbstractEnvironment environment, int id, MyPoint2D position, float pow)
 	{
 		type = pType;
 		remainingTime = getMaxLapse();
@@ -74,7 +74,7 @@ public class Pheromons extends AbstractWorldObject{
 	 */
 	private void delete()
 	{
-		Pheromons object = this;
+		Pheromone object = this;
 		object = null;
 		
 	}
@@ -90,56 +90,56 @@ public class Pheromons extends AbstractWorldObject{
 				newPos.add(-1,1);
 				if(testExistence(newPos))
 				{
-					new Pheromons(type, env, tribeId, newPos, powerRegardToTimeAfterCreation(1.0, time));
+					new Pheromone(type, env, tribeId, newPos, powerRegardToTimeAfterCreation(1.0, time));
 				}
 				
 				newPos = position;
 				newPos.add(0,1);
 				if(testExistence(newPos))
 				{
-					new Pheromons(type, env, tribeId, newPos, powerRegardToTimeAfterCreation(1.0, time));
+					new Pheromone(type, env, tribeId, newPos, powerRegardToTimeAfterCreation(1.0, time));
 				}
 				
 				newPos = position;
 				newPos.add(1,1);
 				if(testExistence(newPos))
 				{
-					new Pheromons(type, env, tribeId, newPos, powerRegardToTimeAfterCreation(1.0, time));
+					new Pheromone(type, env, tribeId, newPos, powerRegardToTimeAfterCreation(1.0, time));
 				}
 				
 				newPos = position;
 				newPos.add(-1,0);
 				if(testExistence(newPos))
 				{
-					new Pheromons(type, env, tribeId, newPos, powerRegardToTimeAfterCreation(1.0, time));
+					new Pheromone(type, env, tribeId, newPos, powerRegardToTimeAfterCreation(1.0, time));
 				}
 				
 				newPos = position;
 				newPos.add(1,0);
 				if(testExistence(newPos))
 				{
-					new Pheromons(type, env, tribeId, newPos, powerRegardToTimeAfterCreation(1.0, time));
+					new Pheromone(type, env, tribeId, newPos, powerRegardToTimeAfterCreation(1.0, time));
 				}
 				
 				newPos = position;
 				newPos.add(-1,-1);
 				if(testExistence(newPos))
 				{
-					new Pheromons(type, env, tribeId, newPos, powerRegardToTimeAfterCreation(1.0, time));
+					new Pheromone(type, env, tribeId, newPos, powerRegardToTimeAfterCreation(1.0, time));
 				}
 				
 				newPos = position;
 				newPos.add(0,-1);
 				if(testExistence(newPos))
 				{
-					new Pheromons(type, env, tribeId, newPos, powerRegardToTimeAfterCreation(1.0, time));
+					new Pheromone(type, env, tribeId, newPos, powerRegardToTimeAfterCreation(1.0, time));
 				}
 				
 				newPos = position;
 				newPos.add(1,-1);
 				if(testExistence(newPos))
 				{
-					new Pheromons(type, env, tribeId, newPos, powerRegardToTimeAfterCreation(1.0, time));
+					new Pheromone(type, env, tribeId, newPos, powerRegardToTimeAfterCreation(1.0, time));
 				}
 	}
 	
