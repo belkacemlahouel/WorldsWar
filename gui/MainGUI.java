@@ -1,12 +1,23 @@
 package gui;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import env2.api.AbstractEnvironment;
 import env2.env.Ground;
 
 public class MainGUI {
 
 	public static void main(String[] args) {		
-		AbstractEnvironment env = new Ground(50, 50);
-		GUI window = new GUI(env);
+		List<AbstractEnvironment> envList = new ArrayList<AbstractEnvironment>();
+		envList.add(new Ground(60, 60));
+		
+		envList.add(new Ground(60, 60));
+		envList.add(new Ground(60, 60));
+
+		envList.add(new Ground(60, 60));
+		envList.add(new Ground(60, 60));
+		
+		GUI window = new GUI(envList, 0);
 	}
 }

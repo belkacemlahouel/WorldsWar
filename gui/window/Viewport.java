@@ -1,13 +1,13 @@
 package gui.window;
 
+import env2.api.AbstractEnvironment;
+import gui.Camera;
+
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Rectangle;
 
 import javax.swing.JPanel;
-
-import math.MyMath;
-import env2.api.AbstractCell;
-import env2.api.AbstractEnvironment;
 
 public class Viewport extends JPanel
 {
@@ -15,129 +15,76 @@ public class Viewport extends JPanel
 
 	/* Constants */
 	private static final Color defaultCellBackgroundColor = Color.GREEN;	
-	private static final int defaultCellPixelSize = 20;	
-	private static final int defaultCellPixelMinSize = 10;	
-	private static final int defaultCellPixelMaxSize = 30;	
-
-	private static final int defaultViewportPosX = 0;
-	private static final int defaultViewportPosY = 0;
-	private static final int defaultViewportHeight = 600;
-	private static final int defaultViewportWidth = 800;
-	
-	private static final int defaultViewportMoveSpeed = 5;
-	private static final int defaultViewportZoomSpeed = 1;
 	
 	/* Attributes */ 
-	private AbstractEnvironment env;	
+	private int id;
 	
-	private Color cellBackgroundColor;	
-	private int cellPixelSize;	
+	private Camera camera;
+	private AbstractEnvironment env;
 	
-	private int viewportPosX;
-	private int viewportPosY;
-	private int viewportHeight;
-	private int viewportWidth;
+	private Color cellBgColor;	
 	
 	/* Constructors */ 
-	public Viewport(AbstractEnvironment e) {
-		this(e, defaultViewportPosX, defaultViewportPosY, 
-				defaultViewportWidth, defaultViewportHeight, 
-				defaultCellPixelSize, defaultCellBackgroundColor);
+	public Viewport(int viewportID, AbstractEnvironment e, Camera cam) {
+		this(viewportID, e, cam, 0, 0, defaultCellBackgroundColor);
 	}	
-	public Viewport(AbstractEnvironment e, int x, int y) {		
-		this(e, x, y, defaultViewportWidth, defaultViewportHeight, defaultCellPixelSize, defaultCellBackgroundColor);
+	public Viewport(int viewportID, AbstractEnvironment e, Camera cam, int x, int y) {		
+		this(viewportID, e, cam, x, y, defaultCellBackgroundColor);
 	}	
-	public Viewport(AbstractEnvironment e, int x, int y, int width, int height) {		
-		this(e, x, y, width, height, defaultCellPixelSize, defaultCellBackgroundColor);
-	}	
-	public Viewport(AbstractEnvironment e, int x, int y, int width, int height, int cellPixelSize) {		
-		this(e, x, y, width, height, cellPixelSize, defaultCellBackgroundColor);
-	}	
-	public Viewport(AbstractEnvironment e, int x, int y, int width, int height, int cellPixelSize, Color cellBgColor) {		
-		super();				
-		assert(e != null);
+	public Viewport(int viewportID, AbstractEnvironment e, Camera cam, int x, int y, Color cellBgColor) {		
+		super();		
 		
-		this.env = e;			
+		this.id = viewportID;	
 		
-		this.cellBackgroundColor = cellBgColor;
-		this.cellPixelSize = cellPixelSize;	
+		this.camera = cam;
+		this.env = e;		
 		
-		this.viewportPosX = Math.max(0, x);
-		this.viewportPosY = Math.max(0, y);
-		this.viewportHeight = Math.max(1, height);
-		this.viewportWidth = Math.max(1, width);
+		this.cellBgColor = cellBgColor;		
 	}	
 
+	/* Getters */
+	public AbstractEnvironment getEnv() {
+		return env;
+	}
+	
 	/* Moving functions */ 
-	public void translate(int dx, int dy){		
-		if(dx != 0 || dy != 0)
-			this.move(this.viewportPosX + dx*defaultViewportMoveSpeed, this.viewportPosY + dy*defaultViewportMoveSpeed);
-	}
-	@Override
-	public void move(int x, int y){		
-		/* Move on X-axis */
-		int maxPosX = Math.max(0, this.env.getWidth()*this.cellPixelSize - this.viewportWidth);		
-		this.viewportPosX = MyMath.clamp(x, 0, maxPosX);
-
-		/* Move on Y-axis */
-		int maxPosY = Math.max(0, this.env.getHeight()*this.cellPixelSize - this.viewportHeight);		
-		this.viewportPosY = MyMath.clamp(y, 0, maxPosY);
-	}
 
 	/* Scaling functions */ 
-	public void zoom(int dz){	
-		/* TODO : make the zoom centereed */
-		
-		int newSize = this.cellPixelSize + dz*defaultViewportZoomSpeed;
-		this.cellPixelSize = MyMath.clamp(newSize, defaultCellPixelMinSize, defaultCellPixelMaxSize);
-	}
 	
 	/* Drawing functions */ 
 	@Override
 	public void paintComponent(Graphics g) {
-	     super.paintComponent(g);
-	     	     
-	     /* Viewport size */
-	     int startX = this.viewportPosX;
-	     int startY = this.viewportPosY;
-	     
-	     int endX = startX + this.viewportWidth;
-	     int endY = startY + this.viewportHeight;
+		super.paintComponent(g);
+		this.setBackground(Color.PINK);
+		
+		/* Get limits */
+		int maxI = this.env.getWidth();
+		int maxJ = this.env.getHeight();
 
-	     /* Display limits */
-	     int startCellX = startX/this.cellPixelSize;
-	     int startCellY = startY/this.cellPixelSize;
-	     
-	     int endCellX = Math.min(this.env.getWidth(), (int) Math.floor((float)endX/this.cellPixelSize));
-	     int endCellY = Math.min(this.env.getHeight(), (int) Math.floor((float)endY/this.cellPixelSize));
+		/* Temporary variables */
+		//AbstractCell tmpCell;
+		Rectangle cellRect;
 
-	     /* Temporary variables */
-	     AbstractCell tmpCell;
-	     int tmpCellX, tmpCellY;
-	     
-	     /* Display */
-	     for(int i=startCellX; i<endCellX; i++)
-	     {
-		     for(int j=startCellY; j<endCellY; j++)
-		     {
-		    	 tmpCell = this.env.getCell(i, j);
-		    	 
-		    	 /* Compute cell relative position */
-		    	 tmpCellX = i*this.cellPixelSize - startX;
-		    	 tmpCellY = j*this.cellPixelSize - startY;
+		/* Display */
+		for(int i=0; i<maxI; i++)
+		{
+			for(int j=0; j<maxJ; j++)
+			{
+				//tmpCell = this.env.getCell(i, j);
 
-		    	 /* Border of the rectangle */
-		    	 g.setColor(Color.BLACK); 
-			     g.fillRect(tmpCellX, tmpCellY, this.cellPixelSize, this.cellPixelSize);
+				/* Compute cell relative position */
+				cellRect = this.camera.logical2relativePixel(id, i, j);
+				
+				/* Border of the rectangle */
+				g.setColor(Color.BLACK); 
+				g.fillRect(cellRect.x, cellRect.y, cellRect.width, cellRect.height);
+				
+				/* Background of the rectangle */	
+				if(i == 0 && j == 0)	g.setColor(Color.RED); 
+				else					g.setColor(this.cellBgColor); 
 
-		    	 /* Background of the rectangle */
-		    	 if(!tmpCell.getObjects().isEmpty())	g.setColor(Color.CYAN); 	
-		    	 else									g.setColor(this.cellBackgroundColor); 
-		    	 
-		    	 if(i == 0 && j == 0)	g.setColor(Color.RED); 
-		    	 
-		    	 g.fillRect(tmpCellX+1, tmpCellY+1, this.cellPixelSize-1, this.cellPixelSize-1);
-		     }
-	     }
+				g.fillRect(cellRect.x+1, cellRect.y+1, cellRect.width-1, cellRect.height-1);
+			}
+		}
 	}	
 }
