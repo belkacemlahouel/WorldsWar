@@ -34,7 +34,7 @@ public class Pheromone extends AbstractWorldObject{
 		pos = position;
 		power = pow;
 		
-		if(power == 2.0)
+		if(power == (float)2.0)
 		{
 			Time time = new Time();
 			buildSurface(pos, time);

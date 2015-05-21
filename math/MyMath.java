@@ -3,6 +3,7 @@ package math;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.Random;
 
 import env2.type.Direction;
@@ -107,6 +108,58 @@ public class MyMath {
 	    
 		return linePoints;		
 	}
+	
+	/**
+	 * Find the intersection point of two bresenheim lines.
+	 * @param firstLine, a bresenheim line.
+	 * @param secondLine, a bresenheim line.
+	 * @return the point of intersection, a MyPoint2D.
+	 */
+	public static MyPoint2D intersectionBresenheimLine(List<MyPoint2D> firstLine, List<MyPoint2D> secondLine){
+		MyPoint2D intersection;
+		Intersection result;
+		
+		MyPoint2D firstPointFirstLine;
+		MyPoint2D lastPointFirstLine = new MyPoint2D(0,0);
+		MyPoint2D firstPointSecondLine;
+		MyPoint2D lastPointSecondLine = new MyPoint2D(0,0);
+		
+		MyVector2D vectorFirstLine;
+		MyVector2D vectorSecondLine;
+		
+		/* Catch the first points and last points of the bresenheim lines */
+		ListIterator<MyPoint2D> iterator = firstLine.listIterator();
+		firstPointFirstLine = iterator.next();
+		while (iterator.hasNext())
+		{
+			lastPointFirstLine=iterator.next();
+		}
+		
+		iterator = secondLine.listIterator();
+		firstPointSecondLine = iterator.next();
+		while (iterator.hasNext())
+		{
+			lastPointSecondLine=iterator.next();
+		}
+		
+		/* Create vector following the bresenheim lines */
+		vectorFirstLine = new MyVector2D(firstPointFirstLine, lastPointFirstLine);
+		vectorSecondLine = new MyVector2D(firstPointSecondLine, lastPointSecondLine);
+		
+		/* Calculate the intersection of the two vector */
+		result = intersection(firstPointFirstLine, vectorFirstLine, firstPointSecondLine, vectorSecondLine);
+
+		if(result != null)
+		{
+			intersection = result.position;
+		}
+		else
+		{
+			intersection = null;
+		}
+		
+		return intersection;
+	}
 
 	/**
 	 * @param pos1 position of the first item
@@ -177,11 +230,18 @@ public class MyMath {
 	
 	public static void main(String[] args) {
 		System.out.println("Hello World!");
-		Intersection res = MyMath.intersection(new MyPoint2D(-1, 0),
-												new MyVector2D(1, 0),
-												new MyPoint2D(0, -1),
-												new MyVector2D(0, 1));
+		Intersection res = MyMath.intersection(new MyPoint2D(0, 1),
+												new MyVector2D(5, 6),
+												new MyPoint2D(5, 0),
+												new MyVector2D(-5, 5));
 		System.out.println("Intersection: " + res);
+		
+		List<MyPoint2D> line1 = bresenheimLine(new MyPoint2D(0,1), new MyPoint2D(5,5));
+		List<MyPoint2D> line2 = bresenheimLine(new MyPoint2D(5,0), new MyPoint2D(0,5));
+		
+		MyPoint2D intersect = intersectionBresenheimLine(line1, line2);
+		System.out.println("The bresenheim lines intersect in (" + intersect.getX() +", " + intersect.getY() +")");
+		
 		System.out.println("Bye World!");
 	}
 }
