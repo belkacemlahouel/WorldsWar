@@ -1,175 +1,76 @@
 package env2.pheromones;
 
+import env2.action.RemoveMeAction;
 import env2.api.AbstractEnvironment;
 import env2.api.AbstractWorldObject;
-import env2.type.Time;
 import env2.type.WorldObjectType;
 import math.MyPoint2D;
 
- 
 /**
- * Representation of an object pheromon.
+ * Representation of an object pheromone.
  * 
- * In the environment the pheromon is detect in that surface :
+ * In the environment the pheromone is detect in that surface :
  * X X X
  * X O X
  * X X X
- * Where O is the position of the pheromon.
+ * Where O is the position of the pheromone.
  */
-public class Pheromone extends AbstractWorldObject{
-	final private WorldObjectType type;
-	private int remainingTime;
-	final private AbstractEnvironment env;
-	//tribeId is the id of the tribe which can detect the pheromon.
-	final private int tribeId;
+
+public final class Pheromone extends AbstractWorldObject {
+	
+	public static final int MAX_POWER = 3;
+	public static final float SPREADING_RATIO = 3/4;
+	public static final float POWER_LOSS = 0.1f;
+	
+	private final WorldObjectType type;
+	private final AbstractEnvironment env;
+	private final int tribeId; // tribeId is the id of the tribe which can detect the pheromone.
 	private MyPoint2D pos;
 	private float power;
 	
-	Pheromone(WorldObjectType pType, AbstractEnvironment environment, int id, MyPoint2D position, float pow)
-	{
+	private final int CREATION_TIME;
+	
+	public Pheromone(WorldObjectType pType, AbstractEnvironment environment, int id, MyPoint2D position, float pow, int creation_time) {
 		type = pType;
-		remainingTime = getMaxLapse();
 		env = environment;
 		tribeId = id;
 		pos = position;
 		power = pow;
 		
-		if(power == 2.0)
-		{
-			Time time = new Time();
-			buildSurface(pos, time);
-		}
+		CREATION_TIME = creation_time;
 	}
 	
 	/**
-	 * Get the max time that a pheromon can stay in environment.
-	 * @return the max time.
-	 */
-	public int getMaxLapse()
-	{
-		return 30;
-	}
-	
-	/**
-	 * Decrease the time a pheromon could still stay in environment.
-	 * @param step, the step to decrease remaining time.
-	 */
-	public void decreaseTime(int step)
-	{
-		remainingTime = remainingTime - step;
-		
-		if(remainingTime <= 0)
-		{
-			this.delete();
-		}
-	}
-
-	/**
-	 * Delete a pheromon.
-	 */
-	private void delete()
-	{
-		Pheromone object = this;
-		object = null;
-		
-	}
-	
-	/**
-	 * Create the surface detected by an agent
-	 * @param position, the position of the pheromon.
-	 */
-	private void buildSurface(MyPoint2D position, Time time)
-	{
-		
-				MyPoint2D newPos = position;
-				newPos.add(-1,1);
-				if(testExistence(newPos))
-				{
-					new Pheromone(type, env, tribeId, newPos, powerRegardToTimeAfterCreation(1.0, time));
-				}
-				
-				newPos = position;
-				newPos.add(0,1);
-				if(testExistence(newPos))
-				{
-					new Pheromone(type, env, tribeId, newPos, powerRegardToTimeAfterCreation(1.0, time));
-				}
-				
-				newPos = position;
-				newPos.add(1,1);
-				if(testExistence(newPos))
-				{
-					new Pheromone(type, env, tribeId, newPos, powerRegardToTimeAfterCreation(1.0, time));
-				}
-				
-				newPos = position;
-				newPos.add(-1,0);
-				if(testExistence(newPos))
-				{
-					new Pheromone(type, env, tribeId, newPos, powerRegardToTimeAfterCreation(1.0, time));
-				}
-				
-				newPos = position;
-				newPos.add(1,0);
-				if(testExistence(newPos))
-				{
-					new Pheromone(type, env, tribeId, newPos, powerRegardToTimeAfterCreation(1.0, time));
-				}
-				
-				newPos = position;
-				newPos.add(-1,-1);
-				if(testExistence(newPos))
-				{
-					new Pheromone(type, env, tribeId, newPos, powerRegardToTimeAfterCreation(1.0, time));
-				}
-				
-				newPos = position;
-				newPos.add(0,-1);
-				if(testExistence(newPos))
-				{
-					new Pheromone(type, env, tribeId, newPos, powerRegardToTimeAfterCreation(1.0, time));
-				}
-				
-				newPos = position;
-				newPos.add(1,-1);
-				if(testExistence(newPos))
-				{
-					new Pheromone(type, env, tribeId, newPos, powerRegardToTimeAfterCreation(1.0, time));
-				}
-	}
-	
-	/**
-	 * Dicrease the power of a pheromon in function of the time passed since the demand of creation.
+	 * Returns the current power
 	 * @param d
-	 * @return the power dicreased.
+	 * @return the current power
 	 */
-	private float powerRegardToTimeAfterCreation(double d, Time time)
-	{
-		return (float) d;
+	public float getPower() {
+		return power;
 	}
-
+	
 	/**
-	 * Test if a position exist in the environment.
-	 * @param pos the position to test.
-	 * @return the result of the test.
+	 * Decrease the power so that a pheromone can stay in environment.
+	 * @param step, the time step from the last update (delta time).
 	 */
-	private boolean testExistence(MyPoint2D pos)
-	{
-		int width = env.getWidth();
-		int height = env.getHeight();
+	public void updatePower(int DELTA_TIME) {
+		power -= DELTA_TIME*POWER_LOSS;
 		
-		if(pos.getX()<=width && pos.getY()<=height)
-		{
-			return true;
+		if(power <= 0) {
+			(new RemoveMeAction(this, env.getCell(pos).getObjects())).doAction(); // TODO Check if any exception...
 		}
-		else
-		{
-			return false;
+	}
+	
+	public void updatePowerNow(int CURRENT_TIME) {
+		power = (CURRENT_TIME-CREATION_TIME)*POWER_LOSS;
+		
+		if(power <= 0) {
+			(new RemoveMeAction(this, env.getCell(pos).getObjects())).doAction(); // TODO Check if any exception...
 		}
 	}
 
 	/**
-	 * Return type of the pheromon.
+	 * Return the type of the pheromone.
 	 */
 	public WorldObjectType getType() {
 		return type;
@@ -180,24 +81,27 @@ public class Pheromone extends AbstractWorldObject{
 		return true;
 	}
 	
+	public int getTribeID() {
+		return tribeId;
+	}
+	
 	/**
-	 * Check if a body can detect a pheromon.
-	 * @param body, the agent's body that can potentialy feel the pheromon.
-	 * @return true, if the body can detect the pheromon.
+	 * Check if a body can detect a pheromone.
+	 * @param body, the agent's body that can potentially feel the pheromone.
+	 * @return true, if the body can detect the pheromone.
 	 */
-	/*public boolean isDetected(AbstractBody body)
-	{
+	/*public boolean isDetected(AbstractBody body) {
 		MyPoint2D pos = body.getPosition();
 		int id = body.getTribeID();
 		
-		//check if the body is part of the tribe that put the pheromon at this place.
+		//check if the body is part of the tribe that put the pheromone at this place.
 		if(id != tribeId)
 		{
 			return false;
 		}
 		else
 		{
-			//check if the body is in the area to feel the pheromon.
+			//check if the body is in the area to feel the pheromone.
 			return this.surface.containsKey(pos);
 		}
 	}*/
