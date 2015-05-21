@@ -127,26 +127,27 @@ public class MyMath {
 	
 	public static Intersection intersection(MyPoint2D pos1, MyVector2D vel1, MyPoint2D pos2, MyVector2D vel2) {
 		if (pos2.equals(pos1))
-			return new Intersection(0, pos1.getX(), pos1.getY());
+			return new Intersection(0f, pos1.getX(), pos1.getY());
 		else {
 			if (vel1.equals(vel2))
 				return null;
 			else {
 				final float TX, TY, DX, DY;
-				final int X, Y;
+				final float X, Y;
 				
-				X = (int) (pos2.getX() - pos1.getX());
-				Y = (int) (pos2.getY() - pos1.getY());
+				X = (pos2.getX() - pos1.getX());
+				Y = (pos2.getY() - pos1.getY());
 				DX = vel1.getDx() - vel2.getDx();
 				DY = vel1.getDy() - vel2.getDy();
 				
 				TX = X/DX;
 				TY = Y/DY;
 				
-				System.err.println("TX == TY ? " + (TX == TY));
-				// We just need to check if we have the same result whatever what coordinate we use for this.
+				Intersection I1 = new Intersection(TX, (int) (TX*vel1.getDx()+pos1.getX()), (int) (TX*vel1.getDy()+pos1.getY()));
 				
-				return new Intersection(TX, X, Y);
+				if (TX != TY) return null;
+				
+				return I1;
 			}
 		}
 	}
@@ -177,10 +178,16 @@ public class MyMath {
 	
 	public static void main(String[] args) {
 		System.out.println("Hello World!");
-		Intersection res = MyMath.intersection(new MyPoint2D(-1, 0),
+		Intersection res = MyMath.intersection(new MyPoint2D(-2, 0),
 												new MyVector2D(1, 0),
 												new MyPoint2D(0, -1),
-												new MyVector2D(0, 1));
+												new MyVector2D(0, 1/2));
+		
+//		res = MyMath.intersection(new MyPoint2D(0, 1),
+//								new MyVector2D(5, 6),
+//								new MyPoint2D(5, 0),
+//								new MyVector2D(-5, 5));
+
 		System.out.println("Intersection: " + res);
 		System.out.println("Bye World!");
 	}
