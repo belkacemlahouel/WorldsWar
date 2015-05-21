@@ -1,10 +1,5 @@
 package env2.pheromones;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-
-import env2.api.AbstractBody;
 import env2.api.AbstractEnvironment;
 import env2.api.AbstractWorldObject;
 import env2.type.Time;
@@ -22,11 +17,11 @@ import math.MyPoint2D;
  * Where O is the position of the pheromon.
  */
 public class Pheromone extends AbstractWorldObject{
-	private WorldObjectType type;
+	final private WorldObjectType type;
 	private int remainingTime;
-	private AbstractEnvironment env;
+	final private AbstractEnvironment env;
 	//tribeId is the id of the tribe which can detect the pheromon.
-	private int tribeId;
+	final private int tribeId;
 	private MyPoint2D pos;
 	private float power;
 	

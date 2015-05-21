@@ -210,7 +210,6 @@ public abstract class AbstractBody extends AbstractMobileWorldObject {
 	 * TODO: add some parameters to these pheromones methods (qty, ...)
 	 */
 	public abstract void producePheromoneDanger();
-	public abstract void producePheromoneAttack();
 	public abstract void producePheromoneFood();
 	
 	public boolean isBaby(float TIME) {
