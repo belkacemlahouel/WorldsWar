@@ -1,38 +1,21 @@
 package env2.resources;
 
-import env2.api.AbstractResource;
 import env2.type.WorldObjectType;
 
-public class Gas extends AbstractResource {
+public final class Gas extends CommonResource {
 
-	@Override
-	public int getQuantity() {
-		// TODO Auto-generated method stub
-		return 0;
+	public Gas(int quantity) {
+		super(quantity);
 	}
 
 	@Override
-	public AbstractResource pick(int quantity) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void add(int quantity) {
-		// TODO Auto-generated method stub
-		
+	public Gas pick(int quantity) {
+		return new Gas(quantity);
 	}
 
 	@Override
 	public WorldObjectType getType() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public boolean isPerceivable() {
-		// TODO Auto-generated method stub
-		return false;
+		return WorldObjectType.GAS;
 	}
 
 }

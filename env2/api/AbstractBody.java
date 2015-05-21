@@ -44,8 +44,8 @@ public abstract class AbstractBody extends AbstractMobileWorldObject {
 	 * 		the complexity is less important,
 	 * 		and it's nothing but a hidden scaling.
 	 */
-	private final int TRANSPORT_CAPA;			// Max weight that could be carried
-	private final int EATING_CAPA;				// Max weight that could be eaten at once
+	private final int TRANSPORT_CAPA;			// Max weight (quantity) that could be carried
+	private final int EATING_CAPA;				// Max weight (quantity) that could be eaten at once
 	private final int MOVING_REACH;				// Max number of cases to be crossed at once
 	private final int VISION_REACH;				// Max vision distance (nb of cases) linked with Frustrum def
 	private final int STRENGTH;					// Strength, in a given unit
