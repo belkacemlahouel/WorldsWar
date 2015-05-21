@@ -49,7 +49,7 @@ public class MyMath {
 		return bresenheimLine(start.getX(), start.getY(), end.getX(), end.getY());
 	}
 
-	public static List<MyPoint2D> bresenheimLine(int startX, int startY, int endX, int endY) {		
+	public static List<MyPoint2D> bresenheimLine(int startX, int startY, int endX, int endY) {
 		ArrayList<MyPoint2D> linePoints = new ArrayList<MyPoint2D>();
 		
 		/* Dimensions of the line */
