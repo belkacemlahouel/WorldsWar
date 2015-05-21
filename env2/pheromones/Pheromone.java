@@ -1,10 +1,5 @@
 package env2.pheromones;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-
-import env2.api.AbstractBody;
 import env2.api.AbstractEnvironment;
 import env2.api.AbstractWorldObject;
 import env2.type.Time;
