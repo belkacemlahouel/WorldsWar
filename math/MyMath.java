@@ -219,12 +219,12 @@ public class MyMath {
 				else if(TY==0){
 					TY = TX;
 				}
-				
+				System.out.println(TX +"-"+TY);
 				System.err.println("TX == TY ? " + (TX == TY));
 				// We just need to check if we have the same result whatever what coordinate we use for this.
-				
-				intersectX = (int) (DX*TX + X);
-				intersectY = (int) (DY*TY + Y);
+
+				intersectX = (int) (vel1.getDx()*TX + pos1.getX());
+				intersectY = (int) (vel1.getDy()*TX + pos1.getY());
 				
 				return new Intersection(TX, intersectX, intersectY);
 			}
