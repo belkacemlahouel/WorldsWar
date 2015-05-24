@@ -1,9 +1,11 @@
 package gui;
 
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
-public class GUIController implements KeyListener 
+public class GUIController implements KeyListener, ComponentListener
 {
 	/* Attributes */
 	private GUI gui;
@@ -13,7 +15,7 @@ public class GUIController implements KeyListener
 		this.gui = g;
 	}
 	
-	/* KeyListenerConstructor */
+	/* KeyListener functions */
 	@Override
 	public void keyPressed(KeyEvent arg0) {		
 		/* Moving keys */
@@ -35,5 +37,24 @@ public class GUIController implements KeyListener
 	
 	@Override
 	public void keyTyped(KeyEvent arg0) {	
+	}
+
+	/* ComponentListener functions */
+
+	@Override
+	public void componentHidden(ComponentEvent e) {
+	}
+
+	@Override
+	public void componentMoved(ComponentEvent e) {
+	}
+
+	@Override
+	public void componentResized(ComponentEvent e) {
+		this.gui.refreshLayout();		
+	}
+
+	@Override
+	public void componentShown(ComponentEvent e) {
 	}	
 }
