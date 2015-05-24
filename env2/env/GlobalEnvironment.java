@@ -15,15 +15,15 @@ import env2.api.AbstractEnvironment;
  *
  */
 
-public class Environment {
+public class GlobalEnvironment {
 
 	private AbstractEnvironment[] grounds;
 	
-	public Environment(int size) {
+	public GlobalEnvironment(int size) {
 		grounds = new AbstractEnvironment[size];
 	}
 	
-	public Environment(Collection<AbstractEnvironment> grounds) {
+	public GlobalEnvironment(Collection<AbstractEnvironment> grounds) {
 		this.grounds = new AbstractEnvironment[grounds.size()];
 		int i = 0;
 		
