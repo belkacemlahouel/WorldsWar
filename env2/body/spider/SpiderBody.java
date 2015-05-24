@@ -108,11 +108,6 @@ private final static HashMap<WorldObjectType, EffectType> MYEFFECTS;
 	}
 
 	@Override
-	public void producePheromoneAttack() {
-		// Nothing to do, Spiders do not produce pheromones
-	}
-
-	@Override
 	public void producePheromoneFood() {
 		// Nothing to do, Spiders do not produce pheromones
 	}

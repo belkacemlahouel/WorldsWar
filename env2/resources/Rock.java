@@ -1,38 +1,21 @@
 package env2.resources;
 
-import env2.api.AbstractResource;
 import env2.type.WorldObjectType;
 
-public final class Rock extends AbstractResource {
+public final class Rock extends CommonResource {
 
-	@Override
-	public int getQuantity() {
-		// TODO Auto-generated method stub
-		return 0;
+	public Rock(int quantity) {
+		super(quantity);
 	}
 
 	@Override
-	public AbstractResource pick(int quantity) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void add(int quantity) {
-		// TODO Auto-generated method stub
-		
+	public Rock pick(int quantity) {
+		return new Rock(quantity);
 	}
 
 	@Override
 	public WorldObjectType getType() {
-		// TODO Auto-generated method stub
-		return null;
+		return WorldObjectType.ROCK;
 	}
-
-	@Override
-	public boolean isPerceivable() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
+	
 }

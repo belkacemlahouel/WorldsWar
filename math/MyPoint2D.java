@@ -22,6 +22,10 @@ public class MyPoint2D implements Comparable<MyPoint2D> {
 		x += dx;
 		y += dy;
 	}
+	
+	public MyPoint2D addNew(int dx, int dy) {
+		return new MyPoint2D(x+dx, y+dy);
+	}
 
 	public int getX() {
 		return x;

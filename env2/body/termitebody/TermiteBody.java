@@ -110,12 +110,6 @@ public class TermiteBody extends AbstractBody {
 	}
 
 	@Override
-	public void producePheromoneAttack() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
 	public void producePheromoneFood() {
 		// TODO Auto-generated method stub
 		
