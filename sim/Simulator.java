@@ -1,22 +1,20 @@
 package sim;
 
+import java.io.IOException;
+
+import parser.DataToGlobalEnvironment;
 import sim.agent.AbstractAgent;
-import env2.env.Environment;
-import env2.env.Ground;
+import env2.env.GlobalEnvironment;
 import gui.GUI;
 
 public class Simulator {
 	
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
 		
-		final int NB_GHOSTS = 2, WIDTH = 10, HEIGHT = 4;
-		int step = 0;
-		
-		Simulator sim = new Simulator(NB_GHOSTS, WIDTH, HEIGHT);
+		Simulator sim = new Simulator();
 		System.out.println("Bye world.");
 		
 		while (true) {
-			System.out.println("Step# " + (step++));
 			sim.doStep();
 			try {
 				Thread.sleep(500);
@@ -29,31 +27,22 @@ public class Simulator {
 	/***/
 	
 	private AbstractAgent[] agents;
-	private Environment envs;
+	private GlobalEnvironment global;
 	private GUI gui;
 	
-	/*
-	 * TODO
-	 * Insertion of a call to the parser in this constructor...
-	 */
+	private final static String DEFAULT_FILENAME = "res/conf/environment.txt";
 	
-	public Simulator(int nbGhosts, int width, int height) {
+	public Simulator() throws IOException {
+		new Simulator(DEFAULT_FILENAME);
+	}
+	
+	public Simulator(String filename) throws IOException {
 		
-		/*
-		 * Environments instanciation
-		 */
-		envs = new Environment(1);
-		envs.set(0, new Ground(10, 10));
+		global = (new DataToGlobalEnvironment(filename)).getGlobalEnvironment(); 
 		
-		/*
-		 * Agents and their bodies
-		 */
+		// TODO
 		
-		/*
-		 * Resources put in the environment
-		 */
-		
-		gui = new GUI(envs.get(0));
+		gui = new GUI(global.get(0)); // TODO @bourgeoismaxime = new GUI(global);
 		gui.setVisible(true);
 	}
 	

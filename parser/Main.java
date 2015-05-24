@@ -25,7 +25,7 @@ class Main {
 		datas.parseEnvDatas();
 		datas.print();
 		
-		AbstractEnvironment env = new Ground(datas.getEnvsHeight().get(0), datas.getEnvsWidth().get(0));
+		AbstractEnvironment env = new Ground(datas.getEnvsHeights().get(0), datas.getEnvsWidths().get(0));
 		//Ground env = new Ground(10, 10);
 		GUI gui = new GUI(env);
 		

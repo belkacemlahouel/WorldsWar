@@ -10,7 +10,7 @@ import java.util.HashMap;
 import parser.ConfParameters;
 
 
-class EnvironmentParser {
+public class EnvironmentParser {
 	
 	private Path fFilePath;
 	//contains the height and width of all the environments classified by their order of appearance in the data file.
@@ -235,7 +235,7 @@ class EnvironmentParser {
 	 * Getter on the list of integer containing the height of the environments.
 	 * @return envsHeight
 	 */
-	public List<Integer> getEnvsHeight()
+	public List<Integer> getEnvsHeights()
 	{
 		return envsHeight;
 	}
@@ -244,7 +244,7 @@ class EnvironmentParser {
 	 * Getter on the list of integer containing the width of the environments.
 	 * @return envsWidth
 	 */
-	public List<Integer> getEnvsWidth()
+	public List<Integer> getEnvsWidths()
 	{
 		return envsWidth;
 	}
@@ -256,5 +256,11 @@ class EnvironmentParser {
 	public List<BodyInfo> getBodies()
 	{
 		return bodies;
+	}
+	
+	public int getNbGrounds() {
+		if (envsWidth.size() != envsHeight.size())
+			System.err.println("NB SIZES PARSED != NB HEIGTHS");
+		return envsWidth.size();
 	}
 }
