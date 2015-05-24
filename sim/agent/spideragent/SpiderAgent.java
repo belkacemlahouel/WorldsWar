@@ -1,13 +1,12 @@
 package sim.agent.spideragent;
 
-import env2.api.AbstractBody;
+import env2.body.spider.SpiderBody;
 import sim.agent.AbstractAgent;
 
-public class SpiderAgent extends AbstractAgent {
+public final class SpiderAgent extends AbstractAgent {
 
-	public SpiderAgent(AbstractBody b, int ID) {
+	public SpiderAgent(SpiderBody b, int ID) {
 		super(b, ID);
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override

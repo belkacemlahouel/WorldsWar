@@ -1,12 +1,11 @@
 package sim.agent.antagent;
 
-import env2.body.antbody.AntBody;
+import env2.body.antbody.AntGathererBody;
 
 public final class AntGathererAgent extends AntAgent {
 
-	public AntGathererAgent(AntBody b, int ID) {
+	public AntGathererAgent(AntGathererBody b, int ID) {
 		super(b, ID);
-		// TODO Auto-generated constructor stub
 	}
 
 	public void live() {

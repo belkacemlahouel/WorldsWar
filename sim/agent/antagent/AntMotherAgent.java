@@ -6,7 +6,6 @@ public final class AntMotherAgent extends AntAgent {
 
 	public AntMotherAgent(AntMotherBody b, int ID) {
 		super(b, ID);
-		// TODO Auto-generated constructor stub
 	}
 
 	public void live() {

@@ -3,7 +3,7 @@ package sim.agent.termiteagent;
 import env2.body.termitebody.TermiteBody;
 import sim.agent.AbstractAgent;
 
-public class TermiteAgent extends AbstractAgent {
+public abstract class TermiteAgent extends AbstractAgent {
 
 	public TermiteAgent(TermiteBody b, int ID) {
 		super(b, ID);
@@ -14,7 +14,5 @@ public class TermiteAgent extends AbstractAgent {
 	 * Default behavior for all agents controlling this type of body
 	 * But this should be overidden when possible
 	 */
-	public void live() {
-		// TODO
-	}
+	public abstract void live();
 }
