@@ -1,27 +1,94 @@
 package parser;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 
-import env2.api.AbstractEnvironment;
+import env2.api.AbstractResource;
 import env2.env.GlobalEnvironment;
 import env2.env.GroundSquared;
+import env2.instanciator.bodies.AbstractBodyInstanciator;
+import env2.instanciator.bodies.ant.AntGathererInstanciator;
+import env2.instanciator.bodies.ant.AntMotherInstanciator;
+import env2.instanciator.bodies.ant.AntNurseInstanciator;
+import env2.instanciator.bodies.ant.AntSoldierInstanciator;
+import env2.instanciator.bodies.ant.AntUndertakerInstanciator;
+import env2.instanciator.bodies.spider.SpiderInstanciator;
+import env2.instanciator.bodies.termite.TermiteGathererInstanciator;
+import env2.instanciator.bodies.termite.TermiteMotherInstanciator;
+import env2.instanciator.bodies.termite.TermiteNurseInstanciator;
+import env2.instanciator.bodies.termite.TermiteSoldierInstanciator;
+import env2.instanciator.bodies.termite.TermiteUndertakerInstanciator;
+import env2.instanciator.resources.AbstractResourceInstanciator;
+import env2.instanciator.resources.FruitInstanciator;
+import env2.instanciator.resources.GasInstanciator;
+import env2.instanciator.resources.LeafInstanciator;
+import env2.instanciator.resources.MeatInstanciator;
+import env2.instanciator.resources.PoisonInstanciator;
+import env2.instanciator.resources.RockInstanciator;
+import env2.instanciator.resources.SugarInstanciator;
+import env2.instanciator.resources.WoodInstanciator;
+import env2.type.WorldObjectType;
 
 public class DataToGlobalEnvironment {
 	
 	private final GlobalEnvironment GLOBAL;
+	private static final HashMap<WorldObjectType, AbstractResourceInstanciator> RESOURCE_INSTANCIATOR;
+	private static final HashMap<WorldObjectType, AbstractBodyInstanciator> BODY_INSTANCIATOR;
+	
+	static {
+		RESOURCE_INSTANCIATOR = new HashMap<>();
+		RESOURCE_INSTANCIATOR.put(WorldObjectType.WOOD, new WoodInstanciator());
+		RESOURCE_INSTANCIATOR.put(WorldObjectType.ROCK, new RockInstanciator());
+		RESOURCE_INSTANCIATOR.put(WorldObjectType.FRUIT, new FruitInstanciator());
+		RESOURCE_INSTANCIATOR.put(WorldObjectType.SUGAR, new SugarInstanciator());
+		RESOURCE_INSTANCIATOR.put(WorldObjectType.GAS, new GasInstanciator());
+		RESOURCE_INSTANCIATOR.put(WorldObjectType.POISON, new PoisonInstanciator());
+		RESOURCE_INSTANCIATOR.put(WorldObjectType.MEAT, new MeatInstanciator());
+		RESOURCE_INSTANCIATOR.put(WorldObjectType.LEAF, new LeafInstanciator());
+	}
+	
+	static {
+		BODY_INSTANCIATOR = new HashMap<>();
+		BODY_INSTANCIATOR.put(WorldObjectType.ANTGATHERERBODY, new AntGathererInstanciator());
+		BODY_INSTANCIATOR.put(WorldObjectType.ANTMOTHERBODY, new AntMotherInstanciator());
+		BODY_INSTANCIATOR.put(WorldObjectType.ANTNURSEBODY, new AntNurseInstanciator());
+		BODY_INSTANCIATOR.put(WorldObjectType.ANTSOLDIERBODY, new AntSoldierInstanciator());
+		BODY_INSTANCIATOR.put(WorldObjectType.ANTUNDERTAKERBODY, new AntUndertakerInstanciator());
+		
+		BODY_INSTANCIATOR.put(WorldObjectType.SPIDERBODY, new SpiderInstanciator());
+		
+		BODY_INSTANCIATOR.put(WorldObjectType.TERMITEGATHERERBODY, new TermiteGathererInstanciator());
+		BODY_INSTANCIATOR.put(WorldObjectType.TERMITEMOTHERBODY, new TermiteMotherInstanciator());
+		BODY_INSTANCIATOR.put(WorldObjectType.TERMITENURSEBODY, new TermiteNurseInstanciator());
+		BODY_INSTANCIATOR.put(WorldObjectType.TERMITESOLDIERBODY, new TermiteSoldierInstanciator());
+		BODY_INSTANCIATOR.put(WorldObjectType.TERMITEUNDERTAKERBODY, new TermiteUndertakerInstanciator());
+	}
 	
 	public DataToGlobalEnvironment(String filename) throws IOException {
 		
-		EnvironmentParser datas = new EnvironmentParser(filename);
-		datas.parseEnvDatas();
+		final EnvironmentParser DATAS = new EnvironmentParser(filename);
+		DATAS.parseEnvDatas();
 		
-		final int NB_GROUNDS = datas.getNbGrounds();
+		final int NB_GROUNDS = DATAS.getNbGrounds();
 		
-		List<AbstractEnvironment> grounds = new LinkedList<>();
+		List<GroundSquared> grounds = new LinkedList<>();
 		for (int i = 0; i < NB_GROUNDS; ++i) {
-			grounds.add(new GroundSquared(datas.getEnvsWidths().get(i), datas.getEnvsHeights().get(i)));
+			grounds.add(new GroundSquared(DATAS.getEnvsWidths().get(i), DATAS.getEnvsHeights().get(i)));
+		}
+		
+		for (PortalInfo info : DATAS.getPortalInfos()) {
+			grounds.get(info.env1).addPortal(info.posEnv1[0], info.posEnv1[1],
+					grounds.get(info.env2), info.posEnv2[0], info.posEnv2[1]);
+		}
+		
+		for (WorldObjectType key : DATAS.getResources2().keySet()) {
+			for (ResourceInfo info : DATAS.getResources2().get(key)) {
+				AbstractResource res = RESOURCE_INSTANCIATOR.get(key).getNew();
+				res.add(info.quantity);
+				grounds.get(info.env).getCell(info.posX, info.posY).addObject(res);
+			}
 		}
 		
 		/*
