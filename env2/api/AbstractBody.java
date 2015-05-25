@@ -115,6 +115,8 @@ public abstract class AbstractBody extends AbstractMobileWorldObject {
 		bonusstrength = 0;
 		mycargo = new ArrayList<>();
 		myfrustrum = null;
+		
+		move(env, pos);
 	}
 	
 	/*************************************************************************

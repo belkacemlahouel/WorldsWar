@@ -7,7 +7,6 @@ import java.util.List;
 
 import math.MyPoint2D;
 import sim.agent.AbstractAgent;
-import env2.api.AbstractBody;
 import env2.api.AbstractResource;
 import env2.env.GlobalEnvironment;
 import env2.env.GroundSquared;
@@ -112,8 +111,7 @@ public class DataToGlobalEnvironment {
 					AbstractBodyInstanciator.ENV = grounds.get(info.env);
 					AbstractBodyInstanciator.TRIBE_ID = info.tribeId;
 					
-					AbstractBody body = BODY_INSTANCIATOR.get(key).getNew();
-					body.move(AbstractBodyInstanciator.ENV, AbstractBodyInstanciator.POS); // TODO is this line necessary?
+					// AbstractBody body = BODY_INSTANCIATOR.get(key).getNew();
 					AbstractAgent agt = BODY_INSTANCIATOR.get(key).getAgent();
 					AGENTS.add(agt);
 				}
@@ -125,5 +123,9 @@ public class DataToGlobalEnvironment {
 	
 	public GlobalEnvironment getGlobalEnvironment() {
 		return GLOBAL;
+	}
+	
+	public LinkedList<AbstractAgent> getAgents() {
+		return AGENTS;
 	}
 }
