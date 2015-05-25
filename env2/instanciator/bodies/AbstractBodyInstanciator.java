@@ -1,5 +1,6 @@
 package env2.instanciator.bodies;
 
+import sim.agent.AbstractAgent;
 import math.MyPoint2D;
 import env2.api.AbstractBody;
 import env2.api.AbstractEnvironment;
@@ -14,4 +15,5 @@ public abstract class AbstractBodyInstanciator extends AbstractInstanciator {
 	public Direction DIR;
 	
 	public abstract AbstractBody getNew();
+	public abstract AbstractAgent getAgent();
 }
