@@ -186,8 +186,8 @@ public class MyMath {
 				/* The vector are colinear : There is no intersection. */
 				return null;
 			else {
-				final float DX, DY;
-				final float TX, TY;
+				float DX, DY;
+				float TX, TY;
 				final int X, Y;
 				int intersectX, intersectY;
 				

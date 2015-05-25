@@ -44,7 +44,7 @@ public class Simulator {
 		
 		// TODO
 		
-		gui = new GUI(global.get(0)); // TODO @bourgeoismaxime = new GUI(global);
+		gui = new GUI(global.getGrounds()); // TODO @bourgeoismaxime = new GUI(global);
 		gui.setVisible(true);
 	}
 	

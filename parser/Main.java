@@ -13,6 +13,7 @@ import env2.api.AbstractEnvironment;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 
 class Main {
@@ -27,7 +28,9 @@ class Main {
 		
 		AbstractEnvironment env = new Ground(datas.getEnvsHeights().get(0), datas.getEnvsWidths().get(0));
 		//Ground env = new Ground(10, 10);
-		GUI gui = new GUI(env);
+		LinkedList<AbstractEnvironment> grounds = new LinkedList<>();
+		grounds.add(env);
+		GUI gui = new GUI(grounds);
 		
 		//Loop that initialize one body per category in the file config
 		MyPoint2D newPos;
