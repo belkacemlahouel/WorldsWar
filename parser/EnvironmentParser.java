@@ -4,39 +4,56 @@ import java.io.IOException;
 import java.nio.file.Paths;
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
 import java.util.HashMap;
+
+import env2.type.WorldObjectType;
 import parser.ConfParameters;
 
 
 public class EnvironmentParser {
 	
 	private Path fFilePath;
-	//contains the height and width of all the environments classified by their order of appearance in the data file.
-	private List<Integer> envsHeight  = new ArrayList<Integer>();
-	private List<Integer> envsWidth  = new ArrayList<Integer>();
-	//contains the informations about tribes in HashMap<Id, TribeType>
+	
+	private LinkedList<Integer> envsHeights; // heights and widths for each environment, in order
+	private LinkedList<Integer> envsWidths;
+	
+	private LinkedList<PortalInfo> portals;
+	
 	private HashMap<Integer,String> tribes = new HashMap<Integer,String>();
-	private List<PortalInfo> portals  = new ArrayList<PortalInfo>();
 	private List<ResourceInfo> resources = new ArrayList<ResourceInfo>();
 	private List<BodyInfo> bodies = new ArrayList<BodyInfo>();
 	
+	/***/
 	
-	public EnvironmentParser()
-	{
-	    fFilePath = null;
-	}
+	// TODO @rdorier
+	private HashMap<WorldObjectType, ResourceInfo> resources2;
+	private HashMap<WorldObjectType, BodyInfo> bodies2;
+	private LinkedList<WorldObjectType> tribes2;
+	
+	/***/
 	
 	/**
 	* Constructor.
 	* @param fileName full name of an existing, readable file.
 	*/
-	public EnvironmentParser(String fileName)
-	{
+	public EnvironmentParser(String fileName) {
 	    fFilePath = Paths.get(fileName);
+	    
+	    envsHeights = new LinkedList<>();
+	    envsWidths = new LinkedList<>();
+	    portals = new LinkedList<>();
+	    
+	    resources2 = new HashMap<>();
+	    bodies2 = new HashMap<>();
+	    tribes2 = new LinkedList<>();
 	}
 	
+	public EnvironmentParser() {
+	    new EnvironmentParser(null);
+	}
 	
 	/**
 	* Parse the datas of the file located in the path saved in fFilePath.
@@ -91,11 +108,11 @@ public class EnvironmentParser {
 	    		case ENV :
 	    			if(j%2 != 0)
 	    			{
-	    				envsWidth.add(Integer.parseInt(param));
+	    				envsWidths.add(Integer.parseInt(param));
 	    			}
 	    			else
 	    			{
-	    				envsHeight.add(Integer.parseInt(param));
+	    				envsHeights.add(Integer.parseInt(param));
 	    			}
 	    			break;
 	    		
@@ -197,9 +214,9 @@ public class EnvironmentParser {
 	void print()
 	{
 		//print the environments
-		for(int i = 0; i < envsHeight.size(); i++)
+		for(int i = 0; i < envsHeights.size(); i++)
 		{
-            System.out.println("Environment "+ (i+1) + " is " + envsHeight.get(i) + "*" + envsWidth.get(i));
+            System.out.println("Environment "+ (i+1) + " is " + envsHeights.get(i) + "*" + envsWidths.get(i));
         }
 		
 		//print the different tribes.
@@ -233,7 +250,7 @@ public class EnvironmentParser {
 	 */
 	public List<Integer> getEnvsHeights()
 	{
-		return envsHeight;
+		return envsHeights;
 	}
 	
 	/**
@@ -242,7 +259,7 @@ public class EnvironmentParser {
 	 */
 	public List<Integer> getEnvsWidths()
 	{
-		return envsWidth;
+		return envsWidths;
 	}
 	
 	/**
@@ -255,12 +272,28 @@ public class EnvironmentParser {
 	}
 	
 	public int getNbGrounds() {
-		if (envsWidth.size() != envsHeight.size())
+		if (envsWidths.size() != envsHeights.size())
 			System.err.println("NB SIZES PARSED != NB HEIGTHS");
-		return envsWidth.size();
+		return envsWidths.size();
 	}
 	
-	public List<PortalInfo> getPortalInfos() {
+	public LinkedList<PortalInfo> getPortalInfos() {
 		return portals;
+	}
+	
+	public List<ResourceInfo> getResourcesInfos() {
+		return resources;
+	}
+	
+	public HashMap<WorldObjectType, BodyInfo> getBodies2() {
+		return bodies2;
+	}
+	
+	public HashMap<WorldObjectType, ResourceInfo> getResources2() {
+		return resources2;
+	}
+	
+	public LinkedList<WorldObjectType> getTribes2() {
+		return tribes2;
 	}
 }
