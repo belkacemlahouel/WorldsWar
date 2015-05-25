@@ -106,7 +106,7 @@ public class EnvironmentParser {
 
 	    	switch (parameter) {
 	    		case ENV :
-	    			if(j%2 != 0)
+	    			if(j%2 == 0)
 	    			{
 	    				envsWidths.add(Integer.parseInt(param));
 	    			}
