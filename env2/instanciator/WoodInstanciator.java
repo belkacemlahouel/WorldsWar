@@ -1,12 +1,12 @@
 package env2.instanciator;
 
-import env2.api.AbstractWorldObject;
+import env2.api.AbstractResource;
 import env2.resources.Wood;
 
-public final class WoodInstanciator extends AbstractInstanciator {
+public final class WoodInstanciator extends AbstractResourceInstanciator {
 
 	@Override
-	public AbstractWorldObject getNew() {
+	public AbstractResource getNew() {
 		return new Wood(0);
 	}
 }

@@ -1,16 +1,40 @@
 package parser;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 
+import env2.api.AbstractResource;
 import env2.env.GlobalEnvironment;
 import env2.env.GroundSquared;
+import env2.instanciator.AbstractResourceInstanciator;
+import env2.instanciator.FruitInstanciator;
+import env2.instanciator.GasInstanciator;
+import env2.instanciator.LeafInstanciator;
+import env2.instanciator.MeatInstanciator;
+import env2.instanciator.PoisonInstanciator;
+import env2.instanciator.RockInstanciator;
+import env2.instanciator.SugarInstanciator;
+import env2.instanciator.WoodInstanciator;
 import env2.type.WorldObjectType;
 
 public class DataToGlobalEnvironment {
 	
 	private final GlobalEnvironment GLOBAL;
+	private static final HashMap<WorldObjectType, AbstractResourceInstanciator> instanciators;
+	
+	static {
+		instanciators = new HashMap<>();
+		instanciators.put(WorldObjectType.WOOD, new WoodInstanciator());
+		instanciators.put(WorldObjectType.ROCK, new RockInstanciator());
+		instanciators.put(WorldObjectType.FRUIT, new FruitInstanciator());
+		instanciators.put(WorldObjectType.SUGAR, new SugarInstanciator());
+		instanciators.put(WorldObjectType.GAS, new GasInstanciator());
+		instanciators.put(WorldObjectType.POISON, new PoisonInstanciator());
+		instanciators.put(WorldObjectType.MEAT, new MeatInstanciator());
+		instanciators.put(WorldObjectType.LEAF, new LeafInstanciator());
+	}
 	
 	public DataToGlobalEnvironment(String filename) throws IOException {
 		
@@ -30,7 +54,11 @@ public class DataToGlobalEnvironment {
 		}
 		
 		for (WorldObjectType key : DATAS.getResources2().keySet()) {
-			// TODO Check instanciator...
+			for (ResourceInfo info : DATAS.getResources2().get(key)) {
+				AbstractResource res = instanciators.get(key).getNew();
+				res.add(info.quantity);
+				grounds.get(info.env).getCell(info.posX, info.posY).addObject(res);
+			}
 		}
 		
 		/*

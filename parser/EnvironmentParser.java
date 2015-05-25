@@ -29,8 +29,8 @@ public class EnvironmentParser {
 	/***/
 	
 	// TODO @rdorier
-	private HashMap<WorldObjectType, ResourceInfo> resources2;
-	private HashMap<WorldObjectType, BodyInfo> bodies2;
+	private HashMap<WorldObjectType, LinkedList<ResourceInfo>> resources2;
+	private HashMap<WorldObjectType, LinkedList<BodyInfo>> bodies2;
 	private LinkedList<WorldObjectType> tribes2;
 	
 	/***/
@@ -285,11 +285,13 @@ public class EnvironmentParser {
 		return resources;
 	}
 	
-	public HashMap<WorldObjectType, BodyInfo> getBodies2() {
+	/***/
+	
+	public HashMap<WorldObjectType, LinkedList<BodyInfo>> getBodies2() {
 		return bodies2;
 	}
 	
-	public HashMap<WorldObjectType, ResourceInfo> getResources2() {
+	public HashMap<WorldObjectType, LinkedList<ResourceInfo>> getResources2() {
 		return resources2;
 	}
 	

@@ -1,12 +1,12 @@
 package env2.instanciator;
 
-import env2.api.AbstractWorldObject;
+import env2.api.AbstractResource;
 import env2.resources.Rock;
 
-public final class RockInstanciator extends AbstractInstanciator {
+public final class RockInstanciator extends AbstractResourceInstanciator {
 
 	@Override
-	public AbstractWorldObject getNew() {
+	public AbstractResource getNew() {
 		return new Rock(0);
 	}
 }

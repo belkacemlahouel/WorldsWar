@@ -1,12 +1,12 @@
 package env2.instanciator;
 
-import env2.api.AbstractWorldObject;
+import env2.api.AbstractResource;
 import env2.resources.Poison;
 
-public final class PoisonInstanciator extends AbstractInstanciator {
+public final class PoisonInstanciator extends AbstractResourceInstanciator {
 
 	@Override
-	public AbstractWorldObject getNew() {
+	public AbstractResource getNew() {
 		return new Poison(0);
 	}
 }
