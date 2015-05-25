@@ -6,6 +6,7 @@ import java.util.List;
 
 import env2.env.GlobalEnvironment;
 import env2.env.GroundSquared;
+import env2.type.WorldObjectType;
 
 public class DataToGlobalEnvironment {
 	
@@ -25,7 +26,11 @@ public class DataToGlobalEnvironment {
 		
 		for (PortalInfo info : DATAS.getPortalInfos()) {
 			grounds.get(info.env1).addPortal(info.posEnv1[0], info.posEnv1[1],
-												grounds.get(info.env2), info.posEnv2[0], info.posEnv2[1]);
+					grounds.get(info.env2), info.posEnv2[0], info.posEnv2[1]);
+		}
+		
+		for (WorldObjectType key : DATAS.getResources2().keySet()) {
+			// TODO Check instanciator...
 		}
 		
 		/*
