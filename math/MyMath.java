@@ -182,25 +182,57 @@ public class MyMath {
 		if (pos2.equals(pos1))
 			return new Intersection(0f, pos1.getX(), pos1.getY());
 		else {
-			if (vel1.equals(vel2))
+			if((vel1.getDx()/vel2.getDx()) == (vel1.getDy()/vel2.getDy()))
+				/* The vector are colinear : There is no intersection. */
 				return null;
 			else {
-				final float TX, TY, DX, DY;
-				final float X, Y;
+				final float DX, DY;
+				final float TX, TY;
+				final int X, Y;
+				int intersectX, intersectY;
 				
 				X = (pos2.getX() - pos1.getX());
 				Y = (pos2.getY() - pos1.getY());
 				DX = vel1.getDx() - vel2.getDx();
 				DY = vel1.getDy() - vel2.getDy();
 				
-				TX = X/DX;
-				TY = Y/DY;
+				/* Case of denominator equals to zero*/
+				if(DX==0){
+					TX=0;
+				}
+				else{
+					TX = X/DX;
+				}
 				
-				Intersection I1 = new Intersection(TX, (int) (TX*vel1.getDx()+pos1.getX()), (int) (TX*vel1.getDy()+pos1.getY()));
+				// Intersection I1 = new Intersection(TX, (int) (TX*vel1.getDx()+pos1.getX()), (int) (TX*vel1.getDy()+pos1.getY()));
 				
-				if (TX != TY) return null;
+				// if (TX != TY) return null;
 				
-				return I1;
+				// return I1;
+
+				/* Case of denominator equals to zero*/
+				if(DY==0){
+					TY=0;
+				}
+				else{
+					TY = Y/DY;
+				}
+				
+				/* Numerator equals to zero still verifies the equation*/
+				if(TX==0){
+					TX = TY;
+				}
+				else if(TY==0){
+					TY = TX;
+				}
+				System.out.println(TX +"-"+TY);
+				System.err.println("TX == TY ? " + (TX == TY));
+				// We just need to check if we have the same result whatever what coordinate we use for this.
+
+				intersectX = (int) (vel1.getDx()*TX + pos1.getX());
+				intersectY = (int) (vel1.getDy()*TX + pos1.getY());
+				
+				return new Intersection(TX, intersectX, intersectY);
 			}
 		}
 	}
