@@ -1,6 +1,7 @@
 package sim;
 
 import java.io.IOException;
+import java.util.LinkedList;
 
 import parser.DataToGlobalEnvironment;
 import sim.agent.AbstractAgent;
@@ -12,7 +13,6 @@ public class Simulator {
 	public static void main(String[] args) throws IOException {
 		
 		Simulator sim = new Simulator();
-		System.out.println("Bye world.");
 		
 		while (true) {
 			sim.doStep();
@@ -26,11 +26,11 @@ public class Simulator {
 
 	/***/
 	
-	private AbstractAgent[] agents;
+	private LinkedList<AbstractAgent> agents;
 	private GlobalEnvironment global;
 	private GUI gui;
 	
-	private final static String DEFAULT_FILENAME = "res/conf/environment.txt";
+	private final static String DEFAULT_FILENAME = "src/res/conf/environment.txt";
 	
 	public Simulator() throws IOException {
 		new Simulator(DEFAULT_FILENAME);
@@ -38,7 +38,9 @@ public class Simulator {
 	
 	public Simulator(String filename) throws IOException {
 		
-		global = (new DataToGlobalEnvironment(filename)).getGlobalEnvironment(); 
+		DataToGlobalEnvironment instancied = new DataToGlobalEnvironment(filename);
+		global = instancied.getGlobalEnvironment(); 
+		agents = instancied.getAgents();
 		
 		// TODO
 		
