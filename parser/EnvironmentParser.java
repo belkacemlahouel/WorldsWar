@@ -17,7 +17,7 @@ public class EnvironmentParser {
 	private List<Integer> envsHeight  = new ArrayList<Integer>();
 	private List<Integer> envsWidth  = new ArrayList<Integer>();
 	//contains the informations about tribes in HashMap<Id, TribeType>
-	private HashMap<Integer,String> tribes =new HashMap<Integer,String>();
+	private HashMap<Integer,String> tribes = new HashMap<Integer,String>();
 	private List<PortalInfo> portals  = new ArrayList<PortalInfo>();
 	private List<ResourceInfo> resources = new ArrayList<ResourceInfo>();
 	private List<BodyInfo> bodies = new ArrayList<BodyInfo>();
@@ -203,12 +203,8 @@ public class EnvironmentParser {
         }
 		
 		//print the different tribes.
-		for(int i = 0; i <= tribes.size(); i++)
-		{
-			if(tribes.containsKey(i))
-			{
-				System.out.println(tribes.get(i)+i);
-			}
+		for (int i : tribes.keySet()) {
+			System.out.println(tribes.get(i) + " " + i);
 		}
 		
 		//print the portals
