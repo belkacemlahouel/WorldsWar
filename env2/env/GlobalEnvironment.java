@@ -23,7 +23,7 @@ public class GlobalEnvironment {
 		grounds = new AbstractEnvironment[size];
 	}
 	
-	public GlobalEnvironment(Collection<AbstractEnvironment> grounds) {
+	public GlobalEnvironment(Collection<? extends AbstractEnvironment> grounds) {
 		this.grounds = new AbstractEnvironment[grounds.size()];
 		int i = 0;
 		

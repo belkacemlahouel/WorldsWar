@@ -259,4 +259,8 @@ public class EnvironmentParser {
 			System.err.println("NB SIZES PARSED != NB HEIGTHS");
 		return envsWidth.size();
 	}
+	
+	public List<PortalInfo> getPortalInfos() {
+		return portals;
+	}
 }
