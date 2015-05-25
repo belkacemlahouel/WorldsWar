@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 
+import math.MyPoint2D;
+import sim.agent.AbstractAgent;
 import env2.api.AbstractResource;
 import env2.env.GlobalEnvironment;
 import env2.env.GroundSquared;
@@ -34,6 +36,8 @@ import env2.type.WorldObjectType;
 public class DataToGlobalEnvironment {
 	
 	private final GlobalEnvironment GLOBAL;
+	private LinkedList<AbstractAgent> AGENTS;
+	
 	private static final HashMap<WorldObjectType, AbstractResourceInstanciator> RESOURCE_INSTANCIATOR;
 	private static final HashMap<WorldObjectType, AbstractBodyInstanciator> BODY_INSTANCIATOR;
 	
@@ -66,6 +70,8 @@ public class DataToGlobalEnvironment {
 		BODY_INSTANCIATOR.put(WorldObjectType.TERMITEUNDERTAKERBODY, new TermiteUndertakerInstanciator());
 	}
 	
+	/***/
+	
 	public DataToGlobalEnvironment(String filename) throws IOException {
 		
 		final EnvironmentParser DATAS = new EnvironmentParser(filename);
@@ -97,10 +103,29 @@ public class DataToGlobalEnvironment {
 		 * Instanciation of GUIBodies should be done in GUI constructor... given a set of bodies
 		 */
 		
+		AGENTS = new LinkedList<>();
+		for (WorldObjectType key : DATAS.getBodies2().keySet()) {
+			for (BodyInfo info : DATAS.getBodies2().get(key)) {
+				for (int i = 0; i < info.quantity; ++i) {
+					AbstractBodyInstanciator.POS = new MyPoint2D(info.pos[0], info.pos[1]);
+					AbstractBodyInstanciator.ENV = grounds.get(info.env);
+					AbstractBodyInstanciator.TRIBE_ID = info.tribeId;
+					
+					// AbstractBody body = BODY_INSTANCIATOR.get(key).getNew();
+					AbstractAgent agt = BODY_INSTANCIATOR.get(key).getAgent();
+					AGENTS.add(agt);
+				}
+			}
+		}
+		
 		GLOBAL = new GlobalEnvironment(grounds);
 	}
 	
 	public GlobalEnvironment getGlobalEnvironment() {
 		return GLOBAL;
+	}
+	
+	public LinkedList<AbstractAgent> getAgents() {
+		return AGENTS;
 	}
 }
