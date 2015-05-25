@@ -8,32 +8,38 @@ import java.util.List;
 import env2.api.AbstractResource;
 import env2.env.GlobalEnvironment;
 import env2.env.GroundSquared;
-import env2.instanciator.AbstractResourceInstanciator;
-import env2.instanciator.FruitInstanciator;
-import env2.instanciator.GasInstanciator;
-import env2.instanciator.LeafInstanciator;
-import env2.instanciator.MeatInstanciator;
-import env2.instanciator.PoisonInstanciator;
-import env2.instanciator.RockInstanciator;
-import env2.instanciator.SugarInstanciator;
-import env2.instanciator.WoodInstanciator;
+import env2.instanciator.bodies.AbstractBodyInstanciator;
+import env2.instanciator.resources.AbstractResourceInstanciator;
+import env2.instanciator.resources.FruitInstanciator;
+import env2.instanciator.resources.GasInstanciator;
+import env2.instanciator.resources.LeafInstanciator;
+import env2.instanciator.resources.MeatInstanciator;
+import env2.instanciator.resources.PoisonInstanciator;
+import env2.instanciator.resources.RockInstanciator;
+import env2.instanciator.resources.SugarInstanciator;
+import env2.instanciator.resources.WoodInstanciator;
 import env2.type.WorldObjectType;
 
 public class DataToGlobalEnvironment {
 	
 	private final GlobalEnvironment GLOBAL;
-	private static final HashMap<WorldObjectType, AbstractResourceInstanciator> instanciators;
+	private static final HashMap<WorldObjectType, AbstractResourceInstanciator> RESOURCE_INSTANCIATOR;
+	private static final HashMap<WorldObjectType, AbstractBodyInstanciator> BODY_INSTANCIATOR;
 	
 	static {
-		instanciators = new HashMap<>();
-		instanciators.put(WorldObjectType.WOOD, new WoodInstanciator());
-		instanciators.put(WorldObjectType.ROCK, new RockInstanciator());
-		instanciators.put(WorldObjectType.FRUIT, new FruitInstanciator());
-		instanciators.put(WorldObjectType.SUGAR, new SugarInstanciator());
-		instanciators.put(WorldObjectType.GAS, new GasInstanciator());
-		instanciators.put(WorldObjectType.POISON, new PoisonInstanciator());
-		instanciators.put(WorldObjectType.MEAT, new MeatInstanciator());
-		instanciators.put(WorldObjectType.LEAF, new LeafInstanciator());
+		RESOURCE_INSTANCIATOR = new HashMap<>();
+		RESOURCE_INSTANCIATOR.put(WorldObjectType.WOOD, new WoodInstanciator());
+		RESOURCE_INSTANCIATOR.put(WorldObjectType.ROCK, new RockInstanciator());
+		RESOURCE_INSTANCIATOR.put(WorldObjectType.FRUIT, new FruitInstanciator());
+		RESOURCE_INSTANCIATOR.put(WorldObjectType.SUGAR, new SugarInstanciator());
+		RESOURCE_INSTANCIATOR.put(WorldObjectType.GAS, new GasInstanciator());
+		RESOURCE_INSTANCIATOR.put(WorldObjectType.POISON, new PoisonInstanciator());
+		RESOURCE_INSTANCIATOR.put(WorldObjectType.MEAT, new MeatInstanciator());
+		RESOURCE_INSTANCIATOR.put(WorldObjectType.LEAF, new LeafInstanciator());
+	}
+	
+	static {
+		BODY_INSTANCIATOR = new HashMap<>();
 	}
 	
 	public DataToGlobalEnvironment(String filename) throws IOException {
@@ -55,7 +61,7 @@ public class DataToGlobalEnvironment {
 		
 		for (WorldObjectType key : DATAS.getResources2().keySet()) {
 			for (ResourceInfo info : DATAS.getResources2().get(key)) {
-				AbstractResource res = instanciators.get(key).getNew();
+				AbstractResource res = RESOURCE_INSTANCIATOR.get(key).getNew();
 				res.add(info.quantity);
 				grounds.get(info.env).getCell(info.posX, info.posY).addObject(res);
 			}
