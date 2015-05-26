@@ -89,32 +89,31 @@ public class DataToGlobalEnvironment {
 					grounds.get(info.env2), info.posEnv2[0], info.posEnv2[1]);
 		}
 		
-		for (WorldObjectType key : DATAS.getResources2().keySet()) {
-			for (ResourceInfo info : DATAS.getResources2().get(key)) {
-				AbstractResource res = RESOURCE_INSTANCIATOR.get(key).getNew();
-				res.add(info.quantity);
-				grounds.get(info.env).getCell(info.posX, info.posY).addObject(res);
-			}
+		
+		for (ResourceInfo info : DATAS.getResourcesInfos()) {
+			AbstractResource res = RESOURCE_INSTANCIATOR.get(info.getType()).getNew();
+			res.add(info.quantity);
+			grounds.get(info.env).getCell(info.posX, info.posY).addObject(res);
 		}
 		
+		
 		/*
-		 * TODO
 		 * Instanciation of bodies and agents + connections
 		 * Instanciation of GUIBodies should be done in GUI constructor... given a set of bodies
 		 */
 		
 		AGENTS = new LinkedList<>();
-		for (WorldObjectType key : DATAS.getBodies2().keySet()) {
-			for (BodyInfo info : DATAS.getBodies2().get(key)) {
-				for (int i = 0; i < info.quantity; ++i) {
-					AbstractBodyInstanciator.POS = new MyPoint2D(info.pos[0], info.pos[1]);
-					AbstractBodyInstanciator.ENV = grounds.get(info.env);
-					AbstractBodyInstanciator.TRIBE_ID = info.tribeId;
-					
-					BODY_INSTANCIATOR.get(key).getNew();
-					AbstractAgent agt = BODY_INSTANCIATOR.get(key).getAgent();
-					AGENTS.add(agt);
-				}
+		for (BodyInfo info : DATAS.getBodies()) {
+			for (int i = 0; i < info.quantity; ++i) {
+				AbstractBodyInstanciator.POS = new MyPoint2D(info.pos[0], info.pos[1]);
+				AbstractBodyInstanciator.ENV = grounds.get(info.env);
+				AbstractBodyInstanciator.TRIBE_ID = info.tribeId;
+				
+				ConfParameters type = DATAS.getTribes().get(info.tribeId);
+				
+				BODY_INSTANCIATOR.get(type).getNew();
+				AbstractAgent agt = BODY_INSTANCIATOR.get(type).getAgent();
+				AGENTS.add(agt);
 			}
 		}
 		

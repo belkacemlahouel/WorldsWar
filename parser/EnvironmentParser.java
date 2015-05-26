@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.HashMap;
 
+import env2.env.GlobalEnvironment;
 import env2.type.WorldObjectType;
 import parser.ConfParameters;
 
@@ -276,5 +277,13 @@ public class EnvironmentParser {
 	
 	public List<ResourceInfo> getResourcesInfos() {
 		return resources;
+	}
+	
+	/**
+	 * Getter on the hashmap of tribes.
+	 * @return tribes
+	 */
+	public HashMap<Integer,ConfParameters> getTribes() {
+		return tribes;
 	}
 }
