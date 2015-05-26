@@ -5,7 +5,9 @@ public enum ConfParameters {
   PORTAL("PORTAL"),
   TRIBE("TRIBE"),
   BODY("BODY"),
-  RES("RESOURCE");
+  RES("RESOURCE"),
+  ANT("ANT"),
+  TERMITE("TERMITE");
   
   private String name = "";
   
