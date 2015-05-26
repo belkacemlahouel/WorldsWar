@@ -1,8 +1,10 @@
 package parser;
 
+import env2.type.WorldObjectType;
+
 public class ResourceInfo extends AbstractInfo {
 	
-	public ConfParameters type;
+	public WorldObjectType type;
 	public int env;
 	public int posX;
 	public int posY;

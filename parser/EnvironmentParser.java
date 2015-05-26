@@ -171,7 +171,12 @@ public class EnvironmentParser {
 	    			
 	    		case RES:
 	    			ResourceInfo resource = new ResourceInfo();
-	    			resource.type = ConfParameters.getByValue(param);
+	    			//resource.type = ConfParameters.getByValue(param);
+	    			for(WorldObjectType obj : WorldObjectType.values()){
+	    				if(param.equalsIgnoreCase(obj.name())){
+	    					resource.type = obj;
+	    				}
+	    			}
 	    			k=0;
 	    			while(valueScanner.hasNext())
 	    			{
