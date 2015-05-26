@@ -38,7 +38,7 @@ class Main {
 		AntNurseBody tmpBody;
 		// AgentBodyGUI tmpBodyGui; // TODO Why is this not used?
 		
-		List<BodyInfo> bodyStart = datas.getBodies();
+		List<BodyInfo> bodyStart = datas.getBodiesInfos();
 		for (BodyInfo body : bodyStart) {
 			newPos = new MyPoint2D(body.pos[0],body.pos[1]);
 			time = new Date().getTime();

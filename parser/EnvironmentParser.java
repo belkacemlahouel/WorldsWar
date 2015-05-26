@@ -259,7 +259,7 @@ public class EnvironmentParser {
 	 * Getter on the list of bodies.
 	 * @return bodies
 	 */
-	public List<BodyInfo> getBodies()
+	public List<BodyInfo> getBodiesInfos()
 	{
 		return bodies;
 	}

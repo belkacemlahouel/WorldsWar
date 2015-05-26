@@ -89,13 +89,11 @@ public class DataToGlobalEnvironment {
 					grounds.get(info.env2), info.posEnv2[0], info.posEnv2[1]);
 		}
 		
-		
 		for (ResourceInfo info : DATAS.getResourcesInfos()) {
 			AbstractResource res = RESOURCE_INSTANCIATOR.get(info.getType()).getNew();
 			res.add(info.quantity);
 			grounds.get(info.env).getCell(info.posX, info.posY).addObject(res);
 		}
-		
 		
 		/*
 		 * Instanciation of bodies and agents + connections
@@ -103,16 +101,14 @@ public class DataToGlobalEnvironment {
 		 */
 		
 		AGENTS = new LinkedList<>();
-		for (BodyInfo info : DATAS.getBodies()) {
-			for (int i = 0; i < info.quantity; ++i) {
-				AbstractBodyInstanciator.POS = new MyPoint2D(info.pos[0], info.pos[1]);
-				AbstractBodyInstanciator.ENV = grounds.get(info.env);
-				AbstractBodyInstanciator.TRIBE_ID = info.tribeId;
-				
-				ConfParameters type = DATAS.getTribes().get(info.tribeId);
-				
-				BODY_INSTANCIATOR.get(type).getNew();
-				AbstractAgent agt = BODY_INSTANCIATOR.get(type).getAgent();
+		for (BodyInfo info : DATAS.getBodiesInfos()) {
+			AbstractBodyInstanciator.POS = new MyPoint2D(info.pos[0], info.pos[1]);
+			AbstractBodyInstanciator.ENV = grounds.get(info.env);
+			AbstractBodyInstanciator.TRIBE_ID = info.tribeId;
+						
+			for (int i = 0; i < info.quantity; ++i) {	
+				BODY_INSTANCIATOR.get(info.function).getNew();
+				AbstractAgent agt = BODY_INSTANCIATOR.get(info.function).getAgent();
 				AGENTS.add(agt);
 			}
 		}
