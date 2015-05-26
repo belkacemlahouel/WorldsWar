@@ -2,6 +2,7 @@ package sim;
 
 import java.io.IOException;
 import java.util.LinkedList;
+import java.util.NoSuchElementException;
 
 import parser.DataToGlobalEnvironment;
 import sim.agent.AbstractAgent;
@@ -42,13 +43,14 @@ public class Simulator {
 		global = instancied.getGlobalEnvironment(); 
 		agents = instancied.getAgents();
 		
-		// TODO
-		
-		gui = new GUI(global.getGrounds()); // TODO @bourgeoismaxime = new GUI(global);
+		gui = new GUI(global.getGrounds());
 		gui.setVisible(true);
 	}
 	
 	public void doStep() {
+		if (agents == null)
+			throw new NoSuchElementException("NO AGENT FOUND!");
+		
 		for (AbstractAgent agt : agents) {
 			agt.live();
 		}

@@ -106,7 +106,7 @@ public class DataToGlobalEnvironment {
 			AbstractBodyInstanciator.ENV = grounds.get(info.env);
 			AbstractBodyInstanciator.TRIBE_ID = info.tribeId;
 						
-			for (int i = 0; i < info.quantity; ++i) {	
+			for (int i = 0; i < info.quantity; ++i) {
 				BODY_INSTANCIATOR.get(info.function).getNew();
 				AbstractAgent agt = BODY_INSTANCIATOR.get(info.function).getAgent();
 				AGENTS.add(agt);
