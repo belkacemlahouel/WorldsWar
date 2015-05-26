@@ -136,14 +136,17 @@ public class EnvironmentParser {
 	    			
 	    		case BODY:
 	    			BodyInfo body = new BodyInfo();
-	    			body.type = ConfParameters.getByValue(param);
+	    			//body.type = ConfParameters.getByValue(param);
 	    			k=0;
 	    			while(valueScanner.hasNext())
 	    			{
 	    				++k;
 	    				if(k==1)
 	    				{
-	    					body.function = ConfParameters.getByValue(valueScanner.next());
+	    					//body.function = ConfParameters.getByValue(valueScanner.next());
+	    					String function = param.concat(valueScanner.next());
+	    					function = function.concat("BODY");
+	    					body.function = WorldObjectType.getType(function);
 	    				}
 	    				else if(k==2)
 	    				{
@@ -171,12 +174,8 @@ public class EnvironmentParser {
 	    			
 	    		case RES:
 	    			ResourceInfo resource = new ResourceInfo();
-	    			//resource.type = ConfParameters.getByValue(param);
-	    			for(WorldObjectType obj : WorldObjectType.values()){
-	    				if(param.equalsIgnoreCase(obj.name())){
-	    					resource.type = obj;
-	    				}
-	    			}
+	    			resource.type = WorldObjectType.getType(param);
+	    			
 	    			k=0;
 	    			while(valueScanner.hasNext())
 	    			{
