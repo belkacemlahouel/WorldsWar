@@ -9,7 +9,6 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.HashMap;
 
-import env2.env.GlobalEnvironment;
 import env2.type.WorldObjectType;
 import parser.ConfParameters;
 

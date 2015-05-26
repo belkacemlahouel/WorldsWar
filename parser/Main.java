@@ -5,7 +5,6 @@ import parser.EnvironmentParser;
 import env2.type.Direction;
 import env2.body.antbody.AntNurseBody;
 import env2.env.Ground;
-import gui.AgentBodyGUI;
 import gui.GUI;
 import math.MyPoint2D;
 import env2.api.AbstractEnvironment;
@@ -30,14 +29,14 @@ class Main {
 		//Ground env = new Ground(10, 10);
 		LinkedList<AbstractEnvironment> grounds = new LinkedList<>();
 		grounds.add(env);
-		GUI gui = new GUI(grounds);
+		/* GUI gui = */new GUI(grounds);
 		
 		//Loop that initialize one body per category in the file config
 		MyPoint2D newPos;
 		float time;
 		List<AntNurseBody> envBodies = new ArrayList<AntNurseBody>();
 		AntNurseBody tmpBody;
-		AgentBodyGUI tmpBodyGui; // TODO Why is this not used?
+		// AgentBodyGUI tmpBodyGui; // TODO Why is this not used?
 		
 		List<BodyInfo> bodyStart = datas.getBodies();
 		for (BodyInfo body : bodyStart) {
