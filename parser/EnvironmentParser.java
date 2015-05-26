@@ -22,18 +22,10 @@ public class EnvironmentParser {
 	
 	private LinkedList<PortalInfo> portals;
 	
-	private HashMap<Integer,String> tribes = new HashMap<Integer,String>();
+	private HashMap<Integer,ConfParameters> tribes = new HashMap<Integer,ConfParameters>();
 	private List<ResourceInfo> resources = new ArrayList<ResourceInfo>();
 	private List<BodyInfo> bodies = new ArrayList<BodyInfo>();
-	
-	/***/
-	
-	// TODO @rdorier
-	private HashMap<WorldObjectType, LinkedList<ResourceInfo>> resources2;
-	private HashMap<WorldObjectType, LinkedList<BodyInfo>> bodies2;
-	private LinkedList<WorldObjectType> tribes2;
-	
-	/***/
+
 	
 	/**
 	* Constructor.
@@ -46,9 +38,6 @@ public class EnvironmentParser {
 	    envsWidths = new LinkedList<>();
 	    portals = new LinkedList<>();
 	    
-	    resources2 = new HashMap<>();
-	    bodies2 = new HashMap<>();
-	    tribes2 = new LinkedList<>();
 	}
 	
 	public EnvironmentParser() {
@@ -117,7 +106,7 @@ public class EnvironmentParser {
 	    			break;
 	    		
 	    		case TRIBE :
-	    			String tribeType = param;
+	    			ConfParameters tribeType = ConfParameters.getByValue(param);
 	    			int id = Integer.parseInt(valueScanner.next());
 	    			tribes.put(id, tribeType);
 	    			break;
@@ -136,14 +125,17 @@ public class EnvironmentParser {
 	    			
 	    		case BODY:
 	    			BodyInfo body = new BodyInfo();
-	    			body.type = ConfParameters.getByValue(param);
+	    			//body.type = ConfParameters.getByValue(param);
 	    			k=0;
 	    			while(valueScanner.hasNext())
 	    			{
 	    				++k;
 	    				if(k==1)
 	    				{
-	    					body.function = ConfParameters.getByValue(valueScanner.next());
+	    					//body.function = ConfParameters.getByValue(valueScanner.next());
+	    					String function = param.concat(valueScanner.next());
+	    					function = function.concat("BODY");
+	    					body.function = WorldObjectType.getType(function);
 	    				}
 	    				else if(k==2)
 	    				{
@@ -171,7 +163,8 @@ public class EnvironmentParser {
 	    			
 	    		case RES:
 	    			ResourceInfo resource = new ResourceInfo();
-	    			resource.type = ConfParameters.getByValue(param);
+	    			resource.type = WorldObjectType.getType(param);
+	    			
 	    			k=0;
 	    			while(valueScanner.hasNext())
 	    			{
@@ -283,19 +276,5 @@ public class EnvironmentParser {
 	
 	public List<ResourceInfo> getResourcesInfos() {
 		return resources;
-	}
-	
-	/***/
-	
-	public HashMap<WorldObjectType, LinkedList<BodyInfo>> getBodies2() {
-		return bodies2;
-	}
-	
-	public HashMap<WorldObjectType, LinkedList<ResourceInfo>> getResources2() {
-		return resources2;
-	}
-	
-	public LinkedList<WorldObjectType> getTribes2() {
-		return tribes2;
 	}
 }

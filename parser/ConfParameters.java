@@ -6,16 +6,8 @@ public enum ConfParameters {
   TRIBE("TRIBE"),
   BODY("BODY"),
   RES("RESOURCE"),
-  SPEC1("ANT"),
-  SPEC2("TERMITE"),
-  SPEC3("SPIDER"),
-  FUNC1("QUEEN"),
-  FUNC2("SOLDER"),
-  FUNC3("NURSE"),
-  RES1("MEAT"),
-  RES2("SUGAR"),
-  RES3("WOOD"),
-  RES4("POISON");
+  ANT("ANT"),
+  TERMITE("TERMITE");
   
   private String name = "";
   

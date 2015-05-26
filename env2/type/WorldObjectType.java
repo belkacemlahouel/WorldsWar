@@ -1,5 +1,7 @@
 package env2.type;
 
+import java.util.HashMap;
+
 public enum WorldObjectType {
 	// BODIES
 	ANTBODY,
@@ -56,6 +58,46 @@ public enum WorldObjectType {
 	public static boolean isTermiteBody(WorldObjectType type) {
 		return (type.ordinal() >= TERMITEBODY.ordinal() &&
 				type.ordinal() <= TERMITEUNDERTAKERBODY.ordinal());
+	}
+	
+	/**
+	 * Get Type with String
+	 */
+	
+	private final static HashMap<String, WorldObjectType> TYPES;
+	
+	static {
+		TYPES = new HashMap<>();
+
+		TYPES.put("ANTGATHERERBODY", ANTGATHERERBODY);
+		TYPES.put("ANTMOTHERBODY", ANTMOTHERBODY);
+		TYPES.put("ANTNURSEBODY", ANTNURSEBODY);
+		TYPES.put("ANTSOLDIERBODY", ANTSOLDIERBODY);
+		TYPES.put("ANTUNDERTAKERBODY", ANTUNDERTAKERBODY);
+		
+		TYPES.put("SPIDERBODY", SPIDERBODY);
+		
+		TYPES.put("TERMITEGATHERERBODY", TERMITEGATHERERBODY);
+		TYPES.put("TERMITEMOTHERBODY", TERMITEMOTHERBODY);
+		TYPES.put("TERMITENURSEBODY", TERMITENURSEBODY);
+		TYPES.put("TERMITESOLDIERBODY", TERMITESOLDIERBODY);
+		TYPES.put("TERMITEUNDERTAKERBODY", TERMITEUNDERTAKERBODY);
+		
+		TYPES.put("ROCK", ROCK);
+		TYPES.put("WOOD", WOOD);
+		TYPES.put("LEAF", LEAF);
+		TYPES.put("MEAT", MEAT);
+		TYPES.put("SUGAR", SUGAR);
+		TYPES.put("FRUIT", FRUIT);
+		TYPES.put("POISON", POISON);
+		TYPES.put("GAS", GAS);
+		
+		TYPES.put("DANGERPHEROMONE", DANGERPHEROMONE);
+		TYPES.put("FOODPHEROMONE", FOODPHEROMONE);
+	}
+	
+	public static WorldObjectType getType(String key) {
+		return TYPES.get(key);
 	}
 	
 	/**

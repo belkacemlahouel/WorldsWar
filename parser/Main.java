@@ -46,7 +46,7 @@ class Main {
 			
 			//TODO find the right env to put the body in and get the quantity to initialize a quantity.
 			tmpBody = new AntNurseBody((int) time, 0, env, Direction.NORTH, newPos);
-			tmpBodyGui = new AgentBodyGUI(body.type.toString(),gui,tmpBody);
+			//tmpBodyGui = new AgentBodyGUI(body.type.toString(),gui,tmpBody);
 			envBodies.add(tmpBody);
 		}
 		
