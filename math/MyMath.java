@@ -254,6 +254,7 @@ public class MyMath {
 	 * @return random number in [min, max[
 	 */
 	public static int random(int min, int max) {
+		if ((max - min) == 0) return min;
 		return new Random().nextInt(max-min) + min;
 	}
 	
