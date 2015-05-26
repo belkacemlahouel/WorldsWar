@@ -16,4 +16,8 @@ public class ResourceInfo extends AbstractInfo {
 	public void printInfos() {
 		System.out.println(quantity + " resource(s) of " + type + " in env " + env + " in position " + posX + ", " + posY);
 	}
+
+	public WorldObjectType getType() {
+		return type;
+	}
 }

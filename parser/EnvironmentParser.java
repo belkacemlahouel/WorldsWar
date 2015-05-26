@@ -259,7 +259,7 @@ public class EnvironmentParser {
 	 * Getter on the list of bodies.
 	 * @return bodies
 	 */
-	public List<BodyInfo> getBodies()
+	public List<BodyInfo> getBodiesInfos()
 	{
 		return bodies;
 	}
@@ -276,5 +276,13 @@ public class EnvironmentParser {
 	
 	public List<ResourceInfo> getResourcesInfos() {
 		return resources;
+	}
+	
+	/**
+	 * Getter on the hashmap of tribes.
+	 * @return tribes
+	 */
+	public HashMap<Integer,ConfParameters> getTribes() {
+		return tribes;
 	}
 }
