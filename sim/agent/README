@@ -1,0 +1,38 @@
+Each agent creates influences which lead to actions.
+	Ex: mother creates an influence to add a given number of babies
+		-> actions "create baby"
+		-> calls instanciator
+		-> adds agents to simulation loop
+
+BE CAREFUL: Babies are not supposed to do anything...
+
+MOTHER: 0.1
+	Contains the probability law for instanciations
+	Instanciations, between X and Y babies each loop
+
+GATHERER: 0.45
+	Look for food (biggest qty AND effect analysis)
+	if found : dropPheromone - go there - pick...
+	else look for pheromone food (strongest) : go there
+	else wander
+
+NURSE: 0.2
+	Look for hurt guys (life < CST = MAX_LIFE/2?)
+	if found : dropDanger - go there - nurse
+	else look for pheromone danger (strongest) : go there
+	else wander
+
+SOLDER: 0.3
+	Look for ennemies
+	if found (and not too much) dropPheromone - go there - attack...
+	else if too much dropbPheromone - run
+	else look for pheromone danger : go there
+	else wander
+
+UNDERTAKER: 0.04
+	Look for deads (friends) : bury -> supress the body - drop pheromone danger
+	If ennemy -> bury body -> creates meat - drop pheromone food
+	else look for pheromone danger
+	else wander
+
+THESE ARE SIMPLE BEHAVIORS TO GET US STARTED... IF IMPROVEMENT, WE'LL DISCUSS THEM LATER.
