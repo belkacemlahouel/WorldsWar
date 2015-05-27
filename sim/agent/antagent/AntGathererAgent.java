@@ -107,7 +107,8 @@ public final class AntGathererAgent extends AntAgent {
 	private void searchMotion(){
 		float angle = (float) ((Math.random() - Math.random())/Math.PI * 4);
 		Direction direction = this.getBody().getDirection();
-		//TODO finish it
+		//TODO must be change, in function of the kinematic that will be implemented.
+		//influenceKinemtic(direction, angle);
 	}
 	
 	/**
@@ -129,6 +130,10 @@ public final class AntGathererAgent extends AntAgent {
 	 * @param pheromone, the type of pheromone to drop.
 	 */
 	private void dropPheromone(WorldObjectType pheromone){
-		
+		if (pheromone == WorldObjectType.DANGERPHEROMONE){
+			this.getBody().producePheromoneDanger();
+		}else if (pheromone == WorldObjectType.FOODPHEROMONE){
+			this.getBody().producePheromoneFood();
+		}
 	}
 }
