@@ -125,6 +125,7 @@ public class EnvironmentParser {
 	    			
 	    		case BODY:
 	    			BodyInfo body = new BodyInfo();
+	    			body.quantity = 1;
 	    			//body.type = ConfParameters.getByValue(param);
 	    			k=0;
 	    			while(valueScanner.hasNext())

@@ -25,14 +25,14 @@ class Main {
 		datas.parseEnvDatas();
 		datas.print();
 		
-		AbstractEnvironment env = new Ground(datas.getEnvsHeights().get(0), datas.getEnvsWidths().get(0));
+		/**AbstractEnvironment env = new Ground(datas.getEnvsHeights().get(0), datas.getEnvsWidths().get(0));
 		//Ground env = new Ground(10, 10);
 		LinkedList<AbstractEnvironment> grounds = new LinkedList<>();
-		grounds.add(env);
-		/* GUI gui = */new GUI(grounds);
+		grounds.add(env);*/
+		/* GUI gui = *//**new GUI(grounds);*/
 		
 		//Loop that initialize one body per category in the file config
-		MyPoint2D newPos;
+		/**MyPoint2D newPos;
 		float time;
 		List<AntNurseBody> envBodies = new ArrayList<AntNurseBody>();
 		AntNurseBody tmpBody;
@@ -47,7 +47,7 @@ class Main {
 			tmpBody = new AntNurseBody((int) time, 0, env, Direction.NORTH, newPos);
 			//tmpBodyGui = new AgentBodyGUI(body.type.toString(),gui,tmpBody);
 			envBodies.add(tmpBody);
-		}
+		}*/
 		
 	}
 }
