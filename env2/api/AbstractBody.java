@@ -331,6 +331,7 @@ public abstract class AbstractBody extends AbstractMobileWorldObject {
 		return mycargo;
 	}
 	
+	
 	/*************************************************************************
 	 * Main method: tests...
 	 * 
