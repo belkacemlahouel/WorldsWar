@@ -10,6 +10,7 @@ public class Application {
 		
 		while (true) {
 			sim.doStep();
+			
 			try {
 				Thread.sleep(500);
 			} catch (InterruptedException e) {
