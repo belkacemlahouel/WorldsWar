@@ -1,8 +1,8 @@
 package env2.api;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 
 import math.MyMath;
 import math.MyPoint2D;
@@ -62,13 +62,14 @@ public abstract class AbstractBody extends AbstractMobileWorldObject {
 	/*
 	 * For-use attributes.
 	 */
-	private Collection<AbstractResource> mycargo;
+	private ArrayList<AbstractResource> mycargo;
 	private AbstractFrustrum myfrustrum;
 	private AbstractEnvironment myenv;
 	private Direction mydir;
 	private MyPoint2D mypos;
 	private int mylife;
 	private int bonusstrength;
+	private ArrayList<AbstractInfluence> myinfluences;
 	
 	/**
 	 * Constructor to be used by all inheriting classes.
@@ -114,6 +115,7 @@ public abstract class AbstractBody extends AbstractMobileWorldObject {
 		mylife = MAX_LIFE;
 		bonusstrength = 0;
 		mycargo = new ArrayList<>();
+		myinfluences = new ArrayList<>();
 		myfrustrum = null;
 		
 		move(env, pos);
@@ -327,8 +329,25 @@ public abstract class AbstractBody extends AbstractMobileWorldObject {
 		return LIFE_LOSS;
 	}
 	
-	public Collection<AbstractResource> getCargo() {
+	public List<AbstractResource> getCargo() {
 		return mycargo;
+	}
+	
+	/***/
+		
+	public ArrayList<AbstractAction> solveInfluences(List<AbstractInfluence> influences) {
+		ArrayList<AbstractAction> actions = new ArrayList<>();
+		
+		for (AbstractInfluence influence : influences) {
+			// TODO
+		}
+		
+		myinfluences.clear();
+		return actions;
+	}
+	
+	public void addInfluence(AbstractInfluence influence) {
+		myinfluences.add(influence);
 	}
 	
 	/*************************************************************************
