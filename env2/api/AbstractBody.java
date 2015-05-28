@@ -331,6 +331,10 @@ public abstract class AbstractBody extends AbstractMobileWorldObject {
 		return mycargo;
 	}
 	
+	public int getMaxLife(){
+		return MAX_LIFE;
+	}
+	
 	
 	/*************************************************************************
 	 * Main method: tests...
