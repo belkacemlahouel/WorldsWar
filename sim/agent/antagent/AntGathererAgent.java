@@ -1,11 +1,13 @@
 package sim.agent.antagent;
 
 import java.util.Iterator;
+import java.util.List;
 
 import env2.type.Direction;
 import env2.type.Time;
 import env2.type.WorldObjectType;
 import env2.api.AbstractBody;
+import env2.api.AbstractCell;
 import env2.api.AbstractFrustrum;
 import env2.api.AbstractWorldObject;
 import env2.body.antbody.AntGathererBody;
@@ -14,7 +16,7 @@ import env2.type.EffectType;
 /**
  * Implementation of an gatherer ant.
  * The priorities in its behavior are basically the followings : get food, follow food pheromones, avoid danger (other agent first, and pheromones in second), randomly search food.
- *
+ * TODO : test goal position in action function : if agent is in the good position do action, if not, move to goal.
  */
 public final class AntGathererAgent extends AntAgent {
 
@@ -24,7 +26,6 @@ public final class AntGathererAgent extends AntAgent {
 
 	/**
 	 * Implementation of the basic behavior of a gatherer ant.
-	 * TODO : add dropPheromone(danger) when find an opponant+droppheromone(food) when find food.
 	 */
 	public void live() {
 		if(!this.getBody().isBaby(Time.TIME)){
@@ -89,7 +90,7 @@ public final class AntGathererAgent extends AntAgent {
 				
 				/* Behavior in function of the result of parsing the frustrum. */
 				if(goal == null){
-					searchMotion();
+					wander();
 				}
 				else if (goal.getType()==WorldObjectType.DANGERPHEROMONE){
 					avoidDanger(goal);
@@ -99,16 +100,6 @@ public final class AntGathererAgent extends AntAgent {
 				}
 			}
 		}
-	}
-	
-	/**
-	 * Behaviour of the ant gatherer when it hasn't find anything.
-	 */
-	private void searchMotion(){
-		float angle = (float) ((Math.random() - Math.random())/Math.PI * 4);
-		Direction direction = this.getBody().getDirection();
-		//TODO must be change, in function of the kinematic that will be implemented.
-		//influenceKinemtic(direction, angle);
 	}
 	
 	/**
@@ -122,7 +113,13 @@ public final class AntGathererAgent extends AntAgent {
 	 * Behaviour of the ant gatherer when it wants to reach a goal.
 	 */
 	private void reachGoal(AbstractWorldObject goal){
+		boolean goodPosition = this.isOnSamePosition(goal);
 		
+		if(goodPosition){
+			//do action on goal
+		}else{
+			//move to goal
+		}
 	}
 	
 	/**
