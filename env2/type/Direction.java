@@ -4,7 +4,7 @@ import java.util.Random;
 
 public enum Direction {
 	
-	NORTH(0,-1) {
+	NORTH(0,+1) {
 		public Direction opposite() { return SOUTH; }
 	},
 	
@@ -12,7 +12,7 @@ public enum Direction {
 		public Direction opposite() { return EAST; }
 	},
 	
-	SOUTH(0,+1) {
+	SOUTH(0,-1) {
 		public Direction opposite() { return NORTH; }
 	},
 	

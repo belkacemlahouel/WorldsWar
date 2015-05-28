@@ -3,6 +3,7 @@ package sim.agent;
 import java.util.Iterator;
 import java.util.List;
 
+import math.MyPoint2D;
 import env2.api.AbstractBody;
 import env2.api.AbstractCell;
 import env2.api.AbstractWorldObject;
@@ -56,13 +57,43 @@ public abstract class AbstractAgent {
 	
 	
 	/**
-	 * Behaviour of the ant gatherer when it hasn't find anything.
+	 * Behaviour of an agent to move randomly.
 	 */
 	public void wander(){
-		//float angle = (float) ((Math.random() - Math.random())/Math.PI * 4);
-		Direction direction = this.getBody().getDirection();
-		//TODO must be change, in function of the kinematic that will be implemented.
-		//influenceKinemtic(direction, angle);
+		AbstractBody body = this.getBody(); 
+		Direction direction = body.getDirection();
+		int movingReach = body.getMovingReach();
+		
+		Direction randomDir = Direction.random();
+		
+		while(randomDir == direction.opposite()){
+			randomDir = Direction.random();
+		}
+		
+		MyPoint2D directionPoint = new MyPoint2D(0,0);
+		
+		while(movingReach > 0){
+			if(movingReach%2 == 0){
+				directionPoint.add(direction.dx, direction.dy);
+			}else{
+				directionPoint.add(randomDir.dx, randomDir.dy);
+			}
+		}
+		
+		directionPoint = body.getPosition().addNew(directionPoint.getX(), directionPoint.getY());
+		if(directionPoint.getX()<0){
+			directionPoint.setLocation(0, directionPoint.getY());
+		}else if(directionPoint.getX()>=this.getBody().getEnvironment().getWidth()){
+			directionPoint.setLocation(this.getBody().getEnvironment().getWidth()-1, directionPoint.getY());
+		}
+		
+		if(directionPoint.getY()<0){
+			directionPoint.setLocation(directionPoint.getX(), 0);
+		}else if(directionPoint.getY()>=this.getBody().getEnvironment().getHeight()){
+			directionPoint.setLocation(directionPoint.getX(), this.getBody().getEnvironment().getHeight()-1);
+		}
+		
+		//TODO : add influence.
 	}
 	
 	/**
