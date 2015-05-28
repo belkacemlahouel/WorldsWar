@@ -1,5 +1,6 @@
 package sim.agent.termiteagent;
 
+import env2.api.AbstractInfluence;
 import env2.body.termitebody.TermiteMotherBody;
 
 public final class TermiteMotherAgent extends TermiteAgent {
@@ -9,8 +10,9 @@ public final class TermiteMotherAgent extends TermiteAgent {
 		// TODO Auto-generated constructor stub
 	}
 
-	public void live() {
+	public AbstractInfluence live() {
 		// TODO
+		return null;
 	}
 	
 }

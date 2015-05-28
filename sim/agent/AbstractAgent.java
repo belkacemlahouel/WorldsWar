@@ -1,6 +1,7 @@
 package sim.agent;
 
 import env2.api.AbstractBody;
+import env2.api.AbstractInfluence;
 import env2.type.Time;
 
 public abstract class AbstractAgent {
@@ -26,7 +27,7 @@ public abstract class AbstractAgent {
 	 * Decision process implemented here
 	 * The agent applies influences
 	 */
-	public abstract void live();
+	public abstract AbstractInfluence live();
 	
 	/**
 	 * Decision process inside
