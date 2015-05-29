@@ -1,7 +1,6 @@
 package parser;
 
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -11,66 +10,13 @@ import env2.api.AbstractResource;
 import env2.env.GlobalEnvironment;
 import env2.env.GroundSquared;
 import env2.instanciator.bodies.AbstractBodyInstanciator;
-import env2.instanciator.bodies.ant.AntGathererInstanciator;
-import env2.instanciator.bodies.ant.AntMotherInstanciator;
-import env2.instanciator.bodies.ant.AntNurseInstanciator;
-import env2.instanciator.bodies.ant.AntSoldierInstanciator;
-import env2.instanciator.bodies.ant.AntUndertakerInstanciator;
-import env2.instanciator.bodies.spider.SpiderInstanciator;
-import env2.instanciator.bodies.termite.TermiteGathererInstanciator;
-import env2.instanciator.bodies.termite.TermiteMotherInstanciator;
-import env2.instanciator.bodies.termite.TermiteNurseInstanciator;
-import env2.instanciator.bodies.termite.TermiteSoldierInstanciator;
-import env2.instanciator.bodies.termite.TermiteUndertakerInstanciator;
-import env2.instanciator.resources.AbstractResourceInstanciator;
-import env2.instanciator.resources.FruitInstanciator;
-import env2.instanciator.resources.GasInstanciator;
-import env2.instanciator.resources.LeafInstanciator;
-import env2.instanciator.resources.MeatInstanciator;
-import env2.instanciator.resources.PoisonInstanciator;
-import env2.instanciator.resources.RockInstanciator;
-import env2.instanciator.resources.SugarInstanciator;
-import env2.instanciator.resources.WoodInstanciator;
-import env2.type.WorldObjectType;
+import env2.instanciator.factory.BodyFactory;
+import env2.instanciator.factory.ResourceFactory;
 
 public class DataToGlobalEnvironment {
 	
 	private final GlobalEnvironment GLOBAL;
 	private LinkedList<AbstractAgent> AGENTS;
-	
-	private static final HashMap<WorldObjectType, AbstractResourceInstanciator> RESOURCE_INSTANCIATOR;
-	private static final HashMap<WorldObjectType, AbstractBodyInstanciator> BODY_INSTANCIATOR;
-	
-	static {
-		RESOURCE_INSTANCIATOR = new HashMap<>();
-		RESOURCE_INSTANCIATOR.put(WorldObjectType.WOOD, new WoodInstanciator());
-		RESOURCE_INSTANCIATOR.put(WorldObjectType.ROCK, new RockInstanciator());
-		RESOURCE_INSTANCIATOR.put(WorldObjectType.FRUIT, new FruitInstanciator());
-		RESOURCE_INSTANCIATOR.put(WorldObjectType.SUGAR, new SugarInstanciator());
-		RESOURCE_INSTANCIATOR.put(WorldObjectType.GAS, new GasInstanciator());
-		RESOURCE_INSTANCIATOR.put(WorldObjectType.POISON, new PoisonInstanciator());
-		RESOURCE_INSTANCIATOR.put(WorldObjectType.MEAT, new MeatInstanciator());
-		RESOURCE_INSTANCIATOR.put(WorldObjectType.LEAF, new LeafInstanciator());
-	}
-	
-	static {
-		BODY_INSTANCIATOR = new HashMap<>();
-		BODY_INSTANCIATOR.put(WorldObjectType.ANTGATHERERBODY, new AntGathererInstanciator());
-		BODY_INSTANCIATOR.put(WorldObjectType.ANTMOTHERBODY, new AntMotherInstanciator());
-		BODY_INSTANCIATOR.put(WorldObjectType.ANTNURSEBODY, new AntNurseInstanciator());
-		BODY_INSTANCIATOR.put(WorldObjectType.ANTSOLDIERBODY, new AntSoldierInstanciator());
-		BODY_INSTANCIATOR.put(WorldObjectType.ANTUNDERTAKERBODY, new AntUndertakerInstanciator());
-		
-		BODY_INSTANCIATOR.put(WorldObjectType.SPIDERBODY, new SpiderInstanciator());
-		
-		BODY_INSTANCIATOR.put(WorldObjectType.TERMITEGATHERERBODY, new TermiteGathererInstanciator());
-		BODY_INSTANCIATOR.put(WorldObjectType.TERMITEMOTHERBODY, new TermiteMotherInstanciator());
-		BODY_INSTANCIATOR.put(WorldObjectType.TERMITENURSEBODY, new TermiteNurseInstanciator());
-		BODY_INSTANCIATOR.put(WorldObjectType.TERMITESOLDIERBODY, new TermiteSoldierInstanciator());
-		BODY_INSTANCIATOR.put(WorldObjectType.TERMITEUNDERTAKERBODY, new TermiteUndertakerInstanciator());
-	}
-	
-	/***/
 	
 	public DataToGlobalEnvironment(String filename) throws IOException {
 		
@@ -90,7 +36,7 @@ public class DataToGlobalEnvironment {
 		}
 		
 		for (ResourceInfo info : DATAS.getResourcesInfos()) {
-			AbstractResource res = RESOURCE_INSTANCIATOR.get(info.getType()).getNew();
+			AbstractResource res = ResourceFactory.RESOURCE_INSTANCIATOR.get(info.getType()).getNew();
 			res.add(info.quantity);
 			grounds.get(info.env).getCell(info.posX, info.posY).addObject(res);
 		}
@@ -107,8 +53,8 @@ public class DataToGlobalEnvironment {
 			AbstractBodyInstanciator.TRIBE_ID = info.tribeId;
 						
 			for (int i = 0; i < info.quantity; ++i) {
-				BODY_INSTANCIATOR.get(info.function).getNew();
-				AbstractAgent agt = BODY_INSTANCIATOR.get(info.function).getAgent();
+				BodyFactory.BODY_INSTANCIATOR.get(info.function).getNew();
+				AbstractAgent agt = BodyFactory.BODY_INSTANCIATOR.get(info.function).getAgent();
 				AGENTS.add(agt);
 			}
 		}
