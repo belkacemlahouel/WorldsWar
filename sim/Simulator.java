@@ -118,8 +118,17 @@ public class Simulator {
 		gui.repaint();
 	}
 	
-	private List<MotionAction> solveMotionInfluences(List<MotionInfluence> motionInfluences) {
-		// TODO
-		return null;
+	/**
+	 * For now on, this just creates all motion actions regarding the corresponding influences...
+	 * @param motionInfluences List of motion influences to apply
+	 * @return List of actions to execute, later
+	 * TODO Maybe add some conflict solving with Bresenheim-lines?
+	 */
+	private LinkedList<MotionAction> solveMotionInfluences(List<MotionInfluence> motionInfluences) {
+		LinkedList<MotionAction> actions = new LinkedList<>();
+		for (MotionInfluence influence : motionInfluences) {
+			actions.add(new MotionAction(influence.mobile, influence.arrivalPos, influence.arrivalEnv));
+		}
+		return actions;
 	}
 }
