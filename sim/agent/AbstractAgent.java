@@ -45,7 +45,7 @@ public abstract class AbstractAgent {
 	 * So agents can know if they belong in the same team or not
 	 * @return tribe id: tribe index
 	 */
-	public int getTribeID() {
+	protected int getTribeID() {
 		return TRIBE_ID;
 	}
 }
