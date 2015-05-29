@@ -1,7 +1,6 @@
 package sim;
 
 import java.io.IOException;
-import java.lang.reflect.Constructor;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -10,24 +9,14 @@ import java.util.NoSuchElementException;
 import parser.DataToGlobalEnvironment;
 import sim.agent.AbstractAgent;
 import env2.action.MotionAction;
+import env2.action.influences.CreateBabyInfluence;
 import env2.action.influences.MotionInfluence;
 import env2.api.AbstractAction;
 import env2.api.AbstractCell;
-import env2.env.Cell;
+import env2.api.InterfaceMother;
 import env2.env.GlobalEnvironment;
 import env2.instanciator.bodies.AbstractBodyInstanciator;
-import env2.instanciator.bodies.ant.AntGathererInstanciator;
-import env2.instanciator.bodies.ant.AntMotherInstanciator;
-import env2.instanciator.bodies.ant.AntNurseInstanciator;
-import env2.instanciator.bodies.ant.AntSoldierInstanciator;
-import env2.instanciator.bodies.ant.AntUndertakerInstanciator;
-import env2.instanciator.bodies.spider.SpiderInstanciator;
-import env2.instanciator.bodies.termite.TermiteGathererInstanciator;
-import env2.instanciator.bodies.termite.TermiteMotherInstanciator;
-import env2.instanciator.bodies.termite.TermiteNurseInstanciator;
-import env2.instanciator.bodies.termite.TermiteSoldierInstanciator;
-import env2.instanciator.bodies.termite.TermiteUndertakerInstanciator;
-import env2.type.WorldObjectType;
+import env2.instanciator.factory.BodyFactory;
 import gui.GUI;
 
 public class Simulator {
@@ -38,7 +27,7 @@ public class Simulator {
 	
 	private LinkedList<MotionInfluence> motionInfluences;
 	private LinkedList<AbstractAction> actions;
-	private LinkedList<Class <? extends AbstractAgent>> newAgents;
+	private HashMap<InterfaceMother, LinkedList<CreateBabyInfluence>> newAgents;
 	private LinkedList<AbstractCell> influencedCells;
 	
 	/***/
@@ -64,7 +53,7 @@ public class Simulator {
 		
 		motionInfluences = new LinkedList<>();
 		actions = new LinkedList<>();
-		newAgents = new LinkedList<>();
+		newAgents = new HashMap<>();
 	}
 	
 	/***/
@@ -105,9 +94,23 @@ public class Simulator {
 			action.doAction();
 		}
 		
+		for (InterfaceMother mother : newAgents.keySet()) {
+			
+			AbstractBodyInstanciator.POS = mother.getPosition();
+			AbstractBodyInstanciator.ENV = mother.getEnvironment();
+			AbstractBodyInstanciator.TRIBE_ID = mother.getTribeID();
+		
+			for (CreateBabyInfluence newBaby : newAgents.get(mother)) {
+				BodyFactory.BODY_INSTANCIATOR.get(newBaby.type).getNew();
+				AbstractAgent agt = BodyFactory.BODY_INSTANCIATOR.get(newBaby.type).getAgent();
+				agents.add(agt);
+			}
+		}
+	
 		/***/
 		
-		/* for (Class<? extends AbstractAgent> c : newAgents) {
+		/* 	// private LinkedList<Class <? extends AbstractAgent>> newAgents;
+			for (Class<? extends AbstractAgent> c : newAgents) {
 			Constructor<? extends AbstractAgent> cons = c.getDeclaredConstructor(Integer.class);
 			agents.add(cons.newInstance(1));
 		} */
