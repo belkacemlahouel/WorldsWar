@@ -1,6 +1,6 @@
 package sim.agent.spideragent;
 
-import env2.api.AbstractInfluence;
+import env2.action.influences.MotionInfluence;
 import env2.body.spider.SpiderBody;
 import sim.agent.AbstractAgent;
 
@@ -11,7 +11,7 @@ public final class SpiderAgent extends AbstractAgent {
 	}
 
 	@Override
-	public AbstractInfluence live() {
+	public MotionInfluence live() {
 		// TODO Auto-generated method stub
 		return null;
 	}

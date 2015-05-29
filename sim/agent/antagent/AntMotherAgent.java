@@ -1,6 +1,6 @@
 package sim.agent.antagent;
 
-import env2.api.AbstractInfluence;
+import env2.action.influences.MotionInfluence;
 import env2.body.antbody.AntMotherBody;
 
 public final class AntMotherAgent extends AntAgent {
@@ -9,7 +9,7 @@ public final class AntMotherAgent extends AntAgent {
 		super(b, ID);
 	}
 
-	public AbstractInfluence live() {
+	public MotionInfluence live() {
 		// TODO
 		return null;
 	}

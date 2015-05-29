@@ -1,6 +1,6 @@
 package sim.agent.antagent;
 
-import env2.api.AbstractInfluence;
+import env2.action.influences.MotionInfluence;
 import env2.body.antbody.AntSoldierBody;
 
 public final class AntSoldierAgent extends AntAgent {
@@ -10,7 +10,7 @@ public final class AntSoldierAgent extends AntAgent {
 		// TODO Auto-generated constructor stub
 	}
 
-	public AbstractInfluence live() {
+	public MotionInfluence live() {
 		// TODO
 		return null;
 	}

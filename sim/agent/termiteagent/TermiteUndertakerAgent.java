@@ -1,6 +1,6 @@
 package sim.agent.termiteagent;
 
-import env2.api.AbstractInfluence;
+import env2.action.influences.MotionInfluence;
 import env2.body.termitebody.TermiteUndertakerBody;
 
 public final class TermiteUndertakerAgent extends TermiteAgent {
@@ -10,7 +10,7 @@ public final class TermiteUndertakerAgent extends TermiteAgent {
 		// TODO Auto-generated constructor stub
 	}
 
-	public AbstractInfluence live() {
+	public MotionInfluence live() {
 		// TODO
 		return null;
 	}
