@@ -9,4 +9,9 @@ public abstract class AbstractCell {
 	public abstract boolean removeObject(AbstractWorldObject o);
 	public abstract void addObject(AbstractWorldObject o);
 	public abstract boolean isPortal();
+	
+	public List<? extends AbstractAction> solveInfluences() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

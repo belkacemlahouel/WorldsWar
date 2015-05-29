@@ -335,10 +335,10 @@ public abstract class AbstractBody extends AbstractMobileWorldObject {
 	
 	/***/
 		
-	public ArrayList<AbstractAction> solveInfluences(List<AbstractInfluence> influences) {
+	public ArrayList<AbstractAction> solveInfluences() {
 		ArrayList<AbstractAction> actions = new ArrayList<>();
 		
-		for (AbstractInfluence influence : influences) {
+		for (AbstractInfluence influence : myinfluences) {
 			// TODO
 		}
 		
