@@ -21,6 +21,7 @@ public class Simulator {
 	
 	/***/
 	
+	private LinkedList<AbstractAgent> newAgents;
 	private LinkedList<AbstractAgent> agents;
 	private GlobalEnvironment global;
 	private GUI gui;
@@ -42,6 +43,7 @@ public class Simulator {
 		
 		// motionInfluences = new LinkedList<>();
 		actions = new LinkedList<>();
+		newAgents = new LinkedList<>();
 	}
 	
 	/***/
@@ -52,6 +54,7 @@ public class Simulator {
 		
 		// motionInfluences.clear();
 		actions.clear();
+		newAgents.clear();
 		
 		for (AbstractAgent agt : agents) {
 			// TODO
@@ -71,6 +74,8 @@ public class Simulator {
 		for (AbstractAction action : actions) {
 			action.doAction();
 		}
+		
+		agents.addAll(newAgents);
 		
 		gui.repaint();
 	}
