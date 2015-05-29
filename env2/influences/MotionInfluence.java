@@ -1,4 +1,4 @@
-package env2.action.influences;
+package env2.influences;
 
 import math.MyPoint2D;
 import env2.api.AbstractEnvironment;

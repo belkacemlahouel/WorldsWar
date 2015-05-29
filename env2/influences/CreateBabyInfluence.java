@@ -1,4 +1,4 @@
-package env2.action.influences;
+package env2.influences;
 
 import java.util.LinkedList;
 

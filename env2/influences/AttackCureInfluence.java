@@ -1,4 +1,4 @@
-package env2.action.influences;
+package env2.influences;
 
 import env2.api.AbstractBody;
 import env2.api.AbstractInfluence;
