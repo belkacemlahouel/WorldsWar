@@ -22,7 +22,7 @@ NURSE: 0.2
 	else look for pheromone danger (strongest) : go there
 	else wander
 
-SOLDER: 0.3
+SOLDIER: 0.3
 	Look for ennemies
 	if found (and not too much) dropPheromone - go there - attack...
 	else if too much dropbPheromone - run

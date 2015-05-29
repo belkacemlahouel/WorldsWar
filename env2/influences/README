@@ -1,0 +1,20 @@
+Some influences are stored in bodies, other are stored in cells,
+and others (motion) in a specific list inside the simulator.
+
+The corresponding influence solver is "near" the storage location. 
+
+IN SIMULATOR:
+	Motion
+
+IN CELLS: (we only iterate on cells which are modified)
+	CreateBaby
+	DropPheromone
+	Pick
+	Put
+	RemoveMe
+
+IN BODIES:
+	Attack/Cure
+	BuryDead
+	Eat
+	KillMyself
