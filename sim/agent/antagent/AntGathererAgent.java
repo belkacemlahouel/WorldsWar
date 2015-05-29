@@ -1,7 +1,7 @@
 package sim.agent.antagent;
 
-import env2.action.influences.MotionInfluence;
 import env2.body.antbody.AntGathererBody;
+import env2.influences.MotionInfluence;
 
 public final class AntGathererAgent extends AntAgent {
 

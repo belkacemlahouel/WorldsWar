@@ -1,7 +1,7 @@
 package sim.agent;
 
-import env2.action.influences.MotionInfluence;
 import env2.api.AbstractBody;
+import env2.influences.MotionInfluence;
 import env2.type.Time;
 
 public abstract class AbstractAgent {

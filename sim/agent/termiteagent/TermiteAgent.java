@@ -1,7 +1,7 @@
 package sim.agent.termiteagent;
 
-import env2.action.influences.MotionInfluence;
 import env2.body.termitebody.TermiteBody;
+import env2.influences.MotionInfluence;
 import sim.agent.AbstractAgent;
 
 public abstract class TermiteAgent extends AbstractAgent {

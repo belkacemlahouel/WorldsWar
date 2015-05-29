@@ -1,7 +1,7 @@
 package sim.agent.antagent;
 
-import env2.action.influences.MotionInfluence;
 import env2.body.antbody.AntSoldierBody;
+import env2.influences.MotionInfluence;
 
 public final class AntSoldierAgent extends AntAgent {
 
