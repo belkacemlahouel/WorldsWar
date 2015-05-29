@@ -16,4 +16,9 @@ public final class AntMotherBody extends AntBody implements InterfaceMother {
 		// TODO Auto-generated method stub
 		
 	}
+
+	@Override
+	public int getTribeID() {
+		return _getTribeID();
+	}
 }
