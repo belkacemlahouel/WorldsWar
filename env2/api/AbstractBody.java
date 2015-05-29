@@ -333,6 +333,10 @@ public abstract class AbstractBody extends AbstractMobileWorldObject {
 		return mycargo;
 	}
 	
+	protected int _getTribeID() {
+		return TRIBE_ID;
+	}
+	
 	/***/
 		
 	public ArrayList<AbstractAction> solveInfluences() {
