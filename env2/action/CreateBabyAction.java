@@ -19,7 +19,7 @@ public class CreateBabyAction extends AbstractAction {
 	}
 	
 	public void doAction() {
-		// TODO
-		// mother.addBaby();
+		// TODO This is not enough!!
+		mother.addBaby();
 	}
 }

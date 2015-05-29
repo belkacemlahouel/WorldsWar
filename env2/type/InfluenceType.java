@@ -5,7 +5,7 @@ public enum InfluenceType {
 	BURY_DEAD,
 	CREATE_BABY,
 	DROP_PHEROMONE,
-	EAT_ACTION,
+	EAT,
 	KILL_MYSELF,
 	MOTION,
 	PICK,
