@@ -6,7 +6,7 @@ public class Application {
 
 	public static void main(String[] args) throws IOException {
 		
-		Simulator sim = new Simulator();
+		Simulator sim = Simulator.getInstance();
 		
 		while (true) {
 			sim.doStep();

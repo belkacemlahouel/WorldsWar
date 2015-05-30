@@ -22,6 +22,7 @@ import gui.GUI;
 public class Simulator {
 	
 	private final static String DEFAULT_FILENAME = "src/res/conf/environment.txt";
+	private static Simulator INSTANCE = null;
 	
 	/***/
 	
@@ -38,22 +39,39 @@ public class Simulator {
 	
 	/***/
 	
-	public Simulator() throws IOException {
+	public static Simulator getInstance() {
+		if (INSTANCE == null)
+			INSTANCE = new Simulator();
+		
+		return INSTANCE;
+	}
+	
+	public static Simulator getInstance(String filename) {
+		if (INSTANCE == null)
+			INSTANCE = new Simulator(filename);
+		
+		return INSTANCE;
+	}
+	
+	private Simulator() {
 		new Simulator(DEFAULT_FILENAME);
 	}
 	
-	public Simulator(String filename) throws IOException {
-		
-		DataToGlobalEnvironment instancied = new DataToGlobalEnvironment(filename);
-		global = instancied.getGlobalEnvironment(); 
-		agents = instancied.getAgents();
-		
-		gui = new GUI(global.getGrounds());
-		gui.setVisible(true);
-		
-		motionInfluences = new LinkedList<>();
-		actions = new LinkedList<>();
-		newAgents = new HashMap<>();
+	private Simulator(String filename) {
+		try {
+			DataToGlobalEnvironment instancied = new DataToGlobalEnvironment(filename);
+			global = instancied.getGlobalEnvironment(); 
+			agents = instancied.getAgents();
+			
+			gui = new GUI(global.getGrounds());
+			gui.setVisible(true);
+			
+			motionInfluences = new LinkedList<>();
+			actions = new LinkedList<>();
+			newAgents = new HashMap<>();
+		} catch (IOException e) {
+			System.err.println("IOException at Simulator Instanciation: " + e);
+		}
 	}
 	
 	/***/
