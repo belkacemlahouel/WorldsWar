@@ -90,9 +90,18 @@ public class GUI extends SimpleFrame
 		int mainWidth = screenSize.width;
 		int mainHeight = screenSize.height/2;
 		
-		int thumbsWidth = (screenSize.width-padding*(envCount-1))/(envCount-1);
-		int thumbsHeight = screenSize.height/2-padding;	
-
+		int thumbsWidth;
+		int thumbsHeight;
+		
+		if (envCount-1 > 0) {
+			thumbsWidth = (screenSize.width-padding*(envCount-1))/(envCount-1);
+			thumbsHeight = screenSize.height/2-padding;
+		} else {
+			mainHeight = screenSize.height;
+			thumbsWidth = screenSize.width;
+			thumbsHeight = 0;
+		}
+		
 		/* Reset the layout and resize/scale panels */
 		if(envCount > 0)
 		{
