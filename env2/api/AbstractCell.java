@@ -1,5 +1,6 @@
 package env2.api;
 
+import java.util.LinkedList;
 import java.util.List;
 
 public abstract class AbstractCell {
@@ -11,7 +12,8 @@ public abstract class AbstractCell {
 	public abstract boolean isPortal();
 	
 	public List<? extends AbstractAction> solveInfluences() {
-		// TODO Auto-generated method stub
-		return null;
+		List<? extends AbstractAction> actions = new LinkedList<>();
+		// TODO treatment here for each cell
+		return actions;
 	}
 }
