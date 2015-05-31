@@ -1,13 +1,11 @@
 package env2.instanciator.actions;
 
 import env2.api.AbstractAction;
-import env2.api.AbstractBody;
+import env2.api.AbstractInfluence;
 
 public abstract class AbstractActionInstanciator {
 
-	public static AbstractBody ACTOR;
-	public static AbstractBody TARGET;
-	public static int LIFE_VAR;
+	public static AbstractInfluence influence; 
 	
 	public abstract AbstractAction getAction();
 }

@@ -1,12 +1,13 @@
 package env2.instanciator.actions;
 
-import env2.api.AbstractAction;
+import env2.action.BuryDeadAction;
+import env2.influences.BuryDeadInfluence;
 
 public class BuryDeadActionInstanciator extends AbstractActionInstanciator {
 
 	@Override
-	public AbstractAction getAction() {
-		// TODO Auto-generated method stub
-		return null;
+	public BuryDeadAction getAction() {
+		BuryDeadInfluence infl = (BuryDeadInfluence) influence;
+		return new BuryDeadAction(infl.undertaker, infl.deadbody);
 	}
 }
