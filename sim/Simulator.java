@@ -1,6 +1,5 @@
 package sim;
 
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -28,7 +27,7 @@ public class Simulator {
 	
 	private LinkedList<MotionInfluence> motionInfluences;
 	private LinkedList<AbstractAction> actions;
-	private HashMap<InterfaceMother, LinkedList<CreateBabyInfluence>> newAgents;
+	private HashMap<InterfaceMother, List<CreateBabyInfluence>> mothers;
 	private LinkedList<AbstractCell> influencedCells;
 	
 	/***/
@@ -58,24 +57,20 @@ public class Simulator {
 	}
 	
 	private Simulator(String filename) {
-		try {
-			if (filename == null || filename == "" || filename.isEmpty())
-				filename = DEFAULT_FILENAME;
-			
-			DataToGlobalEnvironment instancied = new DataToGlobalEnvironment(filename);
-			global = instancied.getGlobalEnvironment(); 
-			agents = instancied.getAgents();
-			
-			gui = new GUI(global.getGrounds());
-			gui.setVisible(true);
-			
-			motionInfluences = new LinkedList<>();
-			actions = new LinkedList<>();
-			newAgents = new HashMap<>();
-			influencedCells = new LinkedList<>();
-		} catch (IOException e) {
-			System.err.println("IOException at Simulator Instanciation: " + e);
-		}
+		if (filename == null || filename == "" || filename.isEmpty())
+			filename = DEFAULT_FILENAME;
+		
+		DataToGlobalEnvironment instancied = new DataToGlobalEnvironment(filename);
+		global = instancied.getGlobalEnvironment(); 
+		agents = instancied.getAgents();
+		mothers = instancied.getMothers();
+		
+		gui = new GUI(global.getGrounds());
+		gui.setVisible(true);
+		
+		motionInfluences = new LinkedList<>();
+		actions = new LinkedList<>();
+		influencedCells = new LinkedList<>();
 	}
 	
 	/***/
@@ -91,7 +86,7 @@ public class Simulator {
 		influencedCells.clear();
 		motionInfluences.clear();
 		actions.clear();
-		newAgents.clear();
+		mothers.clear();
 		
 		for (AbstractAgent agt : agents) {
 			MotionInfluence influence = agt.live();
@@ -120,13 +115,13 @@ public class Simulator {
 			action.doAction();
 		}
 		
-		for (InterfaceMother mother : newAgents.keySet()) {
+		for (InterfaceMother mother : mothers.keySet()) {
 			
 			AbstractBodyInstanciator.POS = mother.getPosition();
 			AbstractBodyInstanciator.ENV = mother.getEnvironment();
 			AbstractBodyInstanciator.TRIBE_ID = mother.getTribeID();
 		
-			for (CreateBabyInfluence newBaby : newAgents.get(mother)) {
+			for (CreateBabyInfluence newBaby : mothers.get(mother)) {
 				BodyFactory.BODY_INSTANCIATOR.get(newBaby.type).getNew();
 				AbstractAgent agt = BodyFactory.BODY_INSTANCIATOR.get(newBaby.type).getAgent();
 				agents.add(agt);
