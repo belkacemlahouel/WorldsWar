@@ -59,6 +59,9 @@ public class Simulator {
 	
 	private Simulator(String filename) {
 		try {
+			if (filename == null || filename == "" || filename.isEmpty())
+				filename = DEFAULT_FILENAME;
+			
 			DataToGlobalEnvironment instancied = new DataToGlobalEnvironment(filename);
 			global = instancied.getGlobalEnvironment(); 
 			agents = instancied.getAgents();

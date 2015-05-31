@@ -4,7 +4,8 @@ public class Application {
 
 	public static void main(String[] args) {
 		
-		Simulator sim = Simulator.getInstance("src/res/conf/ONLY_ONE_MOTHER");
+		String fileName = "src/res/conf/ONLY_ONE_MOTHER";
+		Simulator sim = Simulator.getInstance(fileName);
 		
 		while (!sim.isFinished()) {
 			sim.doStep();
