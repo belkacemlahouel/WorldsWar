@@ -69,6 +69,7 @@ public class Simulator {
 			motionInfluences = new LinkedList<>();
 			actions = new LinkedList<>();
 			newAgents = new HashMap<>();
+			influencedCells = new LinkedList<>();
 		} catch (IOException e) {
 			System.err.println("IOException at Simulator Instanciation: " + e);
 		}
