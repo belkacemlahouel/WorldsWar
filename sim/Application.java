@@ -1,14 +1,12 @@
 package sim;
 
-import java.io.IOException;
-
 public class Application {
 
-	public static void main(String[] args) throws IOException {
+	public static void main(String[] args) {
 		
 		Simulator sim = Simulator.getInstance("src/res/conf/ONLY_ONE_MOTHER");
 		
-		while (true) {
+		while (!sim.isFinished()) {
 			sim.doStep();
 			
 			try {
@@ -17,6 +15,8 @@ public class Application {
 				e.printStackTrace();
 			}
 		}
+		
+		System.out.println("Bye World!");
 	}
 	
 }
