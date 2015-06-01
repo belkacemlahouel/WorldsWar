@@ -19,4 +19,18 @@ public final class TermiteMotherBody extends TermiteBody implements InterfaceMot
 		
 	}
 	
+	@Override
+	public int getTribeID() {
+		return _getTribeID();
+	}
+	
+	@Override
+	public boolean equals(InterfaceMother that) {
+		return this == that;
+	}
+	
+	@Override
+	public int hashCode() {
+		return _getTribeID();
+	}
 }

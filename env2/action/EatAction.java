@@ -2,10 +2,11 @@ package env2.action;
 
 import java.util.Collection;
 
+import env2.api.AbstractAction;
 import env2.api.AbstractBody;
 import env2.api.AbstractResource;
 
-public class EatAction {
+public class EatAction extends AbstractAction {
 	
 	protected AbstractBody eater;
 	protected int qty;

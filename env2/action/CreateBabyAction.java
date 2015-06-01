@@ -12,6 +12,7 @@ public class CreateBabyAction extends AbstractAction {
 	}
 	
 	public void doAction() {
+		// TODO This is not enough!!
 		mother.addBaby();
 	}
 }

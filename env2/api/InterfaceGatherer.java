@@ -1,5 +1,7 @@
 package env2.api;
 
+import math.MyPoint2D;
+
 public interface InterfaceGatherer {
 	
 	public abstract void take(AbstractResource o, int qty);
@@ -8,4 +10,7 @@ public interface InterfaceGatherer {
 	public abstract int getStdTakeQty();
 	public abstract int getRndTakeQty();
 	public abstract int getTotTakeQty();
+	
+	public abstract MyPoint2D getPosition();
+	public abstract AbstractEnvironment getEnvironment();
 }

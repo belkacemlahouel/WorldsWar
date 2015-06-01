@@ -1,6 +1,7 @@
 package sim.agent.antagent;
 
 import env2.body.antbody.AntNurseBody;
+import env2.influences.MotionInfluence;
 
 public final class AntNurseAgent extends AntAgent {
 
@@ -9,8 +10,9 @@ public final class AntNurseAgent extends AntAgent {
 		// TODO Auto-generated constructor stub
 	}
 	
-	public void live() {
+	public MotionInfluence live() {
 		// TODO
+		return null;
 	}
 
 }
