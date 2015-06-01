@@ -48,4 +48,8 @@ public abstract class AbstractAgent {
 	protected int getTribeID() {
 		return TRIBE_ID;
 	}
+	
+	public int hashCode() {
+		return TRIBE_ID;
+	}
 }

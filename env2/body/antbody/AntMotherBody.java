@@ -21,4 +21,14 @@ public final class AntMotherBody extends AntBody implements InterfaceMother {
 	public int getTribeID() {
 		return _getTribeID();
 	}
+	
+	@Override
+	public boolean equals(InterfaceMother that) {
+		return this == that;
+	}
+	
+	@Override
+	public int hashCode() {
+		return _getTribeID();
+	}
 }

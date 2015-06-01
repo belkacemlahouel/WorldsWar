@@ -22,6 +22,10 @@ public final class AntMotherAgent extends AntAgent {
 		super(b, ID);
 		this.mothers = mothers;
 		this.mothers.put((InterfaceMother) getBody(), new LinkedList<CreateBabyInfluence>());
+		
+		// testing
+		WorldObjectType type = WorldObjectType.ANTGATHERERBODY;
+		addMyBaby(new CreateBabyInfluence((InterfaceMother) getBody(), type));
 	}
 
 	public MotionInfluence live() {
@@ -39,9 +43,16 @@ public final class AntMotherAgent extends AntAgent {
 	}
 	
 	private void addMyBaby(CreateBabyInfluence baby) {
-		if (mothers.get((InterfaceMother) getBody()) == null)
-			mothers.put((InterfaceMother) getBody(), new LinkedList<CreateBabyInfluence>());
+		/* if (mothers.get((InterfaceMother) getBody()) == null)
+			mothers.put((InterfaceMother) getBody(), new LinkedList<CreateBabyInfluence>()); */
 		
 		mothers.get((InterfaceMother) getBody()).add(baby);
+	}
+	
+	/*
+	 * To be used when creating new mothers (in exclusivity!!).
+	 */
+	private int genereNextTribeID() {
+		return mothers.size()+1;
 	}
 }

@@ -11,4 +11,9 @@ public interface InterfaceMother {
 	public abstract int getTribeID();
 	public abstract MyPoint2D getPosition();
 	public abstract AbstractEnvironment getEnvironment();
+	
+	/***/
+	
+	public abstract int hashCode();
+	public abstract boolean equals(InterfaceMother that);
 }
