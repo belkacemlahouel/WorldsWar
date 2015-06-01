@@ -5,6 +5,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.NoSuchElementException;
 
+import math.MyMath;
+import math.MyPoint2D;
 import parser.DataToGlobalEnvironment;
 import sim.agent.AbstractAgent;
 import env2.action.MotionAction;
@@ -132,7 +134,15 @@ public class Simulator {
 	private LinkedList<MotionAction> solveMotionInfluences(List<MotionInfluence> motionInfluences) {
 		LinkedList<MotionAction> actions = new LinkedList<>();
 		for (MotionInfluence influence : motionInfluences) {
-			actions.add(new MotionAction(influence.mobile, influence.arrivalPos, influence.arrivalEnv));
+			if (MyMath.isIn(influence.arrivalPos.getX(), influence.arrivalPos.getY(),
+					influence.arrivalEnv.getWidth(), influence.arrivalEnv.getHeight())) {
+				actions.add(new MotionAction(influence.mobile, influence.arrivalPos, influence.arrivalEnv));
+			} else {
+				int tmpX, tmpY;
+				tmpX = Math.max(0, Math.min(influence.arrivalPos.getX(), influence.arrivalEnv.getWidth()));
+				tmpY = Math.max(0, Math.min(influence.arrivalPos.getY(), influence.arrivalEnv.getHeight()));
+				actions.add(new MotionAction(influence.mobile, new MyPoint2D(tmpX, tmpY), influence.arrivalEnv));
+			}
 		}
 		return actions;
 	}
