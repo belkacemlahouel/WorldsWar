@@ -387,6 +387,10 @@ public abstract class AbstractBody extends AbstractMobileWorldObject {
 		return actions;
 	}
 	
+	public void addInfluenceHere(AbstractInfluence influence) {
+		getEnvironment().getCell(getPosition()).addInfluence(influence);
+	}
+	
 	public void addInfluence(AbstractInfluence influence) {
 		myinfluences.add(influence);
 	}
