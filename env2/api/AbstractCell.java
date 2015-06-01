@@ -23,6 +23,9 @@ public abstract class AbstractCell {
 	public List<AbstractAction> solveInfluences() {
 		List<AbstractAction> actions = new LinkedList<>();
 		
+		if (myinfluences == null || myinfluences.isEmpty())
+			return actions;
+		
 		for (AbstractInfluence influence : myinfluences) {
 			switch (influence.getType()) {
 			case DROP_PHEROMONE:
