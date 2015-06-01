@@ -25,6 +25,9 @@ public class DataToGlobalEnvironment {
 	public DataToGlobalEnvironment(String filename) {
 		try {
 			MOTHERS = new HashMap<>();
+			AbstractBodyInstanciator.setMothers(MOTHERS);
+			
+			/***/
 			
 			final EnvironmentParser DATAS = new EnvironmentParser(filename);
 			DATAS.parseEnvDatas();
