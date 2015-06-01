@@ -8,9 +8,13 @@ import math.MyMath;
 import math.MyPoint2D;
 import env2.frustrum.FrustrumCircleN;
 import env2.frustrum.FrustrumCrossN;
+import env2.instanciator.actions.AbstractActionInstanciator;
+import env2.instanciator.factory.ActionFactory;
 import env2.type.Direction;
 import env2.type.EffectType;
 import env2.type.FrustrumType;
+import env2.type.InfluenceType;
+import env2.type.Time;
 import env2.type.WorldObjectType;
 
 public abstract class AbstractBody extends AbstractMobileWorldObject {
@@ -342,8 +346,40 @@ public abstract class AbstractBody extends AbstractMobileWorldObject {
 	public ArrayList<AbstractAction> solveInfluences() {
 		ArrayList<AbstractAction> actions = new ArrayList<>();
 		
+		// TODO
+		
 		for (AbstractInfluence influence : myinfluences) {
-			// TODO
+			switch (influence.getType()) {
+			case ATTACK_CURE:
+				AbstractActionInstanciator.influence = influence;
+				actions.add(ActionFactory.ACTION_INSTANCIATOR.get(InfluenceType.ATTACK_CURE).getAction());
+				break;
+				
+			case EAT:
+				AbstractActionInstanciator.influence = influence;
+				actions.add(ActionFactory.ACTION_INSTANCIATOR.get(InfluenceType.EAT).getAction());
+				break;
+				
+			case KILL_MYSELF:
+				myinfluences.clear();
+				actions.clear();
+				AbstractActionInstanciator.influence = influence;
+				actions.add(ActionFactory.ACTION_INSTANCIATOR.get(InfluenceType.KILL_MYSELF).getAction());
+				return actions;
+			
+			case BURY_DEAD:
+				if (isDead()) {
+					myinfluences.clear();
+					actions.clear();
+					AbstractActionInstanciator.influence = influence;
+					actions.add(ActionFactory.ACTION_INSTANCIATOR.get(InfluenceType.BURY_DEAD).getAction());
+					return actions;
+				}
+				break;
+			
+			default:
+				System.out.println("Influence on body not treated: " + influence);
+			}
 		}
 		
 		myinfluences.clear();
@@ -352,6 +388,11 @@ public abstract class AbstractBody extends AbstractMobileWorldObject {
 	
 	public void addInfluence(AbstractInfluence influence) {
 		myinfluences.add(influence);
+	}
+	
+	public boolean isDead() {
+		// TODO Check TIME
+		return getAge(Time.TIME) > MAX_AGE || getLife() < 0;
 	}
 	
 	/*************************************************************************
