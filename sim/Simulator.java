@@ -135,7 +135,7 @@ public class Simulator {
 			Constructor<? extends AbstractAgent> cons = c.getDeclaredConstructor(Integer.class);
 			agents.add(cons.newInstance(1));
 		} */
-		
+				
 		gui.repaint();
 	}
 	
