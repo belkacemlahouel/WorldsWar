@@ -5,9 +5,9 @@ The corresponding influence solver is "near" the storage location.
 
 IN SIMULATOR:
 	Motion
+	CreateBaby
 
 IN CELLS: (we only iterate on cells which are modified)
-	CreateBaby
 	DropPheromone
 	Pick
 	Put
