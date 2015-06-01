@@ -2,6 +2,7 @@ package env2.api;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 
 import math.MyMath;
@@ -343,8 +344,8 @@ public abstract class AbstractBody extends AbstractMobileWorldObject {
 	
 	/***/
 		
-	public ArrayList<AbstractAction> solveInfluences() {
-		ArrayList<AbstractAction> actions = new ArrayList<>();
+	public List<AbstractAction> solveInfluences() {
+		List<AbstractAction> actions = new LinkedList<>();
 		
 		// TODO
 		
