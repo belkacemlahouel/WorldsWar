@@ -59,4 +59,16 @@ public abstract class AbstractCell {
 	public void addInfluence(AbstractInfluence influence) {
 		myinfluences.add(influence);
 	}
+	
+	/***/
+	
+	private boolean _walkable;
+	
+	public boolean isWalkable() {
+		return _walkable;
+	}
+	
+	public void setWalkable(boolean walkable) {
+		_walkable = walkable;
+	}
 }
