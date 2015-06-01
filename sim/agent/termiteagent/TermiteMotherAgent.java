@@ -25,7 +25,7 @@ public final class TermiteMotherAgent extends TermiteAgent {
 		 * Here I add new mothers to mothers
 		 * And I add all the influences I create influences to my list.
 		 */
-		mothers.get(getBody()).add(new CreateBabyInfluence(null, null, null, TRIBE_ID));
+		// mothers.get(getBody()).add(new CreateBabyInfluence(null, null, null, TRIBE_ID));
 		// TODO This represents a kind-of model
 		return null;
 	}

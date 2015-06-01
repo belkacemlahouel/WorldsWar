@@ -1,8 +1,5 @@
 package env2.influences;
 
-import java.util.LinkedList;
-
-import sim.agent.AbstractAgent;
 import env2.api.AbstractInfluence;
 import env2.api.InterfaceMother;
 import env2.type.InfluenceType;
@@ -11,15 +8,11 @@ import env2.type.WorldObjectType;
 public class CreateBabyInfluence extends AbstractInfluence {
 
 	public InterfaceMother mother;
-	public LinkedList<AbstractAgent> newAgents;
-	public int qty;
 	public WorldObjectType type;
 		
-	public CreateBabyInfluence(InterfaceMother mother, LinkedList<AbstractAgent> newAgents, WorldObjectType type, int qty) {
+	public CreateBabyInfluence(InterfaceMother mother, WorldObjectType type) {
 		this.mother = mother;
-		this.newAgents = newAgents;
 		this.type = type;
-		this.qty = qty;
 	}
 
 	@Override

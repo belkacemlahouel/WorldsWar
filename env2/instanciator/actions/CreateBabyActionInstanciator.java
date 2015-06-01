@@ -8,6 +8,6 @@ public class CreateBabyActionInstanciator extends AbstractActionInstanciator {
 	@Override
 	public CreateBabyAction getAction() {
 		CreateBabyInfluence infl = (CreateBabyInfluence) influence;
-		return new CreateBabyAction(infl.mother, infl.newAgents, infl.qty);
+		return new CreateBabyAction(infl.mother);
 	}
 }
