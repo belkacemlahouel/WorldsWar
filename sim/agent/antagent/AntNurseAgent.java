@@ -91,6 +91,6 @@ public final class AntNurseAgent extends AntAgent {
 	 * @param baby, the baby to feed.
 	 */
 	private void feed(AbstractBody baby){
-		//TODO
+		//TODO : take food and move to baby to feed it.
 	}
 }
