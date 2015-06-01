@@ -3,7 +3,9 @@ package sim.agent.antagent;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Random;
 
+import math.MyMath;
 import env2.api.InterfaceMother;
 import env2.body.antbody.AntMotherBody;
 import env2.influences.CreateBabyInfluence;
@@ -11,12 +13,21 @@ import env2.influences.MotionInfluence;
 import env2.type.WorldObjectType;
 
 public final class AntMotherAgent extends AntAgent {
+	
+	/* 
+	 * Warning : this part is frame (update) dependent
+	 * and not time-dependent.
+	 */
+	
+	private static final int PROBA_MIN = 1;		// inclusive with MyMath.Random
+	private static final int PROBA_MAX = 101; 	// exclusive with MyMath.Random
 
-	// private static final float NB_BABIES = 0.2f; // Per second
+	private static final int MIN_BABIES = 1;	// idem, with MyMath.Random
+	private static final int MAX_BABIES = 6;
 	
 	/***/
 	
-	private HashMap<InterfaceMother, List<CreateBabyInfluence>> mothers;
+	private HashMap<InterfaceMother, List<CreateBabyInfluence>> mothers; // static? final?
 	
 	public AntMotherAgent(AntMotherBody b, int ID, HashMap<InterfaceMother, List<CreateBabyInfluence>> mothers) {
 		super(b, ID);
@@ -29,11 +40,31 @@ public final class AntMotherAgent extends AntAgent {
 		 * And I add all the influences I create influences to my list.
 		 */
 		
-		// Testing but not finished yet. TODO
-				
-		WorldObjectType type = WorldObjectType.ANTGATHERERBODY;
-		addMyBaby(new CreateBabyInfluence((InterfaceMother) getBody(), type));
-
+		int nb_babies = MyMath.random(MIN_BABIES, MAX_BABIES);
+		
+		for (int i = 0; i < nb_babies; ++i) {
+			int proba = MyMath.random(PROBA_MIN, PROBA_MAX);
+			
+			/*
+			 * probabilities order from the most probable to the least
+			 */
+			WorldObjectType type;
+			if (proba < 45)
+				type = WorldObjectType.ANTGATHERERBODY;
+			else if (proba < 75)
+				type = WorldObjectType.ANTSOLDIERBODY;
+			else if (proba < 95)
+				type = WorldObjectType.ANTNURSEBODY;
+			else if (proba < 100)
+				type = WorldObjectType.ANTUNDERTAKERBODY;
+			else
+				type = WorldObjectType.ANTMOTHERBODY;
+			
+			addMyBaby(new CreateBabyInfluence((InterfaceMother) getBody(), type));
+		}
+		
+		// Testing but not finished yet. TODO	
+		
 		return null;
 	}
 	
