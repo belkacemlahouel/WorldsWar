@@ -116,6 +116,28 @@ public class Simulator {
 			action.doAction();
 		}
 		
+		createBabies();
+	
+		/***/
+				
+		gui.repaint();
+	}
+	
+	/**
+	 * For now on, this just creates all motion actions regarding the corresponding influences...
+	 * @param motionInfluences List of motion influences to apply
+	 * @return List of actions to execute, later
+	 * TODO Maybe add some conflict solving with Bresenheim-lines?
+	 */
+	private LinkedList<MotionAction> solveMotionInfluences(List<MotionInfluence> motionInfluences) {
+		LinkedList<MotionAction> actions = new LinkedList<>();
+		for (MotionInfluence influence : motionInfluences) {
+			actions.add(new MotionAction(influence.mobile, influence.arrivalPos, influence.arrivalEnv));
+		}
+		return actions;
+	}
+	
+	private void createBabies() {
 		boolean token_mother = false;
 		int tmp_tribe_id = 0;
 		
@@ -142,30 +164,6 @@ public class Simulator {
 				}
 			}
 		}
-	
-		/***/
-		
-		/* 	// private LinkedList<Class <? extends AbstractAgent>> newAgents;
-			for (Class<? extends AbstractAgent> c : newAgents) {
-			Constructor<? extends AbstractAgent> cons = c.getDeclaredConstructor(Integer.class);
-			agents.add(cons.newInstance(1));
-		} */
-				
-		gui.repaint();
-	}
-	
-	/**
-	 * For now on, this just creates all motion actions regarding the corresponding influences...
-	 * @param motionInfluences List of motion influences to apply
-	 * @return List of actions to execute, later
-	 * TODO Maybe add some conflict solving with Bresenheim-lines?
-	 */
-	private LinkedList<MotionAction> solveMotionInfluences(List<MotionInfluence> motionInfluences) {
-		LinkedList<MotionAction> actions = new LinkedList<>();
-		for (MotionInfluence influence : motionInfluences) {
-			actions.add(new MotionAction(influence.mobile, influence.arrivalPos, influence.arrivalEnv));
-		}
-		return actions;
 	}
 	
 	/*
@@ -175,3 +173,9 @@ public class Simulator {
 		return mothers.size()+1;
 	}
 }
+
+/* 	// private LinkedList<Class <? extends AbstractAgent>> newAgents;
+for (Class<? extends AbstractAgent> c : newAgents) {
+	Constructor<? extends AbstractAgent> cons = c.getDeclaredConstructor(Integer.class);
+	agents.add(cons.newInstance(1));
+} */
