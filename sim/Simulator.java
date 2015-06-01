@@ -16,6 +16,7 @@ import env2.influences.CreateBabyInfluence;
 import env2.influences.MotionInfluence;
 import env2.instanciator.bodies.AbstractBodyInstanciator;
 import env2.instanciator.factory.BodyFactory;
+import env2.type.WorldObjectType;
 import gui.GUI;
 
 public class Simulator {
@@ -115,6 +116,9 @@ public class Simulator {
 			action.doAction();
 		}
 		
+		boolean token_mother = false;
+		int tmp_tribe_id = 0;
+		
 		for (InterfaceMother mother : mothers.keySet()) {
 			
 			AbstractBodyInstanciator.POS = mother.getPosition();
@@ -122,9 +126,20 @@ public class Simulator {
 			AbstractBodyInstanciator.TRIBE_ID = mother.getTribeID();
 		
 			for (CreateBabyInfluence newBaby : mothers.get(mother)) {
+				if (newBaby.type == WorldObjectType.ANTMOTHERBODY || newBaby.type == WorldObjectType.TERMITEMOTHERBODY) {
+					tmp_tribe_id = AbstractBodyInstanciator.TRIBE_ID;
+					AbstractBodyInstanciator.TRIBE_ID = genereNextTribeID();
+					token_mother = true;
+				}
+				
 				BodyFactory.BODY_INSTANCIATOR.get(newBaby.type).getNew();
 				AbstractAgent agt = BodyFactory.BODY_INSTANCIATOR.get(newBaby.type).getAgent();
 				agents.add(agt);
+				
+				if (token_mother) {
+					AbstractBodyInstanciator.TRIBE_ID = tmp_tribe_id;
+					token_mother = false;
+				}
 			}
 		}
 	
@@ -151,5 +166,12 @@ public class Simulator {
 			actions.add(new MotionAction(influence.mobile, influence.arrivalPos, influence.arrivalEnv));
 		}
 		return actions;
+	}
+	
+	/*
+	 * To be used when creating new mothers (in exclusivity!!).
+	 */
+	private int genereNextTribeID() {
+		return mothers.size()+1;
 	}
 }

@@ -3,7 +3,6 @@ package sim.agent.antagent;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Random;
 
 import math.MyMath;
 import env2.api.InterfaceMother;
@@ -18,12 +17,9 @@ public final class AntMotherAgent extends AntAgent {
 	 * Warning : this part is frame (update) dependent
 	 * and not time-dependent.
 	 */
-	
-	private static final int PROBA_MIN = 1;		// inclusive with MyMath.Random
-	private static final int PROBA_MAX = 101; 	// exclusive with MyMath.Random
 
-	private static final int MIN_BABIES = 1;	// idem, with MyMath.Random
-	private static final int MAX_BABIES = 6;
+	private static final int MIN_BABIES = 1;	// inclusive with MyMath.Random
+	private static final int MAX_BABIES = 6;	// exclusive with MyMath.Random
 	
 	/***/
 	
@@ -43,7 +39,7 @@ public final class AntMotherAgent extends AntAgent {
 		int nb_babies = MyMath.random(MIN_BABIES, MAX_BABIES);
 		
 		for (int i = 0; i < nb_babies; ++i) {
-			int proba = MyMath.random(PROBA_MIN, PROBA_MAX);
+			int proba = MyMath.random(1, 101);
 			
 			/*
 			 * probabilities order from the most probable to the least
@@ -73,12 +69,5 @@ public final class AntMotherAgent extends AntAgent {
 			mothers.put((InterfaceMother) getBody(), new LinkedList<CreateBabyInfluence>());
 		
 		mothers.get((InterfaceMother) getBody()).add(baby);
-	}
-	
-	/*
-	 * To be used when creating new mothers (in exclusivity!!).
-	 */
-	private int genereNextTribeID() {
-		return mothers.size()+1;
 	}
 }
