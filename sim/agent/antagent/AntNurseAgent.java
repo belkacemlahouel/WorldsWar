@@ -2,6 +2,7 @@ package sim.agent.antagent;
 
 import java.util.Iterator;
 
+import math.MyPoint2D;
 import env2.api.AbstractBody;
 import env2.api.AbstractFrustrum;
 import env2.api.AbstractWorldObject;
@@ -28,6 +29,7 @@ public final class AntNurseAgent extends AntAgent {
 	public MotionInfluence live() {
 		AbstractBody body = this.getBody();
 		AbstractBody target = null;
+		MotionInfluence influence = null;
 		
 		if(!body.isBaby(Time.TIME)){
 			AbstractFrustrum frustrum = this.getBody().getCurrentFrustrum();
@@ -43,7 +45,7 @@ public final class AntNurseAgent extends AntAgent {
 					AbstractBody objBody = (AbstractBody) obj;
 					if(objBody.isFriend(body) && this.isHurt(objBody)){
 						mission = true;
-						heal(objBody);
+						influence = heal(objBody);
 					}else if (objBody.isBaby(Time.TIME) && target==null){
 						target = objBody;
 					}
@@ -51,11 +53,11 @@ public final class AntNurseAgent extends AntAgent {
 			}
 			
 			if(!mission && target!=null){
-				feed(target);
+				influence = feed(target);
 			}
 		}
 		
-		return null;
+		return influence;
 	}
 	
 	
@@ -79,22 +81,30 @@ public final class AntNurseAgent extends AntAgent {
 	 * Heal an injured agent.
 	 * @param body, the body to heal.
 	 */
-	private void heal(AbstractBody body){
+	private MotionInfluence heal(AbstractBody body){
 		boolean goodPosition = this.isOnSamePosition(body);
+		MotionInfluence influence;
 		
 		if(goodPosition){
-			//do action on goal
+			//TODO : add action heal
+			influence = null;
 		}else{
 			//move to goal
+			MyPoint2D goalPos = null;
+			influence = new MotionInfluence(body, goalPos, body.getEnvironment());
 		}
+		
+		return influence;
 	}
 	
 	/**
 	 * Feed a baby.
 	 * @param baby, the baby to feed.
 	 */
-	private void feed(AbstractBody baby){
+	private MotionInfluence feed(AbstractBody baby){
 		//TODO : take food and move to baby to feed it.
+		MotionInfluence influence = null;
+		return influence;
 	}
 	
 }
