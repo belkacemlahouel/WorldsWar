@@ -3,12 +3,12 @@ package sim.agent.antagent;
 import java.util.Iterator;
 
 import env2.api.AbstractBody;
-import env2.api.AbstractFrustrum;
 import env2.api.AbstractWorldObject;
 import env2.body.antbody.AntSoldierBody;
 import env2.type.Time;
 import env2.type.WorldObjectType;
-
+import env2.frustrum.AbstractFrustrum;
+import env2.frustrum.AbstractWorldObjectWithPosition;
 import env2.influences.MotionInfluence;
 
 /**
@@ -29,14 +29,14 @@ public final class AntSoldierAgent extends AntAgent {
 		AbstractBody body = this.getBody();
 		if(body.isBaby(Time.getTime())){
 			AbstractFrustrum frustrum = this.getBody().getCurrentFrustrum();
-			Iterator<AbstractWorldObject> objs = frustrum.objects();
+			Iterator<AbstractWorldObjectWithPosition> objs = frustrum.objects();
 			
 			boolean mission = false;
 			/* The goal could represent an enemy or a DANGERPHEROMONE */
 			AbstractWorldObject goal = null;
 			
 			while(objs.hasNext() && mission==false){
-				AbstractWorldObject obj = objs.next();
+				AbstractWorldObject obj = objs.next().object;
 				
 				/* Case where obj is a body (so a potential enemy */
 				if(WorldObjectType.isAntBody(obj.getType()) || WorldObjectType.isTermiteBody(obj.getType())){

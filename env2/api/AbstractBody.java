@@ -7,6 +7,7 @@ import java.util.List;
 
 import math.MyMath;
 import math.MyPoint2D;
+import env2.frustrum.AbstractFrustrum;
 import env2.frustrum.FrustrumCircleN;
 import env2.frustrum.FrustrumCrossN;
 import env2.instanciator.actions.AbstractActionInstanciator;
