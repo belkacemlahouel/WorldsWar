@@ -12,7 +12,7 @@ public final class TermiteGathererInstanciator extends AbstractBodyInstanciator 
 	
 	@Override
 	public TermiteGathererBody getNew() {
-		body = new TermiteGathererBody(Time.TIME, TRIBE_ID, ENV, DIR, POS);
+		body = new TermiteGathererBody(Time.getTime(), TRIBE_ID, ENV, DIR, POS);
 		agent = new TermiteGathererAgent(body, TRIBE_ID);
 		return body;
 	}

@@ -42,7 +42,7 @@ public abstract class AbstractAgent {
 	 * @return boolean: should the agent kill himself?
 	 */
 	public boolean killMe() {
-		if (body.getLife() < 0 || body.getAge(Time.TIME) > body.getMaxAge())
+		if (body.getLife() < 0 || body.getAge(Time.getTime()) > body.getMaxAge())
 			return true;
 		
 		return false;

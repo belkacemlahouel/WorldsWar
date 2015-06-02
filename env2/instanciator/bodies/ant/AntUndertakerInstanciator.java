@@ -12,7 +12,7 @@ public final class AntUndertakerInstanciator extends AbstractBodyInstanciator {
 	
 	@Override
 	public AntUndertakerBody getNew() {
-		body = new AntUndertakerBody(Time.TIME, TRIBE_ID, ENV, DIR, POS);
+		body = new AntUndertakerBody(Time.getTime(), TRIBE_ID, ENV, DIR, POS);
 		agent = new AntUndertakerAgent(body, TRIBE_ID);
 		return body;
 	}

@@ -29,7 +29,7 @@ public final class AntNurseAgent extends AntAgent {
 		AbstractBody body = this.getBody();
 		AbstractBody target = null;
 		
-		if(!body.isBaby(Time.TIME)){
+		if(!body.isBaby(Time.getTime())){
 			AbstractFrustrum frustrum = this.getBody().getCurrentFrustrum();
 			Iterator<AbstractWorldObject> objs = frustrum.objects();
 			/* The mission of the nurse is to heal injured ants and to feed babies. */
@@ -44,7 +44,7 @@ public final class AntNurseAgent extends AntAgent {
 					if(objBody.isFriend(body) && this.isHurt(objBody)){
 						mission = true;
 						heal(objBody);
-					}else if (objBody.isBaby(Time.TIME) && target==null){
+					}else if (objBody.isBaby(Time.getTime()) && target==null){
 						target = objBody;
 					}
 				}
