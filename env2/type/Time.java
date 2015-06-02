@@ -10,7 +10,7 @@ public class Time {
 	}
 	
 	public static int getTime() {
-		return (int) (1000*System.currentTimeMillis()) - instanciation_time;
+		return (int) (System.currentTimeMillis()/1000) - instanciation_time;
 	}
 	
 	/***/
