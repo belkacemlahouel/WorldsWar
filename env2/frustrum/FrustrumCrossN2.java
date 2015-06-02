@@ -55,16 +55,15 @@ public class FrustrumCrossN2 extends AbstractFrustrum2 {
 			while (next.isEmpty() && hasNext()) {
 				if (x < ex) {
 					for (AbstractWorldObject obj : e.getCell(x, my).getObjects()) {
-						next.add(new AbstractWorldObjectWithPosition(obj, new MyPoint2D(x, my)));
+						if (b != obj)
+							next.add(new AbstractWorldObjectWithPosition(obj, new MyPoint2D(x, my)));
 					}
 				} else {
 					for (AbstractWorldObject obj : e.getCell(x, my).getObjects()) {
-						next.add(new AbstractWorldObjectWithPosition(obj, new MyPoint2D(mx, y)));
+						if (b != obj)
+							next.add(new AbstractWorldObjectWithPosition(obj, new MyPoint2D(mx, y)));
 					}
 				}
-				
-				if (next.contains(b))
-					next.remove(b); // TODO really need to test?
 				
 				searchNext();
 			}
@@ -79,10 +78,8 @@ public class FrustrumCrossN2 extends AbstractFrustrum2 {
 		}
 		
 		private void searchNext() {
-			do {
-				if (x < ex) ++x;
-				else if (x > ex) ++y;
-			} while (x == mx && y == my);
+			if (x < ex) ++x;
+			else if (x > ex) ++y;
 		}
 
 		public void remove() {
