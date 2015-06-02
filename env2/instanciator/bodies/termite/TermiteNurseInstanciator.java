@@ -12,7 +12,7 @@ public final class TermiteNurseInstanciator extends AbstractBodyInstanciator {
 	
 	@Override
 	public TermiteNurseBody getNew() {
-		body = new TermiteNurseBody(Time.TIME, TRIBE_ID, ENV, DIR, POS);
+		body = new TermiteNurseBody(Time.getTime(), TRIBE_ID, ENV, DIR, POS);
 		agent = new TermiteNurseAgent(body, TRIBE_ID);
 		return body;
 	}

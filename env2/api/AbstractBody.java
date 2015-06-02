@@ -399,7 +399,7 @@ public abstract class AbstractBody extends AbstractMobileWorldObject {
 	
 	public boolean isDead() {
 		// TODO Check TIME
-		return getAge(Time.TIME) > MAX_AGE || getLife() < 0;
+		return getAge(Time.getTime()) > MAX_AGE || getLife() < 0;
 	}
 
 	

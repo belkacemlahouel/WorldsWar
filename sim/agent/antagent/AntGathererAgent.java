@@ -25,7 +25,7 @@ public final class AntGathererAgent extends AntAgent {
 	 * Implementation of the basic behavior of a gatherer ant.
 	 */
 	public MotionInfluence live() {
-		if(!this.getBody().isBaby(Time.TIME)){
+		if(!this.getBody().isBaby(Time.getTime())){
 			AbstractFrustrum frustrum = this.getBody().getCurrentFrustrum();
 			Iterator<AbstractWorldObject> objs = frustrum.objects();
 			/* The mission of the gatherer is to find food. If it finds one resource eatable, it directly goes to it. */

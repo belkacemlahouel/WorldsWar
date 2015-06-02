@@ -27,7 +27,7 @@ public final class AntSoldierAgent extends AntAgent {
 	 */
 	public MotionInfluence live() {
 		AbstractBody body = this.getBody();
-		if(body.isBaby(Time.TIME)){
+		if(body.isBaby(Time.getTime())){
 			AbstractFrustrum frustrum = this.getBody().getCurrentFrustrum();
 			Iterator<AbstractWorldObject> objs = frustrum.objects();
 			

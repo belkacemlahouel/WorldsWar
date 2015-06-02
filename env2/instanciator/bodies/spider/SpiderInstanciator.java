@@ -12,7 +12,7 @@ public class SpiderInstanciator extends AbstractBodyInstanciator {
 	
 	@Override
 	public SpiderBody getNew() {
-		body = new SpiderBody(Time.TIME, TRIBE_ID, ENV, DIR, POS);
+		body = new SpiderBody(Time.getTime(), TRIBE_ID, ENV, DIR, POS);
 		agent = new SpiderAgent(body, TRIBE_ID);
 		return body;
 	}
