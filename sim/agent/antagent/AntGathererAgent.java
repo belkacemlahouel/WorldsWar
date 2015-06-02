@@ -7,7 +7,8 @@ import env2.type.WorldObjectType;
 import env2.api.AbstractBody;
 import env2.api.AbstractWorldObject;
 import env2.body.antbody.AntGathererBody;
-import env2.frustrum.old.AbstractFrustrum;
+import env2.frustrum.AbstractFrustrum;
+import env2.frustrum.AbstractWorldObjectWithPosition;
 import env2.influences.MotionInfluence;
 
 /**
@@ -27,13 +28,13 @@ public final class AntGathererAgent extends AntAgent {
 	public MotionInfluence live() {
 		if(!this.getBody().isBaby(Time.getTime())){
 			AbstractFrustrum frustrum = this.getBody().getCurrentFrustrum();
-			Iterator<AbstractWorldObject> objs = frustrum.objects();
+			Iterator<AbstractWorldObjectWithPosition> objs = frustrum.objects();
 			/* The mission of the gatherer is to find food. If it finds one resource eatable, it directly goes to it. */
 			boolean mission = false;
 			AbstractWorldObject goal = null;
 			
 			while(objs.hasNext() && mission==false){
-				AbstractWorldObject obj = objs.next();
+				AbstractWorldObject obj = objs.next().object;
 				
 				/* obj is a resource */
 				if(WorldObjectType.canBeFood(obj.getType()))

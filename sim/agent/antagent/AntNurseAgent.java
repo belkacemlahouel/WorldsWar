@@ -7,7 +7,8 @@ import env2.api.AbstractWorldObject;
 import env2.body.antbody.AntNurseBody;
 import env2.type.Time;
 import env2.type.WorldObjectType;
-import env2.frustrum.old.AbstractFrustrum;
+import env2.frustrum.AbstractFrustrum;
+import env2.frustrum.AbstractWorldObjectWithPosition;
 import env2.influences.MotionInfluence;
 
 
@@ -31,13 +32,13 @@ public final class AntNurseAgent extends AntAgent {
 		
 		if(!body.isBaby(Time.getTime())){
 			AbstractFrustrum frustrum = this.getBody().getCurrentFrustrum();
-			Iterator<AbstractWorldObject> objs = frustrum.objects();
+			Iterator<AbstractWorldObjectWithPosition> objs = frustrum.objects();
 			/* The mission of the nurse is to heal injured ants and to feed babies. */
 			boolean mission = false;
 			AbstractWorldObject goal = null;
 			
 			while(objs.hasNext() && mission==false){
-				AbstractWorldObject obj = objs.next();
+				AbstractWorldObject obj = objs.next().object;
 				
 				if(WorldObjectType.isAntBody(obj.getType()) || WorldObjectType.isTermiteBody(obj.getType())){
 					AbstractBody objBody = (AbstractBody) obj;
