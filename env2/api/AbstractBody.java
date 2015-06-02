@@ -338,6 +338,8 @@ public abstract class AbstractBody extends AbstractMobileWorldObject {
 		return mycargo;
 	}
 	
+
+
 	protected int _getTribeID() {
 		return TRIBE_ID;
 	}
@@ -399,6 +401,7 @@ public abstract class AbstractBody extends AbstractMobileWorldObject {
 		// TODO Check TIME
 		return getAge(Time.TIME) > MAX_AGE || getLife() < 0;
 	}
+
 	
 	public int getMaxLife(){
 		return MAX_LIFE;

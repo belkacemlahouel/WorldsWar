@@ -4,6 +4,8 @@ import env2.api.AbstractEnvironment;
 import gui.window.SimpleFrame;
 import gui.window.Viewport;
 
+import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -11,6 +13,7 @@ import java.util.List;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.OverlayLayout;
 import javax.swing.SpringLayout;
 
 import math.MyMath;
@@ -27,6 +30,7 @@ public class GUI extends SimpleFrame
 	private GUIController controller;
 	
 	private JPanel mainPanel;
+	private JPanel antPanel;
 	private SpringLayout layout;
 
 	/* Constructors */
@@ -44,11 +48,9 @@ public class GUI extends SimpleFrame
 
 		int envCount = envList.size();		
 		
-		/* Set the main JPanel */
-		this.layout = new SpringLayout();	
-		this.mainPanel = new JPanel();	
-		this.mainPanel.setLayout(this.layout);
-
+		/* Set the panels */		
+		this.initPanels();
+		
 		/* Create a camera */
 		this.camera = new Camera(this);
 		this.camera.setMainViewportID(MyMath.clamp(mainViewportID, 0, envCount));
@@ -66,8 +68,29 @@ public class GUI extends SimpleFrame
 			tmpVP.revalidate();
 		}
 		
+		/* Init the controller and set the layout */
 		this.initController();
-		this.layoutSetting(true);
+		this.mainPanelLayoutSetting(true);
+	}
+	
+	private void initPanels()
+	{
+		/* Init the main panel and set it as a ContentPane */
+		this.layout = new SpringLayout();
+		
+		this.mainPanel = new JPanel();		
+		this.mainPanel.setLayout(this.layout);
+		
+		this.setContentPane(this.mainPanel);
+		
+		/* Init the ant panel and set it as a GlassPane */
+		this.antPanel = new JPanel();
+		
+		this.antPanel.setOpaque(false); 
+        this.antPanel.setLayout(null);
+        
+		this.setGlassPane(this.antPanel);
+		this.getGlassPane().setVisible(true);
 	}
 	
 	/* Getters */
@@ -75,8 +98,15 @@ public class GUI extends SimpleFrame
 		return Collections.unmodifiableList(envList);
 	}
 	
+	public JPanel getAntPanel(){
+		return this.antPanel;
+	}
+	public Camera getCamera(){
+		return this.camera;
+	}
+	
 	/* Layout functions */
-	private void layoutSetting(boolean calledFromConstructor){		
+	private void mainPanelLayoutSetting(boolean calledFromConstructor){		
 		int envCount = this.envList.size();
 		int mainViewportID = this.camera.getMainViewportID();
 		
@@ -148,9 +178,7 @@ public class GUI extends SimpleFrame
 					currentPosition++;
 				}
 			}
-		}
-				
-		this.add(mainPanel);
+		}				
 	}	
 
 	/* Controller functions */
@@ -172,6 +200,6 @@ public class GUI extends SimpleFrame
 	}
 	
 	public void refreshLayout(){
-		this.layoutSetting(false);
+		this.mainPanelLayoutSetting(false);
 	}
 }
