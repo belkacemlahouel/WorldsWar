@@ -1,6 +1,7 @@
 package sim.agent.antagent;
 
 import env2.body.antbody.AntBody;
+import env2.influences.MotionInfluence;
 import sim.agent.AbstractAgent;
 
 public abstract class AntAgent extends AbstractAgent {
@@ -14,5 +15,5 @@ public abstract class AntAgent extends AbstractAgent {
 	 * Default behavior for all agents controlling this type of body
 	 * But this should be overidden when possible
 	 */
-	public abstract void live();
+	public abstract MotionInfluence live();
 }

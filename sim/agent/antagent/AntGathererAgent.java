@@ -1,17 +1,14 @@
 package sim.agent.antagent;
 
 import java.util.Iterator;
-import java.util.List;
 
-import env2.type.Direction;
 import env2.type.Time;
 import env2.type.WorldObjectType;
 import env2.api.AbstractBody;
-import env2.api.AbstractCell;
 import env2.api.AbstractFrustrum;
 import env2.api.AbstractWorldObject;
 import env2.body.antbody.AntGathererBody;
-import env2.type.EffectType;
+import env2.influences.MotionInfluence;
 
 /**
  * Implementation of an gatherer ant.
@@ -27,7 +24,7 @@ public final class AntGathererAgent extends AntAgent {
 	/**
 	 * Implementation of the basic behavior of a gatherer ant.
 	 */
-	public void live() {
+	public MotionInfluence live() {
 		if(!this.getBody().isBaby(Time.TIME)){
 			AbstractFrustrum frustrum = this.getBody().getCurrentFrustrum();
 			Iterator<AbstractWorldObject> objs = frustrum.objects();
@@ -100,6 +97,9 @@ public final class AntGathererAgent extends AntAgent {
 				}
 			}
 		}
+		
+		// TODO
+		return null;
 	}
 	
 	/**

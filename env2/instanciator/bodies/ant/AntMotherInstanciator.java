@@ -13,7 +13,7 @@ public final class AntMotherInstanciator extends AbstractBodyInstanciator {
 	@Override
 	public AntMotherBody getNew() {
 		body = new AntMotherBody(Time.TIME, TRIBE_ID, ENV, DIR, POS);
-		agent = new AntMotherAgent(body, TRIBE_ID);
+		agent = new AntMotherAgent(body, TRIBE_ID, AbstractBodyInstanciator.getMothers());
 		return body;
 	}
 

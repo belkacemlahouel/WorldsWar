@@ -8,6 +8,7 @@ import env2.api.AbstractBody;
 import env2.api.AbstractCell;
 import env2.api.AbstractWorldObject;
 import env2.type.Direction;
+import env2.influences.MotionInfluence;
 import env2.type.Time;
 
 public abstract class AbstractAgent {
@@ -33,7 +34,7 @@ public abstract class AbstractAgent {
 	 * Decision process implemented here
 	 * The agent applies influences
 	 */
-	public abstract void live();
+	public abstract MotionInfluence live();
 	
 	/**
 	 * Decision process inside
@@ -51,7 +52,11 @@ public abstract class AbstractAgent {
 	 * So agents can know if they belong in the same team or not
 	 * @return tribe id: tribe index
 	 */
-	public int getTribeID() {
+	protected int getTribeID() {
+		return TRIBE_ID;
+	}
+	
+	public int hashCode() {
 		return TRIBE_ID;
 	}
 	

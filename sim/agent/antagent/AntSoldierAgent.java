@@ -1,17 +1,15 @@
 package sim.agent.antagent;
 
 import java.util.Iterator;
-import java.util.List;
 
 import env2.api.AbstractBody;
-import env2.api.AbstractCell;
 import env2.api.AbstractFrustrum;
 import env2.api.AbstractWorldObject;
 import env2.body.antbody.AntSoldierBody;
-import env2.type.Direction;
 import env2.type.Time;
 import env2.type.WorldObjectType;
 
+import env2.influences.MotionInfluence;
 
 /**
  * The mission of the soldier is to fight enemy.
@@ -22,13 +20,12 @@ public final class AntSoldierAgent extends AntAgent {
 	public AntSoldierAgent(AntSoldierBody b, int ID) {
 		super(b, ID);
 		// TODO Auto-generated constructor stub
-	}
-	
+	}	
 	
 	/**
 	 * Implementation of the basic behavior of a soldier ant.
 	 */
-	public void live() {
+	public MotionInfluence live() {
 		AbstractBody body = this.getBody();
 		if(body.isBaby(Time.TIME)){
 			AbstractFrustrum frustrum = this.getBody().getCurrentFrustrum();
@@ -60,7 +57,9 @@ public final class AntSoldierAgent extends AntAgent {
 				reachGoal(goal);
 			}
 		}
-				
+		
+		// TODO
+		return null;		
 	}
 	
 	

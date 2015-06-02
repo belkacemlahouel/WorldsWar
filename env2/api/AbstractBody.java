@@ -1,16 +1,21 @@
 package env2.api;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
 
 import math.MyMath;
 import math.MyPoint2D;
 import env2.frustrum.FrustrumCircleN;
 import env2.frustrum.FrustrumCrossN;
+import env2.instanciator.actions.AbstractActionInstanciator;
+import env2.instanciator.factory.ActionFactory;
 import env2.type.Direction;
 import env2.type.EffectType;
 import env2.type.FrustrumType;
+import env2.type.InfluenceType;
+import env2.type.Time;
 import env2.type.WorldObjectType;
 
 public abstract class AbstractBody extends AbstractMobileWorldObject {
@@ -62,13 +67,14 @@ public abstract class AbstractBody extends AbstractMobileWorldObject {
 	/*
 	 * For-use attributes.
 	 */
-	private Collection<AbstractResource> mycargo;
+	private ArrayList<AbstractResource> mycargo;
 	private AbstractFrustrum myfrustrum;
 	private AbstractEnvironment myenv;
 	private Direction mydir;
 	private MyPoint2D mypos;
 	private int mylife;
 	private int bonusstrength;
+	private ArrayList<AbstractInfluence> myinfluences;
 	
 	/**
 	 * Constructor to be used by all inheriting classes.
@@ -114,6 +120,7 @@ public abstract class AbstractBody extends AbstractMobileWorldObject {
 		mylife = MAX_LIFE;
 		bonusstrength = 0;
 		mycargo = new ArrayList<>();
+		myinfluences = new ArrayList<>();
 		myfrustrum = null;
 		
 		move(env, pos);
@@ -327,15 +334,79 @@ public abstract class AbstractBody extends AbstractMobileWorldObject {
 		return LIFE_LOSS;
 	}
 	
-	public Collection<AbstractResource> getCargo() {
+	public List<AbstractResource> getCargo() {
 		return mycargo;
 	}
+	
+
+
+	protected int _getTribeID() {
+		return TRIBE_ID;
+	}
+	
+	/***/
+		
+	public List<AbstractAction> solveInfluences() {
+		List<AbstractAction> actions = new LinkedList<>();
+		
+		// TODO
+		
+		for (AbstractInfluence influence : myinfluences) {
+			switch (influence.getType()) {
+			case ATTACK_CURE:
+				AbstractActionInstanciator.influence = influence;
+				actions.add(ActionFactory.ACTION_INSTANCIATOR.get(InfluenceType.ATTACK_CURE).getAction());
+				break;
+				
+			case EAT:
+				AbstractActionInstanciator.influence = influence;
+				actions.add(ActionFactory.ACTION_INSTANCIATOR.get(InfluenceType.EAT).getAction());
+				break;
+				
+			case KILL_MYSELF:
+				myinfluences.clear();
+				actions.clear();
+				AbstractActionInstanciator.influence = influence;
+				actions.add(ActionFactory.ACTION_INSTANCIATOR.get(InfluenceType.KILL_MYSELF).getAction());
+				return actions;
+			
+			case BURY_DEAD:
+				if (isDead()) {
+					myinfluences.clear();
+					actions.clear();
+					AbstractActionInstanciator.influence = influence;
+					actions.add(ActionFactory.ACTION_INSTANCIATOR.get(InfluenceType.BURY_DEAD).getAction());
+					return actions;
+				}
+				break;
+			
+			default:
+				System.out.println("Influence on body not treated: " + influence);
+			}
+		}
+		
+		myinfluences.clear();
+		return actions;
+	}
+	
+	public void addInfluenceHere(AbstractInfluence influence) {
+		getEnvironment().getCell(getPosition()).addInfluence(influence);
+	}
+	
+	public void addInfluence(AbstractInfluence influence) {
+		myinfluences.add(influence);
+	}
+	
+	public boolean isDead() {
+		// TODO Check TIME
+		return getAge(Time.TIME) > MAX_AGE || getLife() < 0;
+	}
+
 	
 	public int getMaxLife(){
 		return MAX_LIFE;
 	}
-	
-	
+		
 	/*************************************************************************
 	 * Main method: tests...
 	 * 

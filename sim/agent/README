@@ -6,7 +6,7 @@ Each agent creates influences which lead to actions.
 
 BE CAREFUL: Babies are not supposed to do anything...
 
-MOTHER: 0.1
+MOTHER: 0.01
 	Contains the probability law for instanciations
 	Instanciations, between X and Y babies each loop
 
@@ -22,7 +22,7 @@ NURSE: 0.2
 	else look for pheromone danger (strongest) : go there
 	else wander
 
-SOLDER: 0.3
+SOLDIER: 0.3
 	Look for ennemies
 	if found (and not too much) dropPheromone - go there - attack...
 	else if too much dropbPheromone - run
