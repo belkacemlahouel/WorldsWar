@@ -28,5 +28,9 @@ class Main {
 		AntGathererBody ant = new AntGathererBody(0, 1, env, Direction.EAST, new MyPoint2D(1,5));
 		AgentBodyGUI agentGui = new AgentBodyGUI("Ant", gui, ant);
 		agentGui.move();
+		
+		AntSoldierBody antSoldier = new AntSoldierBody(0, 1, env, Direction.NORTH, new MyPoint2D(5,3));
+		AgentBodyGUI agentGuiSoldier = new AgentBodyGUI("Ant", gui, antSoldier);
+		agentGui.move();
 	}
 }
