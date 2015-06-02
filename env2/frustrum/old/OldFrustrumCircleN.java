@@ -1,4 +1,4 @@
-package env2.frustrum;
+package env2.frustrum.old;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -8,20 +8,19 @@ import math.MyPoint2D;
 import env2.api.AbstractBody;
 import env2.api.AbstractEnvironment;
 import env2.api.AbstractWorldObject;
-import env2.frustrum.old.AbstractFrustrum;
 
-public class FrustrumCircleN extends AbstractFrustrum {
+public class OldFrustrumCircleN extends OldAbstractFrustrum {
 	
 	protected final int radius;
 	protected Iterator<AbstractWorldObject> objects;
 	
-	public FrustrumCircleN(AbstractBody b, AbstractEnvironment e, int radius) {
+	public OldFrustrumCircleN(AbstractBody b, AbstractEnvironment e, int radius) {
 		super(b, e);
 		this.radius = radius;
 		objects = new CircleIteratorN(b.getPosition());
 	}
 	
-	public FrustrumCircleN(AbstractBody b, AbstractEnvironment e) {
+	public OldFrustrumCircleN(AbstractBody b, AbstractEnvironment e) {
 		super(b, e);
 		radius = 1;
 		objects = new CircleIteratorN(b.getPosition());

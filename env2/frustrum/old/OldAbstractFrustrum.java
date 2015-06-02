@@ -6,12 +6,12 @@ import env2.api.AbstractBody;
 import env2.api.AbstractEnvironment;
 import env2.api.AbstractWorldObject;
 
-public abstract class AbstractFrustrum {
+public abstract class OldAbstractFrustrum {
 	
 	protected AbstractBody b;
 	protected AbstractEnvironment e;
 	
-	public AbstractFrustrum(AbstractBody b, AbstractEnvironment e) {
+	public OldAbstractFrustrum(AbstractBody b, AbstractEnvironment e) {
 		this.b = b;
 		this.e = e;
 	}

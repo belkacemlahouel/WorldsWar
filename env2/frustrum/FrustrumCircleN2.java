@@ -1,4 +1,4 @@
-package env2.frustrum.old;
+package env2.frustrum;
 
 import java.util.Iterator;
 import java.util.Stack;
@@ -7,8 +7,6 @@ import math.MyPoint2D;
 import env2.api.AbstractBody;
 import env2.api.AbstractEnvironment;
 import env2.api.AbstractWorldObject;
-import env2.frustrum.AbstractFrustrum2;
-import env2.frustrum.AbstractWorldObjectWithPosition;
 
 /**
  * We name it "circle frustrum" but it works on a discrete environment.
