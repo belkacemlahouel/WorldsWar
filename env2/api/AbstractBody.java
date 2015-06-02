@@ -400,6 +400,10 @@ public abstract class AbstractBody extends AbstractMobileWorldObject {
 		return getAge(Time.TIME) > MAX_AGE || getLife() < 0;
 	}
 	
+	public int getMaxLife(){
+		return MAX_LIFE;
+	}
+		
 	/*************************************************************************
 	 * Main method: tests...
 	 * 
