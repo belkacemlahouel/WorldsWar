@@ -5,9 +5,9 @@ import java.util.Iterator;
 import env2.type.Time;
 import env2.type.WorldObjectType;
 import env2.api.AbstractBody;
-import env2.api.AbstractFrustrum;
 import env2.api.AbstractWorldObject;
 import env2.body.antbody.AntGathererBody;
+import env2.frustrum.old.AbstractFrustrum;
 import env2.influences.MotionInfluence;
 
 /**

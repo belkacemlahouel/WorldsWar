@@ -7,8 +7,8 @@ import java.util.List;
 import math.MyPoint2D;
 import env2.api.AbstractBody;
 import env2.api.AbstractEnvironment;
-import env2.api.AbstractFrustrum;
 import env2.api.AbstractWorldObject;
+import env2.frustrum.old.AbstractFrustrum;
 
 public class FrustrumCircleN extends AbstractFrustrum {
 	

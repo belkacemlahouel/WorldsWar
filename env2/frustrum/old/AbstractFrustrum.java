@@ -1,6 +1,10 @@
-package env2.api;
+package env2.frustrum.old;
 
 import java.util.Iterator;
+
+import env2.api.AbstractBody;
+import env2.api.AbstractEnvironment;
+import env2.api.AbstractWorldObject;
 
 public abstract class AbstractFrustrum {
 	

@@ -1,4 +1,4 @@
-package env2.frustrum;
+package env2.frustrum.old;
 
 import java.util.Iterator;
 import java.util.Stack;
@@ -7,6 +7,8 @@ import math.MyPoint2D;
 import env2.api.AbstractBody;
 import env2.api.AbstractEnvironment;
 import env2.api.AbstractWorldObject;
+import env2.frustrum.AbstractFrustrum2;
+import env2.frustrum.AbstractWorldObjectWithPosition;
 
 public class FrustrumCrossN2 extends AbstractFrustrum2 {
 
