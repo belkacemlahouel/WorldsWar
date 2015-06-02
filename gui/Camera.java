@@ -245,9 +245,10 @@ public class Camera
 		int envID = -1;
 		
 		int i=0;
-		while(i<size && i==(-1))
+		while(i<size && envID==(-1))
 		{
 			if(envList.get(i).equals(e)) 	envID = i;
+			i++;
 		}
 		
 		return envID;
