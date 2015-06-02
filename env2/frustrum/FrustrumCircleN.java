@@ -15,18 +15,18 @@ import env2.api.AbstractWorldObject;
  *
  */
 
-public class FrustrumCircleN2 extends AbstractFrustrum2 {
+public class FrustrumCircleN extends AbstractFrustrum {
 
 	protected final int radius;
 	protected Iterator<AbstractWorldObjectWithPosition> objects;
 	
-	public FrustrumCircleN2(AbstractBody b, AbstractEnvironment e, int radius) {
+	public FrustrumCircleN(AbstractBody b, AbstractEnvironment e, int radius) {
 		super(b, e);
 		this.radius = radius;
 		objects = new CircleIteratorN(b.getPosition());
 	}
 	
-	public FrustrumCircleN2(AbstractBody b, AbstractEnvironment e) {
+	public FrustrumCircleN(AbstractBody b, AbstractEnvironment e) {
 		super(b, e);
 		radius = 1;
 		objects = new CircleIteratorN(b.getPosition());

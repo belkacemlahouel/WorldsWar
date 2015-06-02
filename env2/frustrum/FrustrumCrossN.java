@@ -8,18 +8,18 @@ import env2.api.AbstractBody;
 import env2.api.AbstractEnvironment;
 import env2.api.AbstractWorldObject;
 
-public class FrustrumCrossN2 extends AbstractFrustrum2 {
+public class FrustrumCrossN extends AbstractFrustrum {
 
 	protected final int length;
 	protected Iterator<AbstractWorldObjectWithPosition> objects;
 	
-	public FrustrumCrossN2(AbstractBody b, AbstractEnvironment e, int length) {
+	public FrustrumCrossN(AbstractBody b, AbstractEnvironment e, int length) {
 		super(b, e);
 		this.length = length;
 		objects = new CrossIteratorN(b.getPosition());
 	}
 	
-	public FrustrumCrossN2(AbstractBody b, AbstractEnvironment e) {
+	public FrustrumCrossN(AbstractBody b, AbstractEnvironment e) {
 		super(b, e);
 		length = 1;
 		objects = new CrossIteratorN(b.getPosition());
