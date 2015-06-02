@@ -7,9 +7,9 @@ import java.util.List;
 
 import math.MyMath;
 import math.MyPoint2D;
-import env2.frustrum.old.AbstractFrustrum;
-import env2.frustrum.old.FrustrumCircleN;
-import env2.frustrum.old.FrustrumCrossN;
+import env2.frustrum.AbstractFrustrum;
+import env2.frustrum.FrustrumCircleN;
+import env2.frustrum.FrustrumCrossN;
 import env2.instanciator.actions.AbstractActionInstanciator;
 import env2.instanciator.factory.ActionFactory;
 import env2.type.Direction;
