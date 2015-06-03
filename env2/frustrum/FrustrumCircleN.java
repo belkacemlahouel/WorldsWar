@@ -1,19 +1,24 @@
 package env2.frustrum;
 
-import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
+import java.util.Stack;
 
 import math.MyPoint2D;
 import env2.api.AbstractBody;
 import env2.api.AbstractEnvironment;
-import env2.api.AbstractFrustrum;
 import env2.api.AbstractWorldObject;
 
+/**
+ * We name it "circle frustrum" but it works on a discrete environment.
+ * It's more of a square actually.
+ * @author belka
+ *
+ */
+
 public class FrustrumCircleN extends AbstractFrustrum {
-	
+
 	protected final int radius;
-	protected Iterator<AbstractWorldObject> objects;
+	protected Iterator<AbstractWorldObjectWithPosition> objects;
 	
 	public FrustrumCircleN(AbstractBody b, AbstractEnvironment e, int radius) {
 		super(b, e);
@@ -27,54 +32,56 @@ public class FrustrumCircleN extends AbstractFrustrum {
 		objects = new CircleIteratorN(b.getPosition());
 	}
 	
-	public Iterator<AbstractWorldObject> objects() {
+	public Iterator<AbstractWorldObjectWithPosition> objects() {
 		return objects;
 	}
 	
-	private class CircleIteratorN implements Iterator<AbstractWorldObject> {
+	private class CircleIteratorN implements Iterator<AbstractWorldObjectWithPosition> {
 		
-		private int x, y;
-		private int ex, ey;
-		private int mx, my;
-		private List<AbstractWorldObject> next;
+		private int x, y;	// iteration variables, properly initialized
+		private int bx; 	// beginning for x iteration variable, to reinitialize it
+		private int ex, ey;	// limit for iteration variables
+		private int mx, my;	// body position...
+		private Stack<AbstractWorldObjectWithPosition> next;
 		
 		public CircleIteratorN(MyPoint2D pos) {
 			mx = pos.getX();
 			my = pos.getY();
 			
-			x = Math.min(Math.max(0, pos.getX()-radius), e.getWidth()-1);
-			y = Math.min(Math.max(0, pos.getY()-radius), e.getHeight()-1);
-			ex = Math.min(e.getWidth()-1, x+2*radius);
-			ey = Math.min(e.getHeight()-1, y+2*radius);
+			bx = Math.min(Math.max(0, mx-radius), e.getWidth()-1);
+			x = bx;
+			y = Math.min(Math.max(0, my-radius), e.getHeight()-1);
+			ex = Math.min(Math.max(0, mx+radius), e.getWidth()-1);
+			ey = Math.min(Math.max(0, my+radius), e.getHeight()-1);
 			
-			next = new ArrayList<AbstractWorldObject>();
+			next = new Stack<AbstractWorldObjectWithPosition>();
 		}
 
+		public AbstractWorldObjectWithPosition next() {
+			while (next.isEmpty() && hasNext()) {
+				for (AbstractWorldObject obj : e.getCell(x, my).getObjects()) {
+					if (b != obj)
+						next.add(new AbstractWorldObjectWithPosition(obj, new MyPoint2D(x, y)));
+				}
+				
+				searchNext();
+			}
+			
+			return next.pop();
+		}
+		
+		/***/
+		
 		public boolean hasNext() {
 			return x <= ex && y <= ey;
 		}
-
-		public AbstractWorldObject next() {
-			if (next.isEmpty()) { // FIXME 1 or 0 elements?
-				do {
-					next.addAll(e.getCell(x, y).getObjects()); 
-					searchNext();
-				} while (hasNext() && next.isEmpty());
-			} else {
-				next.remove(0);
-			}
-			
-			return next.get(0);
-		}
 		
-		public void searchNext() {
-			do {
-				++x;
-				if (x > ex) {
-					x -= 2*radius+1;
-					++y;
-				}
-			} while (x == mx && y == my);
+		private void searchNext() {
+			++x;
+			if (x > ex) {
+				x = bx;
+				++y;
+			}
 		}
 
 		public void remove() {

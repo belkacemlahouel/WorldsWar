@@ -1,9 +1,12 @@
-package env2.api;
+package env2.frustrum;
 
 import java.util.Iterator;
 
+import env2.api.AbstractBody;
+import env2.api.AbstractEnvironment;
+
 public abstract class AbstractFrustrum {
-	
+
 	protected AbstractBody b;
 	protected AbstractEnvironment e;
 	
@@ -12,5 +15,5 @@ public abstract class AbstractFrustrum {
 		this.e = e;
 	}
 
-	public abstract Iterator<AbstractWorldObject> objects();
+	public abstract Iterator<AbstractWorldObjectWithPosition> objects();
 }

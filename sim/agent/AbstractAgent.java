@@ -42,7 +42,7 @@ public abstract class AbstractAgent {
 	 * @return boolean: should the agent kill himself?
 	 */
 	public boolean killMe() {
-		if (body.getLife() < 0 || body.getAge(Time.TIME) > body.getMaxAge())
+		if (body.getLife() < 0 || body.getAge(Time.getTime()) > body.getMaxAge())
 			return true;
 		
 		return false;
@@ -64,7 +64,8 @@ public abstract class AbstractAgent {
 	/**
 	 * Behaviour of an agent to move randomly.
 	 */
-	public void wander(){
+	public MotionInfluence wander(){
+		MotionInfluence influence;
 		AbstractBody body = this.getBody(); 
 		Direction direction = body.getDirection();
 		int movingReach = body.getMovingReach();
@@ -98,7 +99,9 @@ public abstract class AbstractAgent {
 			directionPoint.setLocation(directionPoint.getX(), this.getBody().getEnvironment().getHeight()-1);
 		}
 		
-		//TODO : add influence.
+		influence = new MotionInfluence(body,directionPoint, body.getEnvironment());
+		
+		return influence;
 	}
 	
 	/**

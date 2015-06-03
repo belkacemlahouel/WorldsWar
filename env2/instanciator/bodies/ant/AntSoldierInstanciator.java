@@ -12,7 +12,7 @@ public final class AntSoldierInstanciator extends AbstractBodyInstanciator {
 	
 	@Override
 	public AntSoldierBody getNew() {
-		body = new AntSoldierBody(Time.TIME, TRIBE_ID, ENV, DIR, POS);
+		body = new AntSoldierBody(Time.getTime(), TRIBE_ID, ENV, DIR, POS);
 		agent = new AntSoldierAgent(body, TRIBE_ID);
 		return body;
 	}

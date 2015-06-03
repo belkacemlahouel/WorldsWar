@@ -7,6 +7,7 @@ import java.util.List;
 
 import math.MyMath;
 import math.MyPoint2D;
+import env2.frustrum.AbstractFrustrum;
 import env2.frustrum.FrustrumCircleN;
 import env2.frustrum.FrustrumCrossN;
 import env2.instanciator.actions.AbstractActionInstanciator;
@@ -399,7 +400,7 @@ public abstract class AbstractBody extends AbstractMobileWorldObject {
 	
 	public boolean isDead() {
 		// TODO Check TIME
-		return getAge(Time.TIME) > MAX_AGE || getLife() < 0;
+		return getAge(Time.getTime()) > MAX_AGE || getLife() < 0;
 	}
 
 	

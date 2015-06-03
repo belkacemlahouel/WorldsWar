@@ -12,7 +12,7 @@ public final class AntGathererInstanciator extends AbstractBodyInstanciator {
 	
 	@Override
 	public AntGathererBody getNew() {
-		body = new AntGathererBody(Time.TIME, TRIBE_ID, ENV, DIR, POS);
+		body = new AntGathererBody(Time.getTime(), TRIBE_ID, ENV, DIR, POS);
 		agent = new AntGathererAgent(body, TRIBE_ID);
 		return body;
 	}

@@ -12,7 +12,7 @@ public final class AntNurseInstanciator extends AbstractBodyInstanciator {
 	
 	@Override
 	public AntNurseBody getNew() {
-		body = new AntNurseBody(Time.TIME, TRIBE_ID, ENV, DIR, POS);
+		body = new AntNurseBody(Time.getTime(), TRIBE_ID, ENV, DIR, POS);
 		agent = new AntNurseAgent(body, TRIBE_ID);
 		return body;
 	}
