@@ -9,7 +9,7 @@ import env2.api.AbstractBody;
 import env2.api.AbstractWorldObject;
 import env2.body.antbody.AntGathererBody;
 import env2.frustrum.AbstractFrustrum;
-import env2.frustrum.AbstractWorldObjectWithPosition;
+import env2.frustrum.Perception;
 import env2.influences.MotionInfluence;
 
 /**
@@ -31,14 +31,14 @@ public final class AntGathererAgent extends AntAgent {
 
 		if(!this.getBody().isBaby(Time.getTime())){
 			AbstractFrustrum frustrum = this.getBody().getCurrentFrustrum();
-			Iterator<AbstractWorldObjectWithPosition> objs = frustrum.objects();
-			
+			Iterator<Perception> objs = frustrum.objects();
+
 			/* The mission of the gatherer is to find food. If it finds one resource eatable, it directly goes to it. */
 			boolean mission = false;
-			AbstractWorldObjectWithPosition goal = null;
+			Perception goal = null;
 			
 			while(objs.hasNext() && mission==false){
-				AbstractWorldObjectWithPosition objWithPos = objs.next();
+				Perception objWithPos = objs.next();
 				AbstractWorldObject obj = objWithPos.object;
 				
 				/* obj is a resource */
@@ -110,7 +110,7 @@ public final class AntGathererAgent extends AntAgent {
 	/**
 	 * Behaviour of the ant gatherer when it wants to avoid a danger.
 	 */
-	private MotionInfluence avoidDanger(AbstractWorldObjectWithPosition goal){
+	private MotionInfluence avoidDanger(Perception goal){
 		MotionInfluence influence;
 		MyPoint2D goalPos = goal.position;
 		goalPos.setLocation(-goalPos.getX(), -goalPos.getY());
@@ -123,7 +123,7 @@ public final class AntGathererAgent extends AntAgent {
 	/**
 	 * Behaviour of the ant gatherer when it wants to reach a goal.
 	 */
-	private MotionInfluence reachGoal(AbstractWorldObjectWithPosition goal){
+	private MotionInfluence reachGoal(Perception goal){
 		MotionInfluence influence;
 		AbstractBody body = this.getBody();
 		boolean goodPosition = this.isOnSamePosition(goal.object);

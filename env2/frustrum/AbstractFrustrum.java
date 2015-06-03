@@ -15,5 +15,5 @@ public abstract class AbstractFrustrum {
 		this.e = e;
 	}
 
-	public abstract Iterator<AbstractWorldObjectWithPosition> objects();
+	public abstract Iterator<Perception> objects();
 }

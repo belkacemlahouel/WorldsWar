@@ -11,7 +11,7 @@ import env2.api.AbstractWorldObject;
 public class FrustrumCrossN extends AbstractFrustrum {
 
 	protected final int length;
-	protected Iterator<AbstractWorldObjectWithPosition> objects;
+	protected Iterator<Perception> objects;
 	
 	public FrustrumCrossN(AbstractBody b, AbstractEnvironment e, int length) {
 		super(b, e);
@@ -25,16 +25,16 @@ public class FrustrumCrossN extends AbstractFrustrum {
 		objects = new CrossIteratorN(b.getPosition());
 	}
 	
-	public Iterator<AbstractWorldObjectWithPosition> objects() {
+	public Iterator<Perception> objects() {
 		return objects;
 	}
 	
-	private class CrossIteratorN implements Iterator<AbstractWorldObjectWithPosition> {
+	private class CrossIteratorN implements Iterator<Perception> {
 		
 		private int x, y;	// iteration variables, properly initialized
 		private int ex, ey;	// limit for iteration variables
 		private int mx, my;	// body position...
-		private Stack<AbstractWorldObjectWithPosition> next;
+		private Stack<Perception> next;
 		
 		/***/
 		
@@ -47,21 +47,21 @@ public class FrustrumCrossN extends AbstractFrustrum {
 			ex = Math.min(Math.max(0, mx+length), e.getWidth()-1);
 			ey = Math.min(Math.max(0, my+length), e.getHeight()-1);
 			
-			next = new Stack<AbstractWorldObjectWithPosition>();
+			next = new Stack<Perception>();
 		}
 		
-		public AbstractWorldObjectWithPosition next() {
+		public Perception next() {
 			
 			while (next.isEmpty() && hasNext()) {
 				if (x < ex) {
 					for (AbstractWorldObject obj : e.getCell(x, my).getObjects()) {
 						if (b != obj)
-							next.add(new AbstractWorldObjectWithPosition(obj, new MyPoint2D(x, my)));
+							next.add(new Perception(obj, new MyPoint2D(x, my)));
 					}
 				} else {
 					for (AbstractWorldObject obj : e.getCell(x, my).getObjects()) {
 						if (b != obj)
-							next.add(new AbstractWorldObjectWithPosition(obj, new MyPoint2D(mx, y)));
+							next.add(new Perception(obj, new MyPoint2D(mx, y)));
 					}
 				}
 				

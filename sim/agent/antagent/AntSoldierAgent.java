@@ -9,7 +9,7 @@ import env2.body.antbody.AntSoldierBody;
 import env2.type.Time;
 import env2.type.WorldObjectType;
 import env2.frustrum.AbstractFrustrum;
-import env2.frustrum.AbstractWorldObjectWithPosition;
+import env2.frustrum.Perception;
 import env2.influences.MotionInfluence;
 
 /**
@@ -32,14 +32,14 @@ public final class AntSoldierAgent extends AntAgent {
 
 		if(body.isBaby(Time.getTime())){
 			AbstractFrustrum frustrum = this.getBody().getCurrentFrustrum();
-			Iterator<AbstractWorldObjectWithPosition> objs = frustrum.objects();
+			Iterator<Perception> objs = frustrum.objects();
 			
 			boolean mission = false;
 			/* The goal could represent an enemy or a DANGERPHEROMONE */
-			AbstractWorldObjectWithPosition goal = null;
+			Perception goal = null;
 			
 			while(objs.hasNext() && mission==false){
-				AbstractWorldObjectWithPosition objWithPos = objs.next();
+				Perception objWithPos = objs.next();
 				AbstractWorldObject obj = objWithPos.object;
 				
 				/* Case where obj is a body (so a potential enemy */
@@ -82,7 +82,7 @@ public final class AntSoldierAgent extends AntAgent {
 	/**
 	 * Behaviour of the soldier gatherer when it wants to reach a goal.
 	 */
-	private MotionInfluence reachGoal(AbstractWorldObjectWithPosition goal){
+	private MotionInfluence reachGoal(Perception goal){
 		boolean goodPosition = this.isOnSamePosition(goal.object);
 		MotionInfluence influence;
 		
