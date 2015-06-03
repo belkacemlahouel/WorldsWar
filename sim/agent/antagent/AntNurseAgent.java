@@ -35,9 +35,10 @@ public final class AntNurseAgent extends AntAgent {
 		if(!body.isBaby(Time.getTime())){
 			AbstractFrustrum frustrum = this.getBody().getCurrentFrustrum();
 			Iterator<Perception> objs = frustrum.objects();
+
 			/* The mission of the nurse is to heal injured ants and to feed babies. */
 			boolean mission = false;
-			AbstractWorldObject goal = null;
+			Perception goal = null;
 			
 			while(objs.hasNext() && mission==false){
 				AbstractWorldObject obj = objs.next().object;
@@ -91,7 +92,7 @@ public final class AntNurseAgent extends AntAgent {
 			influence = null;
 		}else{
 			//move to goal
-			MyPoint2D goalPos = null;
+			MyPoint2D goalPos = body.getPosition();
 			influence = new MotionInfluence(body, goalPos, body.getEnvironment());
 		}
 		
@@ -103,8 +104,18 @@ public final class AntNurseAgent extends AntAgent {
 	 * @param baby, the baby to feed.
 	 */
 	private MotionInfluence feed(AbstractBody baby){
-		//TODO : take food and move to baby to feed it.
-		MotionInfluence influence = null;
+		boolean goodPosition = this.isOnSamePosition(baby);
+		MotionInfluence influence;
+		
+		if(goodPosition){
+			//TODO : add action feed
+			influence = null;
+		}else{
+			//move to goal
+			MyPoint2D goalPos = baby.getPosition();
+			influence = new MotionInfluence(body, goalPos, body.getEnvironment());
+		}
+		
 		return influence;
 	}
 	
