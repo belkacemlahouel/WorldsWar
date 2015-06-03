@@ -5,11 +5,14 @@ import java.util.Iterator;
 import math.MyPoint2D;
 import env2.api.AbstractBody;
 import env2.api.AbstractWorldObject;
+import env2.api.InterfaceGatherer;
+import env2.api.InterfaceNurse;
 import env2.body.antbody.AntNurseBody;
 import env2.type.Time;
 import env2.type.WorldObjectType;
 import env2.frustrum.AbstractFrustrum;
 import env2.frustrum.Perception;
+import env2.influences.AttackCureInfluence;
 import env2.influences.MotionInfluence;
 
 
@@ -83,17 +86,20 @@ public final class AntNurseAgent extends AntAgent {
 	 * Heal an injured agent.
 	 * @param body, the body to heal.
 	 */
-	private MotionInfluence heal(AbstractBody body){
-		boolean goodPosition = this.isOnSamePosition(body);
+	private MotionInfluence heal(AbstractBody bodyTarget){
+		boolean goodPosition = this.isOnSamePosition(bodyTarget);
 		MotionInfluence influence;
 		
 		if(goodPosition){
-			//TODO : add action heal
+			InterfaceNurse interfaceNurse = (InterfaceNurse) this.getBody();
+			AttackCureInfluence cureInfluence = new AttackCureInfluence(bodyTarget, interfaceNurse.getStdCure());
+			body.addInfluenceHere(cureInfluence);
+			
 			influence = null;
 		}else{
 			//move to goal
-			MyPoint2D goalPos = body.getPosition();
-			influence = new MotionInfluence(body, goalPos, body.getEnvironment());
+			MyPoint2D goalPos = bodyTarget.getPosition();
+			influence = new MotionInfluence(bodyTarget, goalPos, bodyTarget.getEnvironment());
 		}
 		
 		return influence;
