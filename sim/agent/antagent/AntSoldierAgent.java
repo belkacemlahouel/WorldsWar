@@ -36,20 +36,21 @@ public final class AntSoldierAgent extends AntAgent {
 			
 			boolean mission = false;
 			/* The goal could represent an enemy or a DANGERPHEROMONE */
-			AbstractWorldObject goal = null;
+			AbstractWorldObjectWithPosition goal = null;
 			
 			while(objs.hasNext() && mission==false){
-				AbstractWorldObject obj = objs.next().object;
+				AbstractWorldObjectWithPosition objWithPos = objs.next();
+				AbstractWorldObject obj = objWithPos.object;
 				
 				/* Case where obj is a body (so a potential enemy */
 				if(WorldObjectType.isAntBody(obj.getType()) || WorldObjectType.isTermiteBody(obj.getType())){
 					if(!((AbstractBody) obj).isFriend(this.getBody())){
-						goal = obj;
+						goal = objWithPos;
 						dropPheromone(WorldObjectType.DANGERPHEROMONE);
 						mission = true;
 					}
 				}else if(WorldObjectType.isPheromone(obj.getType())){
-					goal = obj;
+					goal = objWithPos;
 				}
 			}
 			
@@ -81,20 +82,20 @@ public final class AntSoldierAgent extends AntAgent {
 	/**
 	 * Behaviour of the soldier gatherer when it wants to reach a goal.
 	 */
-	private MotionInfluence reachGoal(AbstractWorldObject goal){
-		boolean goodPosition = this.isOnSamePosition(goal);
+	private MotionInfluence reachGoal(AbstractWorldObjectWithPosition goal){
+		boolean goodPosition = this.isOnSamePosition(goal.object);
 		MotionInfluence influence;
 		
 		if(goodPosition){
 			influence = null;
 					
 			/* If it is a pheromone, the soldier doesn't do anything, it waits for a fight or for the pheromone to disappear. */
-			if(WorldObjectType.isAntBody(goal.getType()) || WorldObjectType.isTermiteBody(goal.getType())){
+			if(WorldObjectType.isAntBody(goal.object.getType()) || WorldObjectType.isTermiteBody(goal.object.getType())){
 			//TODO : add action fight
 			}
 		}else{
 			//move to goal
-			MyPoint2D goalPos = null;
+			MyPoint2D goalPos = goal.position;
 			influence = new MotionInfluence(body, goalPos, body.getEnvironment());
 		}
 		

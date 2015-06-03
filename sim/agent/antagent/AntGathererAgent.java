@@ -32,24 +32,26 @@ public final class AntGathererAgent extends AntAgent {
 		if(!this.getBody().isBaby(Time.getTime())){
 			AbstractFrustrum frustrum = this.getBody().getCurrentFrustrum();
 			Iterator<AbstractWorldObjectWithPosition> objs = frustrum.objects();
+			
 			/* The mission of the gatherer is to find food. If it finds one resource eatable, it directly goes to it. */
 			boolean mission = false;
-			AbstractWorldObject goal = null;
+			AbstractWorldObjectWithPosition goal = null;
 			
 			while(objs.hasNext() && mission==false){
-				AbstractWorldObject obj = objs.next().object;
+				AbstractWorldObjectWithPosition objWithPos = objs.next();
+				AbstractWorldObject obj = objWithPos.object;
 				
 				/* obj is a resource */
 				if(WorldObjectType.canBeFood(obj.getType()))
 				{
 					switch(this.getBody().getEffect(obj)){
 						case GOOD:
-							goal = obj;
+							goal = objWithPos;
 							mission = true;
 							dropPheromone(WorldObjectType.FOODPHEROMONE);
 							break;
 						case VERYGOOD:
-							goal = obj;
+							goal = objWithPos;
 							mission = true;
 							dropPheromone(WorldObjectType.FOODPHEROMONE);
 							break;
@@ -62,16 +64,16 @@ public final class AntGathererAgent extends AntAgent {
 						case DANGERPHEROMONE:
 							if(goal==null)
 							{
-								goal = obj;
+								goal = objWithPos;
 							}
 							break;
 						case FOODPHEROMONE:
 							if(goal==null)
 							{
-								goal = obj;
+								goal = objWithPos;
 							}
-							else if(goal.getType() == WorldObjectType.DANGERPHEROMONE){
-								goal = obj;
+							else if(goal.object.getType() == WorldObjectType.DANGERPHEROMONE){
+								goal = objWithPos;
 							}
 							break;
 						default:
@@ -80,10 +82,10 @@ public final class AntGathererAgent extends AntAgent {
 				}else if(WorldObjectType.isAntBody(obj.getType()) || WorldObjectType.isTermiteBody(obj.getType())){
 					if(!((AbstractBody) obj).isFriend(this.getBody())){
 						if(goal == null){
-							goal = obj;
+							goal = objWithPos;
 							dropPheromone(WorldObjectType.DANGERPHEROMONE);
-						}else if (!WorldObjectType.canBeFood(goal.getType()) || goal.getType() != WorldObjectType.FOODPHEROMONE){
-							goal = obj;
+						}else if (!WorldObjectType.canBeFood(goal.object.getType()) || goal.object.getType() != WorldObjectType.FOODPHEROMONE){
+							goal = objWithPos;
 							dropPheromone(WorldObjectType.DANGERPHEROMONE);
 						}
 					}
@@ -93,7 +95,7 @@ public final class AntGathererAgent extends AntAgent {
 				if(goal == null){
 					influence = wander();
 				}
-				else if (goal.getType()==WorldObjectType.DANGERPHEROMONE){
+				else if (goal.object.getType()==WorldObjectType.DANGERPHEROMONE){
 					influence = avoidDanger(goal);
 				}
 				else{
@@ -108,10 +110,11 @@ public final class AntGathererAgent extends AntAgent {
 	/**
 	 * Behaviour of the ant gatherer when it wants to avoid a danger.
 	 */
-	private MotionInfluence avoidDanger(AbstractWorldObject goal){
+	private MotionInfluence avoidDanger(AbstractWorldObjectWithPosition goal){
 		MotionInfluence influence;
-		MyPoint2D goalPos = null;
-		//TODO : send the opposite to goalPos
+		MyPoint2D goalPos = goal.position;
+		goalPos.setLocation(-goalPos.getX(), -goalPos.getY());
+
 		influence = new MotionInfluence(body, goalPos, body.getEnvironment());
 		
 		return influence;
@@ -120,17 +123,17 @@ public final class AntGathererAgent extends AntAgent {
 	/**
 	 * Behaviour of the ant gatherer when it wants to reach a goal.
 	 */
-	private MotionInfluence reachGoal(AbstractWorldObject goal){
+	private MotionInfluence reachGoal(AbstractWorldObjectWithPosition goal){
 		MotionInfluence influence;
 		AbstractBody body = this.getBody();
-		boolean goodPosition = this.isOnSamePosition(goal);
+		boolean goodPosition = this.isOnSamePosition(goal.object);
 		
 		if(goodPosition){
 			influence = null;
 			//TODO : add action take food
 		}else{
 			//move to goal
-			MyPoint2D goalPos = null;
+			MyPoint2D goalPos = goal.position;
 			influence = new MotionInfluence(body, goalPos, body.getEnvironment());
 		}
 		
