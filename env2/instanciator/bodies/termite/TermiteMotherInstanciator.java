@@ -12,7 +12,7 @@ public final class TermiteMotherInstanciator extends AbstractBodyInstanciator {
 	
 	@Override
 	public TermiteMotherBody getNew() {
-		body = new TermiteMotherBody(Time.TIME, TRIBE_ID, ENV, DIR, POS);
+		body = new TermiteMotherBody(Time.getTime(), TRIBE_ID, ENV, DIR, POS);
 		agent = new TermiteMotherAgent(body, TRIBE_ID, AbstractBodyInstanciator.getMothers());
 		return body;
 	}

@@ -12,7 +12,7 @@ public final class TermiteSoldierInstanciator extends AbstractBodyInstanciator {
 	
 	@Override
 	public TermiteSoldierBody getNew() {
-		body = new TermiteSoldierBody(Time.TIME, TRIBE_ID, ENV, DIR, POS);
+		body = new TermiteSoldierBody(Time.getTime(), TRIBE_ID, ENV, DIR, POS);
 		agent = new TermiteSoldierAgent(body, TRIBE_ID);
 		return body;
 	}

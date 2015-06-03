@@ -1,78 +1,86 @@
 package env2.frustrum;
 
-import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
+import java.util.Stack;
 
 import math.MyPoint2D;
 import env2.api.AbstractBody;
 import env2.api.AbstractEnvironment;
-import env2.api.AbstractFrustrum;
 import env2.api.AbstractWorldObject;
+import env2.api.AbstractWorldObjectWithPosition;
 
 public class FrustrumCrossN extends AbstractFrustrum {
+
+	protected final int length;
+	protected Iterator<AbstractWorldObjectWithPosition> objects;
 	
-	protected final int radius;
-	protected Iterator<AbstractWorldObject> objects;
-	
-	public FrustrumCrossN(AbstractBody b, AbstractEnvironment e, int radius) {
+	public FrustrumCrossN(AbstractBody b, AbstractEnvironment e, int length) {
 		super(b, e);
-		this.radius = radius;
+		this.length = length;
 		objects = new CrossIteratorN(b.getPosition());
 	}
 	
 	public FrustrumCrossN(AbstractBody b, AbstractEnvironment e) {
 		super(b, e);
-		radius = 1;
+		length = 1;
 		objects = new CrossIteratorN(b.getPosition());
 	}
 	
-	public Iterator<AbstractWorldObject> objects() {
+	public Iterator<AbstractWorldObjectWithPosition> objects() {
 		return objects;
 	}
 	
-	private class CrossIteratorN implements Iterator<AbstractWorldObject> {
+	private class CrossIteratorN implements Iterator<AbstractWorldObjectWithPosition> {
 		
-		private int x, y;
-		private int ex, ey;
-		private int mx, my;
-		private List<AbstractWorldObject> next;
+		private int x, y;	// iteration variables, properly initialized
+		private int ex, ey;	// limit for iteration variables
+		private int mx, my;	// body position...
+		private Stack<AbstractWorldObjectWithPosition> next;
+		
+		/***/
 		
 		public CrossIteratorN(MyPoint2D pos) {
 			mx = pos.getX();
 			my = pos.getY();
 			
-			x = Math.min(Math.max(0, pos.getX()-radius), e.getWidth()-1);
-			y = Math.min(Math.max(0, pos.getY()-radius), e.getHeight()-1);
-			ex = Math.min(e.getWidth()-1, x+2*radius);
-			ey = Math.min(e.getHeight()-1, y+2*radius);
+			x = Math.min(Math.max(0, mx-length), e.getWidth()-1);
+			y = Math.min(Math.max(0, my-length), e.getHeight()-1);
+			ex = Math.min(Math.max(0, mx+length), e.getWidth()-1);
+			ey = Math.min(Math.max(0, my+length), e.getHeight()-1);
 			
-			next = new ArrayList<AbstractWorldObject>();
+			next = new Stack<AbstractWorldObjectWithPosition>();
 		}
-
+		
+		public AbstractWorldObjectWithPosition next() {
+			
+			while (next.isEmpty() && hasNext()) {
+				if (x < ex) {
+					for (AbstractWorldObject obj : e.getCell(x, my).getObjects()) {
+						if (b != obj)
+							next.add(new AbstractWorldObjectWithPosition(obj, new MyPoint2D(x, my)));
+					}
+				} else {
+					for (AbstractWorldObject obj : e.getCell(x, my).getObjects()) {
+						if (b != obj)
+							next.add(new AbstractWorldObjectWithPosition(obj, new MyPoint2D(mx, y)));
+					}
+				}
+				
+				searchNext();
+			}
+			
+			return next.pop();
+		}
+		
+		/***/
+		
 		public boolean hasNext() {
 			return x <= ex && y <= ey;
 		}
-
-		public AbstractWorldObject next() {
-			if (next.size() < 2) { // FIXME at 1 or 0 elements we should search again? Because of return get(0)
-				do {
-					if (x < ex) next.addAll(e.getCell(x, my).getObjects()); // FIXME Check this computation
-					else next.addAll(e.getCell(mx, y).getObjects());
-					searchNext();
-				} while (hasNext() && next.isEmpty()); // FIXME do {} while or while?
-			} else {
-				next.remove(0);
-			}
-			
-			return next.get(0);
-		}
 		
-		public void searchNext() {
-			do {
-				if (x < ex) ++x;
-				else if (x > ex) ++y;
-			} while (x == mx && y == my);
+		private void searchNext() {
+			if (x < ex) ++x;
+			else if (x > ex) ++y;
 		}
 
 		public void remove() {
