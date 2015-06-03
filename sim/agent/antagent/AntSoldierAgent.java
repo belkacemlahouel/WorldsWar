@@ -1,16 +1,23 @@
 package sim.agent.antagent;
 
+import java.util.Collection;
 import java.util.Iterator;
 
 import math.MyPoint2D;
 import env2.api.AbstractBody;
+import env2.api.AbstractResource;
 import env2.api.AbstractWorldObject;
+import env2.api.InterfaceGatherer;
+import env2.api.InterfaceSoldier;
 import env2.body.antbody.AntSoldierBody;
 import env2.type.Time;
 import env2.type.WorldObjectType;
 import env2.frustrum.AbstractFrustrum;
 import env2.frustrum.Perception;
+import env2.influences.AttackCureInfluence;
+import env2.influences.EatInfluence;
 import env2.influences.MotionInfluence;
+import env2.influences.PickInfluence;
 
 /**
  * The mission of the soldier is to fight enemy.
@@ -91,7 +98,9 @@ public final class AntSoldierAgent extends AntAgent {
 					
 			/* If it is a pheromone, the soldier doesn't do anything, it waits for a fight or for the pheromone to disappear. */
 			if(WorldObjectType.isAntBody(goal.object.getType()) || WorldObjectType.isTermiteBody(goal.object.getType())){
-			//TODO : add action fight
+				InterfaceSoldier soldier = (InterfaceSoldier) body;		
+				AttackCureInfluence attack = new AttackCureInfluence((AbstractBody) goal.object, soldier.getRndDmg());				
+				body.addInfluenceHere(attack);
 			}
 		}else{
 			//move to goal

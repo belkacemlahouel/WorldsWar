@@ -1,21 +1,28 @@
 package sim.agent.antagent;
 
+import java.util.Collection;
 import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
 
 import math.MyPoint2D;
 import env2.type.Time;
 import env2.type.WorldObjectType;
 import env2.api.AbstractBody;
+import env2.api.AbstractCell;
+import env2.api.AbstractResource;
 import env2.api.AbstractWorldObject;
+import env2.api.InterfaceGatherer;
 import env2.body.antbody.AntGathererBody;
 import env2.frustrum.AbstractFrustrum;
 import env2.frustrum.Perception;
+import env2.influences.EatInfluence;
 import env2.influences.MotionInfluence;
+import env2.influences.PickInfluence;
 
 /**
  * Implementation of an gatherer ant.
  * The priorities in its behavior are basically the followings : get food, follow food pheromones, avoid danger (other agent first, and pheromones in second), randomly search food.
- * TODO : test goal position in action function : if agent is in the good position do action, if not, move to goal.
  */
 public final class AntGathererAgent extends AntAgent {
 
@@ -130,7 +137,15 @@ public final class AntGathererAgent extends AntAgent {
 		
 		if(goodPosition){
 			influence = null;
-			//TODO : add action take food
+			
+			InterfaceGatherer interfaceGath = (InterfaceGatherer)body;
+			Collection<AbstractResource> collectionResources = this.getResourceCollection();		
+			
+			EatInfluence eat = new EatInfluence(body, collectionResources, (AbstractResource) goal.object, interfaceGath.getStdTakeQty());
+			PickInfluence pick = new PickInfluence(interfaceGath, (AbstractResource) goal.object, interfaceGath.getStdTakeQty());
+			
+			body.addInfluenceHere(eat);
+			body.addInfluenceHere(pick);
 		}else{
 			//move to goal
 			MyPoint2D goalPos = goal.position;
@@ -150,5 +165,31 @@ public final class AntGathererAgent extends AntAgent {
 		}else if (pheromone == WorldObjectType.FOODPHEROMONE){
 			this.getBody().producePheromoneFood();
 		}
+	}
+	
+	
+	/**
+	 * Get the resources in the cell of the body.
+	 * @return collection of resources.
+	 */
+	private Collection<AbstractResource> getResourceCollection(){
+		Collection<AbstractResource> collection = new LinkedList<AbstractResource>();
+		
+		AbstractCell cell = this.getBody().getEnvironment().getCell(body.getPosition());
+		List<AbstractWorldObject> objects = cell.getObjects();
+		
+		Iterator<AbstractWorldObject> iterator = objects.iterator();
+		AbstractWorldObject obj;
+		
+		while(iterator.hasNext()){
+			obj = iterator.next();
+			WorldObjectType type = obj.getType();
+			if(!WorldObjectType.isAntBody(type) && !WorldObjectType.isPheromone(type) && !WorldObjectType.isTermiteBody(type))
+			{
+				collection.add((AbstractResource) obj);
+			}
+		}
+		
+		return collection;
 	}
 }
