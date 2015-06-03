@@ -56,22 +56,22 @@ public class ResourceGUI {
 				resourceRepr = new ImageIcon("src/res/gui/wood.png");
 				break;
 			case LEAF :
-				resourceRepr = new ImageIcon("src/res/gui/ant.png");
+				resourceRepr = new ImageIcon("src/res/gui/leaf.png");
 				break;
 			case MEAT:
-				resourceRepr = new ImageIcon("src/res/gui/termite.png");
+				resourceRepr = new ImageIcon("src/res/gui/meat.png");
 				break;
 			case SUGAR :
-				resourceRepr = new ImageIcon("src/res/gui/ant.png");
+				resourceRepr = new ImageIcon("src/res/gui/sugar.png");
 				break;
 			case FRUIT:
-				resourceRepr = new ImageIcon("src/res/gui/termite.png");
+				resourceRepr = new ImageIcon("src/res/gui/fruit.png");
 				break;
 			case POISON :
-				resourceRepr = new ImageIcon("src/res/gui/ant.png");
+				resourceRepr = new ImageIcon("src/res/gui/poison.png");
 				break;
 			case GAS:
-				resourceRepr = new ImageIcon("src/res/gui/termite.png");
+				resourceRepr = new ImageIcon("src/res/gui/gas.png");
 				break;
 			default :
 				break;
