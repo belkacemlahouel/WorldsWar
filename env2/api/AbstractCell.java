@@ -36,6 +36,10 @@ public abstract class AbstractCell {
 			case PICK:
 				PickInfluence pick_influence = (PickInfluence) influence;
 				pick_influence.qty /= pick_influence.picked.getNbPickers();
+				pick_influence.qty = Math.max(0, Math.min(pick_influence.qty, pick_influence.picker.getStrength()));
+				// TODO bounded with strength or another formula?
+				if (pick_influence.picked.incrNbPickersServed() >= pick_influence.picked.getNbPickers())
+					pick_influence.picked.resetNbPickers();
 				AbstractActionInstanciator.influence = pick_influence;
 				actions.add(ActionFactory.ACTION_INSTANCIATOR.get(InfluenceType.PICK).getAction());
 				break;
