@@ -39,7 +39,7 @@ public class FrustrumCircleN extends AbstractFrustrum {
 	private class CircleIteratorN implements Iterator<Perception> {
 		
 		private int x, y;	// iteration variables, properly initialized
-		private int bx; 	// beginning for x iteration variable, to reinitialize it
+		private int bx; 	// beginning for x iteration variable, to reinitialize x when needed
 		private int ex, ey;	// limit for iteration variables
 		private int mx, my;	// body position...
 		private Stack<Perception> next;
@@ -55,17 +55,12 @@ public class FrustrumCircleN extends AbstractFrustrum {
 			ey = Math.min(Math.max(0, my+radius), e.getHeight()-1);
 			
 			next = new Stack<Perception>();
+			searchNexts();
 		}
 
 		public Perception next() {
-			while (next.isEmpty() && hasNext()) {
-				for (AbstractWorldObject obj : e.getCell(x, my).getObjects()) {
-					if (b != obj)
-						next.add(new Perception(obj, new MyPoint2D(x, y)));
-				}
-				
-				searchNext();
-			}
+			if (next.isEmpty())
+				searchNexts();
 			
 			return next.pop();
 		}
@@ -73,14 +68,21 @@ public class FrustrumCircleN extends AbstractFrustrum {
 		/***/
 		
 		public boolean hasNext() {
-			return x <= ex && y <= ey;
+			return !next.isEmpty() && x <= ex && y <= ey;
 		}
 		
-		private void searchNext() {
-			++x;
-			if (x > ex) {
-				x = bx;
-				++y;
+		private void searchNexts() {
+			while (next.isEmpty() && x <= ex && y <= ey) {
+				for (AbstractWorldObject obj : e.getCell(x, y).getObjects()) {
+					if (b != obj)
+						next.add(new Perception(obj, new MyPoint2D(x, y)));
+				}
+				
+				++x;
+				if (x > ex) {
+					x = bx;
+					++y;
+				}
 			}
 		}
 

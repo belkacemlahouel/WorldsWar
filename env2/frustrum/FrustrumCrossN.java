@@ -48,11 +48,24 @@ public class FrustrumCrossN extends AbstractFrustrum {
 			ey = Math.min(Math.max(0, my+length), e.getHeight()-1);
 			
 			next = new Stack<Perception>();
+			searchNexts();
 		}
 		
 		public Perception next() {
+			if (next.isEmpty())
+				searchNexts();
 			
-			while (next.isEmpty() && hasNext()) {
+			return next.pop();
+		}
+		
+		/***/
+		
+		public boolean hasNext() {
+			return !next.isEmpty() && x <= ex && y <= ey;
+		}
+		
+		private void searchNexts() {
+			while (next.isEmpty() && x <= ex && y <= ey) {
 				if (x < ex) {
 					for (AbstractWorldObject obj : e.getCell(x, my).getObjects()) {
 						if (b != obj)
@@ -65,21 +78,9 @@ public class FrustrumCrossN extends AbstractFrustrum {
 					}
 				}
 				
-				searchNext();
+				if (x < ex) ++x;
+				else if (x > ex) ++y;
 			}
-			
-			return next.pop();
-		}
-		
-		/***/
-		
-		public boolean hasNext() {
-			return x <= ex && y <= ey;
-		}
-		
-		private void searchNext() {
-			if (x < ex) ++x;
-			else if (x > ex) ++y;
 		}
 
 		public void remove() {
