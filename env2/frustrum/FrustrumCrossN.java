@@ -7,7 +7,6 @@ import math.MyPoint2D;
 import env2.api.AbstractBody;
 import env2.api.AbstractEnvironment;
 import env2.api.AbstractWorldObject;
-import env2.api.AbstractWorldObjectWithPosition;
 
 public class FrustrumCrossN extends AbstractFrustrum {
 
