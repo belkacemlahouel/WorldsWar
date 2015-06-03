@@ -18,7 +18,7 @@ import env2.api.AbstractWorldObject;
 public class FrustrumCircleN extends AbstractFrustrum {
 
 	protected final int radius;
-	protected Iterator<AbstractWorldObjectWithPosition> objects;
+	protected Iterator<Perception> objects;
 	
 	public FrustrumCircleN(AbstractBody b, AbstractEnvironment e, int radius) {
 		super(b, e);
@@ -32,17 +32,17 @@ public class FrustrumCircleN extends AbstractFrustrum {
 		objects = new CircleIteratorN(b.getPosition());
 	}
 	
-	public Iterator<AbstractWorldObjectWithPosition> objects() {
+	public Iterator<Perception> objects() {
 		return objects;
 	}
 	
-	private class CircleIteratorN implements Iterator<AbstractWorldObjectWithPosition> {
+	private class CircleIteratorN implements Iterator<Perception> {
 		
 		private int x, y;	// iteration variables, properly initialized
 		private int bx; 	// beginning for x iteration variable, to reinitialize it
 		private int ex, ey;	// limit for iteration variables
 		private int mx, my;	// body position...
-		private Stack<AbstractWorldObjectWithPosition> next;
+		private Stack<Perception> next;
 		
 		public CircleIteratorN(MyPoint2D pos) {
 			mx = pos.getX();
@@ -54,14 +54,14 @@ public class FrustrumCircleN extends AbstractFrustrum {
 			ex = Math.min(Math.max(0, mx+radius), e.getWidth()-1);
 			ey = Math.min(Math.max(0, my+radius), e.getHeight()-1);
 			
-			next = new Stack<AbstractWorldObjectWithPosition>();
+			next = new Stack<Perception>();
 		}
 
-		public AbstractWorldObjectWithPosition next() {
+		public Perception next() {
 			while (next.isEmpty() && hasNext()) {
 				for (AbstractWorldObject obj : e.getCell(x, my).getObjects()) {
 					if (b != obj)
-						next.add(new AbstractWorldObjectWithPosition(obj, new MyPoint2D(x, y)));
+						next.add(new Perception(obj, new MyPoint2D(x, y)));
 				}
 				
 				searchNext();

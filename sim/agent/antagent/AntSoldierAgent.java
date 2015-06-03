@@ -9,7 +9,7 @@ import env2.body.antbody.AntSoldierBody;
 import env2.type.Time;
 import env2.type.WorldObjectType;
 import env2.frustrum.AbstractFrustrum;
-import env2.frustrum.AbstractWorldObjectWithPosition;
+import env2.frustrum.Perception;
 import env2.influences.MotionInfluence;
 
 /**
@@ -32,7 +32,7 @@ public final class AntSoldierAgent extends AntAgent {
 
 		if(body.isBaby(Time.getTime())){
 			AbstractFrustrum frustrum = this.getBody().getCurrentFrustrum();
-			Iterator<AbstractWorldObjectWithPosition> objs = frustrum.objects();
+			Iterator<Perception> objs = frustrum.objects();
 			
 			boolean mission = false;
 			/* The goal could represent an enemy or a DANGERPHEROMONE */
