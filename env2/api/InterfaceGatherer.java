@@ -13,4 +13,6 @@ public interface InterfaceGatherer {
 	
 	public abstract MyPoint2D getPosition();
 	public abstract AbstractEnvironment getEnvironment();
+	
+	public abstract int getStrength();
 }

@@ -9,17 +9,23 @@ public abstract class AbstractResource extends AbstractWorldObject {
 	/***/
 	
 	private int NB_PICKER = 0;
+	private int NB_PICKER_SERVED = 0;
 	
 	public void addPicker() {
 		++NB_PICKER;
 	}
 	
-	public void resetNbPicker() {
+	public void resetNbPickers() {
 		NB_PICKER = 0;
+		NB_PICKER_SERVED = 0;
 	}
 	
 	public int getNbPickers() {
 		return NB_PICKER;
+	}
+	
+	public int incrNbPickersServed() {
+		return (++NB_PICKER_SERVED);
 	}
 	
 	/***/
