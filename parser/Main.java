@@ -10,6 +10,7 @@ import parser.DataToGlobalEnvironment;
 import gui.*;
 import env2.api.AbstractEnvironment;
 import env2.env.Ground;
+import env2.resources.Wood;
 import env2.type.Direction;
 import env2.body.antbody.*;
 
@@ -32,5 +33,11 @@ class Main {
 		AntSoldierBody antSoldier = new AntSoldierBody(0, 1, env, Direction.NORTH, new MyPoint2D(5,3));
 		AgentBodyGUI agentGuiSoldier = new AgentBodyGUI("Ant", gui, antSoldier);
 		agentGui.move();
+		
+		//Something is wrong/missing for the resourceGui cause resource doesn't appaer.
+		Wood someWood = new Wood(100);
+		System.out.println(someWood.getType());
+		ResourceGUI woodGui = new ResourceGUI(someWood,gui,new MyPoint2D(1,4),env);
+		woodGui.move();
 	}
 }

@@ -80,7 +80,6 @@ public class ResourceGUI {
 		/* Use the camera to put the agent body gui at the right place */
 		Rectangle rectPos;
 		Camera camera = guiContainer.getCamera();
-		
 		rectPos = camera.logical2absolutePixel(env, posX, posY);
 		
 		if(rectPos != null){
