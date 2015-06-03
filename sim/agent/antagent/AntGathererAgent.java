@@ -2,6 +2,7 @@ package sim.agent.antagent;
 
 import java.util.Iterator;
 
+import math.MyPoint2D;
 import env2.type.Time;
 import env2.type.WorldObjectType;
 import env2.api.AbstractBody;
@@ -26,6 +27,8 @@ public final class AntGathererAgent extends AntAgent {
 	 * Implementation of the basic behavior of a gatherer ant.
 	 */
 	public MotionInfluence live() {
+		MotionInfluence influence = null;
+
 		if(!this.getBody().isBaby(Time.getTime())){
 			AbstractFrustrum frustrum = this.getBody().getCurrentFrustrum();
 			Iterator<AbstractWorldObjectWithPosition> objs = frustrum.objects();
@@ -88,39 +91,50 @@ public final class AntGathererAgent extends AntAgent {
 				
 				/* Behavior in function of the result of parsing the frustrum. */
 				if(goal == null){
-					wander();
+					influence = wander();
 				}
 				else if (goal.getType()==WorldObjectType.DANGERPHEROMONE){
-					avoidDanger(goal);
+					influence = avoidDanger(goal);
 				}
 				else{
-					reachGoal(goal);
+					influence = reachGoal(goal);
 				}
 			}
 		}
 		
-		// TODO
-		return null;
+		return influence;
 	}
 	
 	/**
 	 * Behaviour of the ant gatherer when it wants to avoid a danger.
 	 */
-	private void avoidDanger(AbstractWorldObject goal){
+	private MotionInfluence avoidDanger(AbstractWorldObject goal){
+		MotionInfluence influence;
+		MyPoint2D goalPos = null;
+		//TODO : send the opposite to goalPos
+		influence = new MotionInfluence(body, goalPos, body.getEnvironment());
 		
+		return influence;
 	}
 	
 	/**
 	 * Behaviour of the ant gatherer when it wants to reach a goal.
 	 */
-	private void reachGoal(AbstractWorldObject goal){
+	private MotionInfluence reachGoal(AbstractWorldObject goal){
+		MotionInfluence influence;
+		AbstractBody body = this.getBody();
 		boolean goodPosition = this.isOnSamePosition(goal);
 		
 		if(goodPosition){
-			//do action on goal
+			influence = null;
+			//TODO : add action take food
 		}else{
 			//move to goal
+			MyPoint2D goalPos = null;
+			influence = new MotionInfluence(body, goalPos, body.getEnvironment());
 		}
+		
+		return influence;
 	}
 	
 	/**

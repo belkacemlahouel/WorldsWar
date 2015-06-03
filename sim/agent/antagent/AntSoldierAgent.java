@@ -2,6 +2,7 @@ package sim.agent.antagent;
 
 import java.util.Iterator;
 
+import math.MyPoint2D;
 import env2.api.AbstractBody;
 import env2.api.AbstractWorldObject;
 import env2.body.antbody.AntSoldierBody;
@@ -27,6 +28,8 @@ public final class AntSoldierAgent extends AntAgent {
 	 */
 	public MotionInfluence live() {
 		AbstractBody body = this.getBody();
+		MotionInfluence influence = null;
+
 		if(body.isBaby(Time.getTime())){
 			AbstractFrustrum frustrum = this.getBody().getCurrentFrustrum();
 			Iterator<AbstractWorldObjectWithPosition> objs = frustrum.objects();
@@ -52,14 +55,13 @@ public final class AntSoldierAgent extends AntAgent {
 			
 			/* Behavior in function of the result of parsing the frustrum. */
 			if(goal == null){
-				wander();
+				influence = wander();
 			}else{
-				reachGoal(goal);
+				influence = reachGoal(goal);
 			}
 		}
 		
-		// TODO
-		return null;		
+		return influence;		
 	}
 	
 	
@@ -79,17 +81,24 @@ public final class AntSoldierAgent extends AntAgent {
 	/**
 	 * Behaviour of the soldier gatherer when it wants to reach a goal.
 	 */
-	private void reachGoal(AbstractWorldObject goal){
+	private MotionInfluence reachGoal(AbstractWorldObject goal){
 		boolean goodPosition = this.isOnSamePosition(goal);
+		MotionInfluence influence;
 		
 		if(goodPosition){
+			influence = null;
+					
 			/* If it is a pheromone, the soldier doesn't do anything, it waits for a fight or for the pheromone to disappear. */
 			if(WorldObjectType.isAntBody(goal.getType()) || WorldObjectType.isTermiteBody(goal.getType())){
-			//TODO : fight
+			//TODO : add action fight
 			}
 		}else{
 			//move to goal
+			MyPoint2D goalPos = null;
+			influence = new MotionInfluence(body, goalPos, body.getEnvironment());
 		}
+		
+		return influence;
 	}
 	
 }
