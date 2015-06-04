@@ -54,9 +54,15 @@ public enum WorldObjectType {
 		return (type.ordinal() >= ANTBODY.ordinal() &&
 				type.ordinal() <= ANTUNDERTAKERBODY.ordinal());
 	}
-	
+	public static boolean isSpiderBody(WorldObjectType type) {
+		return (type.ordinal() == SPIDERBODY.ordinal());
+	}
 	public static boolean isTermiteBody(WorldObjectType type) {
 		return (type.ordinal() >= TERMITEBODY.ordinal() &&
+				type.ordinal() <= TERMITEUNDERTAKERBODY.ordinal());
+	}
+	public static boolean isBody(WorldObjectType type) {
+		return (type.ordinal() >= ANTBODY.ordinal() &&
 				type.ordinal() <= TERMITEUNDERTAKERBODY.ordinal());
 	}
 	

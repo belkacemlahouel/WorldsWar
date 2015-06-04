@@ -1,7 +1,7 @@
 package gui;
 
 import env2.api.AbstractEnvironment;
-import gui.window.Viewport;
+import gui.window.EnvironmentViewport;
 
 import java.awt.Rectangle;
 import java.util.ArrayList;
@@ -27,7 +27,7 @@ public class Camera
 	GUI gui;
 	
 	List<ViewportVisualInfos> vpInfosList;
-	private int mainViewportID;
+	private int mainViewportID = 0;
 	
 	/* Constructors */ 
 	public Camera(GUI gui) {
@@ -140,10 +140,10 @@ public class Camera
 	}
 	
 	/* Viewport functions */
-	public void addViewport(Viewport vp, int graphicalX, int graphicalY) {
+	public void addViewport(EnvironmentViewport vp, int graphicalX, int graphicalY) {
 		this.addViewport(vp, graphicalX, graphicalY, defaultPosX, defaultPosY);		
 	}
-	public void addViewport(Viewport vp, int graphicalX, int graphicalY, int logicX, int logicY) {		
+	public void addViewport(EnvironmentViewport vp, int graphicalX, int graphicalY, int logicX, int logicY) {		
 		/* Attributes setting */
 		AbstractEnvironment env = vp.getEnv();
 		vpInfosList.add(new ViewportVisualInfos(logicX, logicY, graphicalX, graphicalX, env.getWidth(), env.getHeight()));
@@ -240,15 +240,19 @@ public class Camera
 	/* Various functions */	
 	public int findEnvID(AbstractEnvironment e)
 	{
-		List<AbstractEnvironment> envList = gui.getEnvList();
-		int size = envList.size();
 		int envID = -1;
+		List<AbstractEnvironment> envList = gui.getEnvList();
 		
-		int i=0;
-		while(i<size && envID==(-1))
+		if(envList != null)
 		{
-			if(envList.get(i).equals(e)) 	envID = i;
-			i++;
+			int size = envList.size();
+			
+			int i=0;
+			while(i<size && envID==(-1))
+			{
+				if(envList.get(i).equals(e)) 	envID = i;
+				i++;
+			}
 		}
 		
 		return envID;

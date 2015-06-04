@@ -21,7 +21,7 @@ public class AgentBodyGUI {
 	public JPanel container;
 	public AbstractBody agentBody;
 	public ImageIcon bodyRepr;
-	private GUI guiContainer;
+	private GUI gui;
 
 	
 	/*
@@ -29,63 +29,53 @@ public class AgentBodyGUI {
 	 */
 	public AgentBodyGUI(String species, GUI gui, AbstractBody body)
 	{
+		this.gui = gui;
+		
 		agentBody = body;
 		container = new JPanel();
-		guiContainer = gui;
 		MyPoint2D coordinates = agentBody.getPosition();
 		
 		int posX = coordinates.getX();
 		int posY = coordinates.getY();
 		
-		int width;
-		int height;
-		
 		if(species.equalsIgnoreCase("Ant"))
 		{
 			bodyRepr = new ImageIcon("src/res/gui/ant.png");
 		}
-		else if(species.equalsIgnoreCase("Ant"))
+		else if(species.equalsIgnoreCase("Termine"))
 		{
 			bodyRepr = new ImageIcon("src/res/gui/termite.png");
 		}
-		else
+		else if(species.equalsIgnoreCase("Spider"))
 		{
-			//TODO create the spider.png file.
 			bodyRepr = new ImageIcon("src/res/gui/spider.png");
 		}
+		else
+			bodyRepr = new ImageIcon("src/res/gui/ant.png");
 		
 		/* Use the camera to put the agent body gui at the right place */
 		Rectangle rectPos;
-		Camera camera = guiContainer.getCamera();
-		
-		rectPos = camera.logical2absolutePixel(agentBody.getEnvironment(), posX, posY);
-		System.out.println(rectPos);
-		
+		Camera camera = this.gui.getCamera();
+
+		rectPos = camera.logical2absolutePixel(agentBody.getEnvironment(), posX, posY);		
 		if(rectPos != null){
 			posX = (int) rectPos.getX();
 			posY = (int) rectPos.getY();
-
-			width = (int) rectPos.getWidth();
-			height = (int) rectPos.getHeight();
 		}else{
 			posX = 0;
 			posY = 0;
-
-			width = 10;
-			height = 10;
-		}
-		
+		}		
 		
 		// print the panel in the GUI and add the representation in the panel
 		container.add(new JLabel(bodyRepr));
 
-		container.setSize(width, height);		
+		container.setSize((int) rectPos.getWidth(), (int) rectPos.getHeight());		
 		container.setLocation(posX, posY);
-		
-		gui.getAntPanel().add(container);
-		
+
 		container.setLocation(posX,posY);
 		container.setOpaque(false);
+		
+		this.gui.getAntPanel().add(container);		
 	}
 	
 	/*
@@ -116,7 +106,7 @@ public class AgentBodyGUI {
 		int x = getPosXBody();
 		int y = getPosYBody();
 		Rectangle rectPos;
-		Camera camera = guiContainer.getCamera();
+		Camera camera = this.gui.getCamera();
 		
 		rectPos = camera.logical2absolutePixel(agentBody.getEnvironment(), x, y);
 		
@@ -128,9 +118,8 @@ public class AgentBodyGUI {
 			y = 0;
 		}
 		
-		System.out.println(x+" and "+y);
-		
 		//move the panel of the body's representation
+		container.setSize((int) rectPos.getWidth(), (int) rectPos.getHeight());		
 		container.setLocation(x,y);
 	}
 }
