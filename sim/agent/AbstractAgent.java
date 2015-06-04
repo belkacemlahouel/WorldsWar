@@ -84,6 +84,7 @@ public abstract class AbstractAgent{
 			}else{
 				directionPoint.add(randomDir.dx, randomDir.dy);
 			}
+			--movingReach;
 		}
 		
 		directionPoint = body.getPosition().addNew(directionPoint.getX(), directionPoint.getY());
