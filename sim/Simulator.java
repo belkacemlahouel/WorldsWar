@@ -83,7 +83,7 @@ public class Simulator {
 		return agents == null || agents.isEmpty();
 	}
 	
-	public void doStep() {
+	public void doStep() {		
 		if (agents == null)
 			throw new NoSuchElementException("NO AGENT FOUND!");
 		
@@ -91,7 +91,11 @@ public class Simulator {
 		motionInfluences.clear();
 		actions.clear();
 		mothers.clear();
-		
+
+		/* =========================
+		 * BLOCKED IN THIS FOR LOOP
+		 * ========================= */
+		System.out.print("In -> ");
 		for (AbstractAgent agt : agents) {
 			MotionInfluence influence = agt.live();
 			if (influence != null)
@@ -100,13 +104,14 @@ public class Simulator {
 			// TODO Check that all agents act then move <=> They act in this current cell
 			influencedCells.add(agt.getBody().getEnvironment().getCell(agt.getBody().getPosition()));
 		}
+		System.out.println("Out");
 		
 		/***/
-		
+
 		for (AbstractAgent agt : agents) {
 			actions.addAll(agt.getBody().solveInfluences());
 		}
-		
+
 		for (AbstractCell c : influencedCells) {
 			actions.addAll(c.solveInfluences());
 		}
@@ -114,15 +119,15 @@ public class Simulator {
 		actions.addAll(solveMotionInfluences(motionInfluences));
 		
 		/***/
-		
+
 		for (AbstractAction action : actions) {
 			action.doAction();
 		}
-		
+
 		createBabies();
 	
 		/***/				
-		gui.refresh();
+		//gui.refresh();
 	}
 	
 	/**

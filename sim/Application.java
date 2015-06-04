@@ -4,7 +4,7 @@ public class Application {
 
 	public static void main(String[] args) {
 		
-		final int TIME_STEP = 500; // in ms 
+		final int TIME_STEP = 1000; // in ms 
 		final String fileName = "src/res/conf/ONLY_ONE_MOTHER";
 		
 		/***/

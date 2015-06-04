@@ -30,9 +30,6 @@ class Main {
 		AntGathererBody ant = new AntGathererBody(0, 1, GUI.getInstance().getEnvList().get(1), Direction.EAST, new MyPoint2D(1,5));		
 		AntSoldierBody antSoldier = new AntSoldierBody(0, 1, GUI.getInstance().getEnvList().get(1), Direction.NORTH, new MyPoint2D(5,3));
 		
-		while(true)
-		{
-			GUI.getInstance().refresh();
-		}
+		GUI.getInstance().refresh();
 	}
 }

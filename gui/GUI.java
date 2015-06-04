@@ -141,13 +141,13 @@ public class GUI implements InterfaceObserver
 	}
 	
 	/* Layout functions */
-	private void mainPanelLayoutSetting(){		
-		/* Resize the main panel */
-		Dimension screenSize = this.frame.getSize();
-		this.envPanel.setPreferredSize(screenSize);
-		
+	private void mainPanelLayoutSetting(){				
 		if(this.hasEnvBeenInit)
 		{
+			/* Resize the main panel */
+			Dimension screenSize = this.frame.getSize();
+			this.envPanel.setPreferredSize(screenSize);
+
 			int envCount = this.envList.size();
 			int mainViewportID = this.camera.getMainViewportID();
 			
@@ -244,8 +244,6 @@ public class GUI implements InterfaceObserver
 
 			this.agentBodyList.add(agentBody);
 			this.antPanel.add(agentBody.container);
-
-			this.antPanel.revalidate();
 		}
 	}
 	
@@ -298,6 +296,7 @@ public class GUI implements InterfaceObserver
 	public void refresh()
 	{
 		this.moveAllBodyGUI();	
+		this.antPanel.revalidate();
 		this.antPanel.repaint();
 	}
 	private void moveAllBodyGUI()
