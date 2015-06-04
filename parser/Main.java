@@ -10,6 +10,7 @@ import parser.DataToGlobalEnvironment;
 import gui.*;
 import env2.api.AbstractEnvironment;
 import env2.env.Ground;
+import env2.resources.Wood;
 import env2.type.Direction;
 import env2.body.antbody.*;
 
@@ -30,6 +31,9 @@ class Main {
 		AntGathererBody ant = new AntGathererBody(0, 1, GUI.getInstance().getEnvList().get(1), Direction.EAST, new MyPoint2D(1,5));		
 		AntSoldierBody antSoldier = new AntSoldierBody(0, 1, GUI.getInstance().getEnvList().get(1), Direction.NORTH, new MyPoint2D(5,3));
 		
-		GUI.getInstance().refresh();
+		while(true)
+		{
+			GUI.getInstance().refresh();
+		}
 	}
 }
