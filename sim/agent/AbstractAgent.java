@@ -75,6 +75,8 @@ public abstract class AbstractAgent{
 		while(randomDir == direction.opposite()){
 			randomDir = Direction.random();
 		}
+		System.out.print(randomDir);
+		
 		
 		MyPoint2D directionPoint = new MyPoint2D(0,0);
 		
@@ -99,6 +101,8 @@ public abstract class AbstractAgent{
 		}else if(directionPoint.getY()>=this.getBody().getEnvironment().getHeight()){
 			directionPoint.setLocation(directionPoint.getX(), this.getBody().getEnvironment().getHeight()-1);
 		}
+		
+		System.out.println(" -> " + directionPoint);
 		
 		influence = new MotionInfluence(body,directionPoint, body.getEnvironment());
 		

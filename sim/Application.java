@@ -5,7 +5,7 @@ public class Application {
 	public static void main(String[] args) {
 		
 		final int TIME_STEP = 1000; // in ms 
-		final String fileName = "src/res/conf/TEST2";
+		final String fileName = "src/res/conf/ONLY_ONE_MOTHER";
 		
 		/***/
 		
