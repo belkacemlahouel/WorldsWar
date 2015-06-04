@@ -68,8 +68,9 @@ public class Simulator {
 		agents = instancied.getAgents();
 		mothers = instancied.getMothers();
 		
-		gui = new GUI(global.getGrounds());
-		gui.setVisible(true);
+		gui = GUI.getInstance();
+		gui.setEnvironmentList(global.getGrounds());
+		gui.getFrame().setVisible(true);
 		
 		motionInfluences = new LinkedList<>();
 		actions = new LinkedList<>();
@@ -120,9 +121,8 @@ public class Simulator {
 		
 		createBabies();
 	
-		/***/
-				
-		gui.repaint();
+		/***/				
+		gui.refresh();
 	}
 	
 	/**

@@ -21,23 +21,21 @@ class Main {
 	public static void main(String [ ] args) throws IOException {
 		DataToGlobalEnvironment parser = new DataToGlobalEnvironment("src/res/conf/environment.txt");
 		
-		Ground env = new Ground(10, 10);
+		/*Ground env = new Ground(10, 10);
 		List<AbstractEnvironment> listEnvs = new ArrayList<AbstractEnvironment>();
 		listEnvs.add(env);
-		GUI gui = new GUI(listEnvs);
 		
-		AntGathererBody ant = new AntGathererBody(0, 1, env, Direction.EAST, new MyPoint2D(1,5));
-		AgentBodyGUI agentGui = new AgentBodyGUI("Ant", gui, ant);
-		agentGui.move();
+		GUI gui = GUI.getInstance();
+		gui.setEnvironmentList(listEnvs);*/
+
+		AntGathererBody ant = new AntGathererBody(0, 1, GUI.getInstance().getEnvList().get(1), Direction.EAST, new MyPoint2D(1,5));		
+		AntSoldierBody antSoldier = new AntSoldierBody(0, 1, GUI.getInstance().getEnvList().get(1), Direction.NORTH, new MyPoint2D(5,3));
 		
-		AntSoldierBody antSoldier = new AntSoldierBody(0, 1, env, Direction.NORTH, new MyPoint2D(5,3));
-		AgentBodyGUI agentGuiSoldier = new AgentBodyGUI("Ant", gui, antSoldier);
-		agentGui.move();
-		
-		//Something is wrong/missing for the resourceGui cause resource doesn't appaer.
-		Wood someWood = new Wood(100);
-		System.out.println(someWood.getType());
-		ResourceGUI woodGui = new ResourceGUI(someWood,gui,new MyPoint2D(1,4),env);
-		woodGui.move();
+
+		while(true)
+		{
+			GUI.getInstance().refresh();
+		}
+
 	}
 }

@@ -7,6 +7,7 @@ import java.util.List;
 
 import math.MyPoint2D;
 import sim.agent.AbstractAgent;
+import env2.api.AbstractEnvironment;
 import env2.api.AbstractResource;
 import env2.api.InterfaceMother;
 import env2.env.GlobalEnvironment;
@@ -15,6 +16,7 @@ import env2.influences.CreateBabyInfluence;
 import env2.instanciator.bodies.AbstractBodyInstanciator;
 import env2.instanciator.factory.BodyFactory;
 import env2.instanciator.factory.ResourceFactory;
+import gui.GUI;
 
 public class DataToGlobalEnvironment {
 	
@@ -34,13 +36,14 @@ public class DataToGlobalEnvironment {
 			
 			final int NB_GROUNDS = DATAS.getNbGrounds();
 			
-			List<GroundSquared> grounds = new LinkedList<>();
+			List<AbstractEnvironment> grounds = new LinkedList<>();
 			for (int i = 0; i < NB_GROUNDS; ++i) {
 				grounds.add(new GroundSquared(DATAS.getEnvsWidths().get(i), DATAS.getEnvsHeights().get(i)));
 			}
 			
 			for (PortalInfo info : DATAS.getPortalInfos()) {
-				grounds.get(info.env1).addPortal(info.posEnv1[0], info.posEnv1[1],
+				GroundSquared e = (GroundSquared) grounds.get(info.env1);
+				e.addPortal(info.posEnv1[0], info.posEnv1[1],
 						grounds.get(info.env2), info.posEnv2[0], info.posEnv2[1]);
 			}
 			
@@ -49,6 +52,8 @@ public class DataToGlobalEnvironment {
 				res.add(info.quantity);
 				grounds.get(info.env).getCell(info.posX, info.posY).addObject(res);
 			}
+			
+			GUI.getInstance().setEnvironmentList(grounds);
 			
 			/*
 			 * Instanciation of bodies and agents + connections
