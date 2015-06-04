@@ -91,11 +91,7 @@ public class Simulator {
 		motionInfluences.clear();
 		actions.clear();
 		mothers.clear();
-
-		/* =========================
-		 * BLOCKED IN THIS FOR LOOP
-		 * ========================= */
-		System.out.print("In -> ");
+		
 		for (AbstractAgent agt : agents) {
 			MotionInfluence influence = agt.live();
 			if (influence != null)
@@ -104,7 +100,6 @@ public class Simulator {
 			// TODO Check that all agents act then move <=> They act in this current cell
 			influencedCells.add(agt.getBody().getEnvironment().getCell(agt.getBody().getPosition()));
 		}
-		System.out.println("Out");
 		
 		/***/
 
