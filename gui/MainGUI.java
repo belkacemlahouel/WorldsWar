@@ -18,6 +18,7 @@ public class MainGUI {
 		envList.add(new Ground(60, 60));
 		envList.add(new Ground(60, 60));
 		
-		GUI window = new GUI(envList, 0);
+		GUI window = GUI.getInstance();
+		window.setEnvironmentList(envList, 0);
 	}
 }

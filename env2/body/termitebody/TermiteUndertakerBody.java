@@ -17,6 +17,6 @@ public class TermiteUndertakerBody extends TermiteBody implements InterfaceUnder
 	@Override
 	public void buryDead(AbstractBody b) {
 		// TODO Auto-generated method stub
-		
+		b.fireEvent(20);				
 	}
 }

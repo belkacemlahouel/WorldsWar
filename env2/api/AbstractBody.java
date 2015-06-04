@@ -18,8 +18,11 @@ import env2.type.FrustrumType;
 import env2.type.InfluenceType;
 import env2.type.Time;
 import env2.type.WorldObjectType;
+import gui.GUI;
 
-public abstract class AbstractBody extends AbstractMobileWorldObject {
+public abstract class AbstractBody extends AbstractMobileWorldObject implements InterfaceObservable{
+	/* Observable interface variable */
+	private List<InterfaceObserver> observers = new ArrayList<InterfaceObserver>();
 	
 	/*
 	 * Offsets introduction with these variables representing
@@ -125,6 +128,10 @@ public abstract class AbstractBody extends AbstractMobileWorldObject {
 		myfrustrum = null;
 		
 		move(env, pos);
+		
+		GUI gui = GUI.getInstance();
+		this.addObserver(gui);
+		this.fireEvent(10);
 	}
 	
 	/*************************************************************************
@@ -422,5 +429,20 @@ public abstract class AbstractBody extends AbstractMobileWorldObject {
 		int t = AGE/ADULT_AGE;
 		int interpsize = (int) ((1-t) * (0.1 * MAX_BODY_SIZE) + (t) * (MAX_BODY_SIZE));
 		System.out.println("INTERP SIZE: " + interpsize);
+	}
+
+	/* Observable interface functions */
+	public void addObserver(InterfaceObserver i)
+	{
+		if(i != null)		this.observers.add(i);
+	}
+    public void removeObserver(InterfaceObserver i)
+	{
+		if(i != null)		this.observers.remove(i);		
+	}
+    public void fireEvent(int eventCode)
+	{
+		for(InterfaceObserver i : this.observers)
+			i.eventFired(this, eventCode);
 	}
 }
