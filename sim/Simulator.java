@@ -122,7 +122,7 @@ public class Simulator {
 		createBabies();
 	
 		/***/				
-		//gui.refresh();
+		gui.refresh();
 	}
 	
 	/**
