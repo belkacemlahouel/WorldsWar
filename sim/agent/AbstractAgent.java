@@ -64,7 +64,7 @@ public abstract class AbstractAgent{
 	/**
 	 * Behaviour of an agent to move randomly.
 	 */
-	public MotionInfluence wander(){
+	public MotionInfluence wander() {
 		MotionInfluence influence;
 		AbstractBody body = this.getBody(); 
 		Direction direction = body.getDirection();
@@ -72,24 +72,34 @@ public abstract class AbstractAgent{
 		
 		Direction randomDir = Direction.random();
 		
-		while(randomDir == direction.opposite()){
+		while (randomDir == direction.opposite()) {
 			randomDir = Direction.random();
-		}
-		System.out.print(randomDir);
-		
+		}		
 		
 		MyPoint2D directionPoint = new MyPoint2D(0,0);
 		
-		while(movingReach > 0){
-			if(movingReach%2 == 0){
+		// TODO dafuq is this for?
+		while (movingReach > 0) {
+			if (movingReach%2 == 0) {
 				directionPoint.add(direction.dx, direction.dy);
-			}else{
+			} else {
 				directionPoint.add(randomDir.dx, randomDir.dy);
 			}
 			--movingReach;
 		}
 		
-		directionPoint = body.getPosition().addNew(directionPoint.getX(), directionPoint.getY());
+		// TODO rdorier: check that
+		int x = getBody().getPosition().getX() + randomDir.dx;
+		int y = getBody().getPosition().getY() + randomDir.dy;
+		
+		x = Math.max(0, Math.min(x, getBody().getEnvironment().getWidth()));
+		y = Math.max(0, Math.min(y, getBody().getEnvironment().getHeight()));
+		
+		directionPoint = new MyPoint2D(x, y);
+		
+		// Buggy
+		/* directionPoint = body.getPosition().addNew(directionPoint.getX(), directionPoint.getY());
+		
 		if(directionPoint.getX()<0){
 			directionPoint.setLocation(0, directionPoint.getY());
 		}else if(directionPoint.getX()>=this.getBody().getEnvironment().getWidth()){
@@ -100,9 +110,7 @@ public abstract class AbstractAgent{
 			directionPoint.setLocation(directionPoint.getX(), 0);
 		}else if(directionPoint.getY()>=this.getBody().getEnvironment().getHeight()){
 			directionPoint.setLocation(directionPoint.getX(), this.getBody().getEnvironment().getHeight()-1);
-		}
-		
-		System.out.println(" -> " + directionPoint);
+		} */
 		
 		influence = new MotionInfluence(body,directionPoint, body.getEnvironment());
 		
