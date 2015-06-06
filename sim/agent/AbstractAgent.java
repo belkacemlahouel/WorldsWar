@@ -78,7 +78,7 @@ public abstract class AbstractAgent{
 		
 		MyPoint2D directionPoint = new MyPoint2D(0,0);
 		
-		// TODO dafuq is this for?
+		// Part to make the direction not straight
 		while (movingReach > 0) {
 			if (movingReach%2 == 0) {
 				directionPoint.add(direction.dx, direction.dy);
@@ -88,7 +88,7 @@ public abstract class AbstractAgent{
 			--movingReach;
 		}
 		
-		// TODO rdorier: check that
+		// Check for the limit of the environment.
 		int x = getBody().getPosition().getX() + randomDir.dx;
 		int y = getBody().getPosition().getY() + randomDir.dy;
 		
@@ -97,20 +97,6 @@ public abstract class AbstractAgent{
 		
 		directionPoint = new MyPoint2D(x, y);
 		
-		// Buggy
-		/* directionPoint = body.getPosition().addNew(directionPoint.getX(), directionPoint.getY());
-		
-		if(directionPoint.getX()<0){
-			directionPoint.setLocation(0, directionPoint.getY());
-		}else if(directionPoint.getX()>=this.getBody().getEnvironment().getWidth()){
-			directionPoint.setLocation(this.getBody().getEnvironment().getWidth()-1, directionPoint.getY());
-		}
-		
-		if(directionPoint.getY()<0){
-			directionPoint.setLocation(directionPoint.getX(), 0);
-		}else if(directionPoint.getY()>=this.getBody().getEnvironment().getHeight()){
-			directionPoint.setLocation(directionPoint.getX(), this.getBody().getEnvironment().getHeight()-1);
-		} */
 		
 		influence = new MotionInfluence(body,directionPoint, body.getEnvironment());
 		
