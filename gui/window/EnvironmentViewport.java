@@ -16,6 +16,7 @@ public class EnvironmentViewport extends JPanel
 
 	/* Constants */
 	private static final Color defaultCellBackgroundColor = Color.GREEN;	
+	private static final Color portalCellBackgroundColor = new Color(139,69,19);	
 	
 	/* Attributes */ 
 	private int id;
@@ -27,20 +28,15 @@ public class EnvironmentViewport extends JPanel
 	
 	/* Constructors */ 
 	public EnvironmentViewport(int viewportID, AbstractEnvironment e, Camera cam) {
-		this(viewportID, e, cam, 0, 0, defaultCellBackgroundColor);
+		this(viewportID, e, cam, 0, 0);
 	}	
 	public EnvironmentViewport(int viewportID, AbstractEnvironment e, Camera cam, int x, int y) {		
-		this(viewportID, e, cam, x, y, defaultCellBackgroundColor);
-	}	
-	public EnvironmentViewport(int viewportID, AbstractEnvironment e, Camera cam, int x, int y, Color cellBgColor) {		
 		super();		
 		
 		this.id = viewportID;	
 		
 		this.camera = cam;
 		this.env = e;		
-		
-		this.cellBgColor = cellBgColor;		
 	}	
 
 	/* Getters */
@@ -82,7 +78,11 @@ public class EnvironmentViewport extends JPanel
 				g.fillRect(cellRect.x, cellRect.y, cellRect.width, cellRect.height);
 				
 				/* Background of the rectangle */	
-				g.setColor(this.cellBgColor); 
+				if(tmpCell.isPortal())
+					g.setColor(portalCellBackgroundColor); 
+				else
+					g.setColor(defaultCellBackgroundColor); 
+					
 				g.fillRect(cellRect.x+1, cellRect.y+1, cellRect.width-1, cellRect.height-1);
 			}
 		}

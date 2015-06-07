@@ -1,13 +1,5 @@
 package gui;
 
-import env2.api.AbstractBody;
-import env2.api.AbstractEnvironment;
-import env2.api.InterfaceObservable;
-import env2.api.InterfaceObserver;
-import env2.type.WorldObjectType;
-import gui.window.EnvironmentViewport;
-import gui.window.SimpleFrame;
-
 import java.awt.Dimension;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -19,13 +11,19 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SpringLayout;
 
-import sim.agent.AbstractAgent;
 import math.MyMath;
+import math.MyPoint2D;
+import env2.api.AbstractBody;
+import env2.api.AbstractEnvironment;
+import env2.api.AbstractResource;
+import env2.api.InterfaceObservable;
+import env2.api.InterfaceObserver;
+import env2.type.WorldObjectType;
+import gui.window.EnvironmentViewport;
+import gui.window.SimpleFrame;
 
 public class GUI implements InterfaceObserver
 {
-	private static final long serialVersionUID = 1355585020854646163L;
-	
 	/* Attributes */
 	private SimpleFrame frame;
 	
@@ -35,11 +33,12 @@ public class GUI implements InterfaceObserver
 	private Camera camera = null;
 	private GUIController controller = null;
 	
-	private JPanel envPanel = null;
-	private JPanel antPanel = null;
+	private JPanel mapPanel = new JPanel();
+	private JPanel worldObjectPanel = new JPanel();
 	private SpringLayout layout = null;
 	
 	private List<AgentBodyGUI> agentBodyList = new LinkedList<AgentBodyGUI>();
+	private List<ResourceGUI> resourcesList = new LinkedList<ResourceGUI>();
 	
 	private boolean hasEnvBeenInit = false;
 
@@ -93,7 +92,7 @@ public class GUI implements InterfaceObserver
 			this.camera.addViewport(tmpVP, 0, 0);
 
 			this.vpList.add(tmpVP);			
-			this.envPanel.add(tmpVP);
+			this.mapPanel.add(tmpVP);
 			tmpVP.revalidate();
 		}
 		
@@ -105,20 +104,16 @@ public class GUI implements InterfaceObserver
 	private void initPanels()
 	{
 		/* Init the env panel and set it as a ContentPane */
-		this.layout = new SpringLayout();
+		this.layout = new SpringLayout();		
+		this.mapPanel.setLayout(this.layout);
 		
-		this.envPanel = new JPanel();		
-		this.envPanel.setLayout(this.layout);
+		this.frame.setContentPane(this.mapPanel);
 		
-		this.frame.setContentPane(this.envPanel);
-		
-		/* Init the ant panel and set it as a GlassPane */
-		this.antPanel = new JPanel();
-		
-		this.antPanel.setOpaque(false); 
-        this.antPanel.setLayout(null);
+		/* Init the ant panel and set it as a GlassPane */		
+		this.worldObjectPanel.setOpaque(false); 
+        this.worldObjectPanel.setLayout(null);
         
-		this.frame.setGlassPane(this.antPanel);
+		this.frame.setGlassPane(this.worldObjectPanel);
 		this.frame.getGlassPane().setVisible(true);
 	}
 		
@@ -130,8 +125,8 @@ public class GUI implements InterfaceObserver
 			return null;
 	}
 	
-	public JPanel getAntPanel(){
-		return this.antPanel;
+	public JPanel getWorldObjectPanel(){
+		return this.worldObjectPanel;
 	}
 	public Camera getCamera(){
 		return this.camera;
@@ -146,7 +141,7 @@ public class GUI implements InterfaceObserver
 		{
 			/* Resize the main panel */
 			Dimension screenSize = this.frame.getSize();
-			this.envPanel.setPreferredSize(screenSize);
+			this.mapPanel.setPreferredSize(screenSize);
 
 			int envCount = this.envList.size();
 			int mainViewportID = this.camera.getMainViewportID();
@@ -181,8 +176,8 @@ public class GUI implements InterfaceObserver
 				this.camera.graphicalResize(mainViewportID, 0, 0, mainWidth, mainHeight);
 				this.camera.graphicalRescale(mainViewportID, mainWidth, mainHeight, true);
 	
-				this.layout.putConstraint(SpringLayout.WEST, tmpVP, 0, SpringLayout.WEST, this.envPanel);
-				this.layout.putConstraint(SpringLayout.NORTH, tmpVP, 0, SpringLayout.NORTH, this.envPanel);
+				this.layout.putConstraint(SpringLayout.WEST, tmpVP, 0, SpringLayout.WEST, this.mapPanel);
+				this.layout.putConstraint(SpringLayout.NORTH, tmpVP, 0, SpringLayout.NORTH, this.mapPanel);
 				
 				tmpVP.revalidate();
 				
@@ -200,8 +195,8 @@ public class GUI implements InterfaceObserver
 						
 						if(currentPosition == 0)
 						{
-							this.layout.putConstraint(SpringLayout.WEST, tmpVP, 0, SpringLayout.WEST, this.envPanel);
-							this.layout.putConstraint(SpringLayout.NORTH, tmpVP, mainHeight+padding, SpringLayout.NORTH, this.envPanel);
+							this.layout.putConstraint(SpringLayout.WEST, tmpVP, 0, SpringLayout.WEST, this.mapPanel);
+							this.layout.putConstraint(SpringLayout.NORTH, tmpVP, mainHeight+padding, SpringLayout.NORTH, this.mapPanel);
 						}
 						else
 						{
@@ -243,10 +238,9 @@ public class GUI implements InterfaceObserver
 			agentBody.move();
 
 			this.agentBodyList.add(agentBody);
-			this.antPanel.add(agentBody.container);
+			this.worldObjectPanel.add(agentBody.container);
 		}
 	}
-	
 	public void deleteAgentBody(AbstractBody a)
 	{
 		if(a != null)
@@ -261,7 +255,7 @@ public class GUI implements InterfaceObserver
 				tmpBody = agentBodyIterator.next();
 				if(tmpBody.agentBody.equals(a))
 				{					
-					this.antPanel.remove(tmpBody.container);
+					this.worldObjectPanel.remove(tmpBody.container);
 					
 					agentBodyIterator.remove();	
 					agentBodyFound = true;
@@ -270,6 +264,47 @@ public class GUI implements InterfaceObserver
 		}
 	}
 	
+	public void createRessourceGUI(AbstractResource r, MyPoint2D pos, AbstractEnvironment env)
+	{
+		if(r != null)
+		{
+			WorldObjectType type = r.getType();
+			
+			if(type != null)
+			{
+				if(!WorldObjectType.isBody(type)){
+					ResourceGUI resourceGUI = new ResourceGUI(r, this, pos, env);
+					resourceGUI.move();
+
+					this.resourcesList.add(resourceGUI);
+					this.worldObjectPanel.add(resourceGUI.container);
+				}
+			}
+		}
+	}
+	public void deleteRessourceGUI(AbstractResource a)
+	{
+		if(a != null)
+		{
+			ResourceGUI tmpResource;
+			Iterator<ResourceGUI> resourceIterator = this.resourcesList.iterator();
+			
+			boolean resourceFound = false;
+			
+			while(resourceIterator.hasNext() && !resourceFound)
+			{
+				tmpResource = resourceIterator.next();
+				if(tmpResource.resource.equals(a))
+				{					
+					this.worldObjectPanel.remove(tmpResource.container);
+					
+					resourceIterator.remove();	
+					resourceFound = true;
+				}
+			}
+		}
+	}
+		
 	/* Controller functions */
 	private void initController()
 	{
@@ -295,14 +330,16 @@ public class GUI implements InterfaceObserver
 	/* Repaint function */
 	public void refresh()
 	{
-		this.moveAllBodyGUI();	
-		this.antPanel.revalidate();
-		this.antPanel.repaint();
+		this.moveAllObjects();	
+		this.worldObjectPanel.revalidate();
+		this.worldObjectPanel.repaint();
 	}
-	private void moveAllBodyGUI()
+	private void moveAllObjects()
 	{
 		for(AgentBodyGUI a : agentBodyList)
 			a.move();
+		for(ResourceGUI r : resourcesList)
+			r.move();
 	}
 	
 	/* Observer interface function */

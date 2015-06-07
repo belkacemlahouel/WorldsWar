@@ -1,7 +1,7 @@
 package env2.api;
 
-public abstract class AbstractResource extends AbstractWorldObject {
-	
+
+public abstract class AbstractResource extends AbstractWorldObject{	
 	public abstract int getQuantity();
 	public abstract AbstractResource pick(int quantity);
 	public abstract void add(int quantity);
@@ -10,6 +10,11 @@ public abstract class AbstractResource extends AbstractWorldObject {
 	
 	private int NB_PICKER = 0;
 	private int NB_PICKER_SERVED = 0;
+	
+	
+	/***/
+	
+	/***/
 	
 	public void addPicker() {
 		++NB_PICKER;

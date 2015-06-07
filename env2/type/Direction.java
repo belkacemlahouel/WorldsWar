@@ -28,13 +28,10 @@ public enum Direction {
 		this.dx = x;
 		this.dy = y;
 	}
-	
-	// private static int seed = 0;
 
 	public static Direction random() {
-		Random rnd = new Random(); // (seed++);
+		Random rnd = new Random();
 		return values()[rnd.nextInt(values().length)];
-		// return values()[MyMath.random(0, values().length)];
 	}
 
 	public abstract Direction opposite();
