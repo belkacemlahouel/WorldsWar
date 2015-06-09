@@ -38,34 +38,39 @@ public final class AntSoldierAgent extends AntAgent {
 		MotionInfluence influence = null;
 
 		if(body.isBaby(Time.getTime())){
-			AbstractFrustrum frustrum = this.getBody().getCurrentFrustrum();
-			Iterator<Perception> objs = frustrum.objects();
 			
-			boolean mission = false;
-			/* The goal could represent an enemy or a DANGERPHEROMONE */
-			Perception goal = null;
-			
-			while(objs.hasNext() && mission==false){
-				Perception objWithPos = objs.next();
-				AbstractWorldObject obj = objWithPos.object;
+			//test if the cell is a portal
+			if(!body.getEnvironment().getCell(body.getPosition()).isPortal()){
 				
-				/* Case where obj is a body (so a potential enemy */
-				if(WorldObjectType.isAntBody(obj.getType()) || WorldObjectType.isTermiteBody(obj.getType())){
-					if(!((AbstractBody) obj).isFriend(this.getBody())){
+				AbstractFrustrum frustrum = this.getBody().getCurrentFrustrum();
+				Iterator<Perception> objs = frustrum.objects();
+				
+				boolean mission = false;
+				/* The goal could represent an enemy or a DANGERPHEROMONE */
+				Perception goal = null;
+				
+				while(objs.hasNext() && mission==false){
+					Perception objWithPos = objs.next();
+					AbstractWorldObject obj = objWithPos.object;
+					
+					/* Case where obj is a body (so a potential enemy */
+					if(WorldObjectType.isAntBody(obj.getType()) || WorldObjectType.isTermiteBody(obj.getType())){
+						if(!((AbstractBody) obj).isFriend(this.getBody())){
+							goal = objWithPos;
+							dropPheromone(WorldObjectType.DANGERPHEROMONE);
+							mission = true;
+						}
+					}else if(WorldObjectType.isPheromone(obj.getType())){
 						goal = objWithPos;
-						dropPheromone(WorldObjectType.DANGERPHEROMONE);
-						mission = true;
 					}
-				}else if(WorldObjectType.isPheromone(obj.getType())){
-					goal = objWithPos;
 				}
-			}
-			
-			/* Behavior in function of the result of parsing the frustrum. */
-			if(goal == null){
-				influence = wander();
-			}else{
-				influence = reachGoal(goal);
+				
+				/* Behavior in function of the result of parsing the frustrum. */
+				if(goal == null){
+					influence = wander();
+				}else{
+					influence = reachGoal(goal);
+				}
 			}
 		}
 		
