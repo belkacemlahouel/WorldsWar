@@ -77,6 +77,7 @@ public class EnvironmentParser {
 	      //assumes the line has a certain structure
 	      type = scanner.next();
 	      parameter = ConfParameters.getByValue(type);
+	      System.out.println(parameter);
 	      value = scanner.next();	      
 	    }
 	    else
