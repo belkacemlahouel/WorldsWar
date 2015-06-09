@@ -10,6 +10,7 @@ import env2.api.InterfaceNurse;
 import env2.body.antbody.AntNurseBody;
 import env2.type.Time;
 import env2.type.WorldObjectType;
+import env2.env.PortalCell;
 import env2.frustrum.AbstractFrustrum;
 import env2.frustrum.Perception;
 import env2.influences.AttackCureInfluence;
@@ -36,29 +37,37 @@ public final class AntNurseAgent extends AntAgent {
 		MotionInfluence influence = null;
 		
 		if(!body.isBaby(Time.getTime())){
-			AbstractFrustrum frustrum = this.getBody().getCurrentFrustrum();
-			Iterator<Perception> objs = frustrum.objects();
+			//test if the cell is a portal
+			if(!body.getEnvironment().getCell(body.getPosition()).isPortal()){
 
-			/* The mission of the nurse is to heal injured ants and to feed babies. */
-			boolean mission = false;
-			Perception goal = null;
-			
-			while(objs.hasNext() && mission==false){
-				AbstractWorldObject obj = objs.next().object;
+				AbstractFrustrum frustrum = this.getBody().getCurrentFrustrum();
+				Iterator<Perception> objs = frustrum.objects();
+	
+				/* The mission of the nurse is to heal injured ants and to feed babies. */
+				boolean mission = false;
+				Perception goal = null;
 				
-				if(WorldObjectType.isAntBody(obj.getType()) || WorldObjectType.isTermiteBody(obj.getType())){
-					AbstractBody objBody = (AbstractBody) obj;
-					if(objBody.isFriend(body) && this.isHurt(objBody)){
-						mission = true;
-						influence = heal(objBody);
-					}else if (objBody.isBaby(Time.getTime()) && target==null){
-						target = objBody;
+				while(objs.hasNext() && mission==false){
+					AbstractWorldObject obj = objs.next().object;
+					
+					if(WorldObjectType.isAntBody(obj.getType()) || WorldObjectType.isTermiteBody(obj.getType())){
+						AbstractBody objBody = (AbstractBody) obj;
+						if(objBody.isFriend(body) && this.isHurt(objBody)){
+							mission = true;
+							influence = heal(objBody);
+						}else if (objBody.isBaby(Time.getTime()) && target==null){
+							target = objBody;
+						}
 					}
 				}
-			}
-			
-			if(!mission && target!=null){
-				influence = feed(target);
+				
+				if(!mission && target!=null){
+					influence = feed(target);
+				}
+			}else{
+				//The cell is a portal
+				PortalCell cell = (PortalCell) body.getEnvironment().getCell(body.getPosition());
+				influence = new MotionInfluence(body, cell.getArrivalPosition(), cell.getArrivalEnvironment());
 			}
 		}
 		
