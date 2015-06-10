@@ -51,7 +51,7 @@ public final class AntGathererAgent extends AntAgent {
 			return null;
 		}
 		
-		if(body.getTransportCapacity()==0){
+		if(body.isFull()){
 			System.out.println("I'm full !");
 		}
 		
