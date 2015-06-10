@@ -44,12 +44,12 @@ public final class AntGathererAgent extends AntAgent {
 		/*if (body.isBaby(Time.getTime())) {
 			System.out.println("I'm a baby :)");
 			return null;
-		}
+		}*/
 		
 		if (body.isDead()) {
 			System.out.println("I'm dead: " + body.getPosition());
 			return null;
-		}*/
+		}
 		
 		if(body.getTransportCapacity()==0){
 			System.out.println("I'm full !");
