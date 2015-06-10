@@ -415,6 +415,10 @@ public abstract class AbstractBody extends AbstractMobileWorldObject implements 
 	public int getMaxLife(){
 		return MAX_LIFE;
 	}
+	
+	public AbstractCell getCell() {
+		return getEnvironment().getCell(mypos);
+	}
 		
 	/*************************************************************************
 	 * Main method: tests...
@@ -431,6 +435,8 @@ public abstract class AbstractBody extends AbstractMobileWorldObject implements 
 		int interpsize = (int) ((1-t) * (0.1 * MAX_BODY_SIZE) + (t) * (MAX_BODY_SIZE));
 		System.out.println("INTERP SIZE: " + interpsize);
 	}
+	
+	/***/
 
 	/* Observable interface functions */
 	public void addObserver(InterfaceObserver i)

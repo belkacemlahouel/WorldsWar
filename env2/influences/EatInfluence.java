@@ -1,6 +1,6 @@
 package env2.influences;
 
-import java.util.Collection;
+import java.util.List;
 
 import env2.api.AbstractBody;
 import env2.api.AbstractInfluence;
@@ -12,9 +12,9 @@ public class EatInfluence extends AbstractInfluence {
 	public AbstractBody eater;
 	public int qty;
 	public AbstractResource resource;
-	public Collection<AbstractResource> container;
+	public List<AbstractResource> container;
 	
-	public EatInfluence(AbstractBody eater, Collection<AbstractResource> container, AbstractResource resource, int qty) {
+	public EatInfluence(AbstractBody eater, List<AbstractResource> container, AbstractResource resource, int qty) {
 		this.qty = qty;
 		this.eater = eater;
 		this.resource = resource;

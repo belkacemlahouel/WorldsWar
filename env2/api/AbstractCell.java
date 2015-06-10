@@ -17,8 +17,7 @@ public abstract class AbstractCell {
 	public abstract boolean isPortal();
 	
 	/***/
-	
-	private List<AbstractInfluence> myinfluences = new LinkedList<AbstractInfluence>();
+	private List<AbstractInfluence> myinfluences = new LinkedList<>();
 	
 	public List<AbstractAction> solveInfluences() {
 		List<AbstractAction> actions = new LinkedList<>();

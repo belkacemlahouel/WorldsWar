@@ -12,6 +12,7 @@ import sim.agent.AbstractAgent;
 import env2.action.MotionAction;
 import env2.api.AbstractAction;
 import env2.api.AbstractCell;
+import env2.api.InterfaceGatherer;
 import env2.api.InterfaceMother;
 import env2.env.GlobalEnvironment;
 import env2.influences.CreateBabyInfluence;
@@ -25,6 +26,17 @@ public class Simulator {
 	
 	private final static String DEFAULT_FILENAME = "src/res/conf/environment.txt";
 	private static Simulator INSTANCE = null;
+	
+	/***/
+	
+	private static InterfaceGatherer virtualGatherer;
+	
+	public static InterfaceGatherer getVirtualGatherer() {
+		if (virtualGatherer == null)
+			virtualGatherer = (InterfaceGatherer) BodyFactory.BODY_INSTANCIATOR.get(WorldObjectType.ANTGATHERERBODY);
+		
+		return virtualGatherer;
+	}
 	
 	/***/
 	
@@ -120,13 +132,21 @@ public class Simulator {
 		for (AbstractAction action : actions) {
 			action.doAction();
 		}
+		
+		/***/
+		
+		for (AbstractAgent agt : agents) {
+			agt.getBody().applyLifeVariation(-agt.getBody().getLifeLoss());
+		}
 
+		/***/
+		
 		createBabies();
 	
 		/***/	
-		nbStep++;
+		/*nbStep++;
 		if(nbStep%10 == 0)
-	 		System.out.println(agents.size());
+	 		System.out.println(agents.size());*/
 		
 		gui.refresh(true);
 	}
@@ -136,6 +156,7 @@ public class Simulator {
 	 * @param motionInfluences List of motion influences to apply
 	 * @return List of actions to execute, later
 	 * TODO Maybe add some conflict solving with Bresenheim-lines?
+	 * TODO Check if the guy want to move in its reach?
 	 */
 	private LinkedList<MotionAction> solveMotionInfluences(List<MotionInfluence> motionInfluences) {
 		LinkedList<MotionAction> actions = new LinkedList<>();

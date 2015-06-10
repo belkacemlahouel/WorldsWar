@@ -1,6 +1,6 @@
 package env2.action;
 
-import java.util.Collection;
+import java.util.List;
 
 import env2.api.AbstractAction;
 import env2.api.AbstractBody;
@@ -11,9 +11,9 @@ public class EatAction extends AbstractAction {
 	protected AbstractBody eater;
 	protected int qty;
 	protected AbstractResource resource;
-	protected Collection<AbstractResource> container;
+	protected List<AbstractResource> container;
 	
-	public EatAction(AbstractBody eater, Collection<AbstractResource> container, AbstractResource resource, int qty) {
+	public EatAction(AbstractBody eater, List<AbstractResource> container, AbstractResource resource, int qty) {
 		this.qty = qty;
 		this.eater = eater;
 		this.resource = resource;

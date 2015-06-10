@@ -16,7 +16,7 @@ public abstract class AbstractResource extends AbstractWorldObject{
 	
 	/***/
 	
-	public void addPicker() {
+	public void incrNbPicker() {
 		++NB_PICKER;
 	}
 	
