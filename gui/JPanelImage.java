@@ -21,4 +21,9 @@ public class JPanelImage extends JPanel {
         	g.drawImage(img, 0, 0, null);
         }
     }
+    
+    /* modif romain */
+    public void setImage(BufferedImage image){
+    	this.img = image;
+    }
 }

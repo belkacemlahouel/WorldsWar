@@ -143,6 +143,11 @@ public class AgentBodyGUI {
 			y = 0;
 		}
 		
+		if(agentBody.isDead()){
+			bodyRepr = loadImage("src/res/gui/dead_ant.png");
+			container.setImage(bodyRepr);
+		}
+		
 		//move the panel of the body's representation
 		container.setSize((int) rectPos.getWidth(), (int) rectPos.getHeight());		
 		container.setLocation(x,y);
