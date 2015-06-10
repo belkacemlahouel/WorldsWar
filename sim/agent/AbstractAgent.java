@@ -92,8 +92,8 @@ public abstract class AbstractAgent{
 		int x = getBody().getPosition().getX() + randomDir.dx;
 		int y = getBody().getPosition().getY() + randomDir.dy;
 		
-		x = Math.max(0, Math.min(x, getBody().getEnvironment().getWidth()));
-		y = Math.max(0, Math.min(y, getBody().getEnvironment().getHeight()));
+		x = Math.max(0, Math.min(x, getBody().getEnvironment().getWidth()-1));
+		y = Math.max(0, Math.min(y, getBody().getEnvironment().getHeight()-1));
 		
 		directionPoint = new MyPoint2D(x, y);
 		
