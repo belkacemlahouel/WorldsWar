@@ -22,6 +22,7 @@ public final class AntUndertakerAgent extends AntAgent {
 			return null;
 		}
 		
-		return wander();
+		//return wander();
+		return null;
 	}
 }

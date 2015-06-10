@@ -1,10 +1,13 @@
 package sim.agent.antagent;
 
 import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
+import parser.ConfParameters;
 import math.MyPoint2D;
 import env2.type.EffectType;
 import env2.type.Time;
@@ -53,6 +56,8 @@ public final class AntGathererAgent extends AntAgent {
 		
 		if(body.isFull()){
 			System.out.println("I'm full !");
+			dropPheromone(WorldObjectType.FOODPHEROMONE);
+			return returnCave();
 		}
 		
 		if(!body.isBaby(Time.getTime())){
@@ -118,7 +123,7 @@ public final class AntGathererAgent extends AntAgent {
 								break;
 						}
 					}else if(WorldObjectType.isAntBody(obj.getType()) || WorldObjectType.isTermiteBody(obj.getType())){
-						if(!((AbstractBody) obj).isFriend(this.getBody())){
+						if(!((AbstractBody) obj).isFriend(body)){
 							if(goal == null){
 								goal = objWithPos;
 								dropPheromone(WorldObjectType.DANGERPHEROMONE);
@@ -206,6 +211,51 @@ public final class AntGathererAgent extends AntAgent {
 		}else if (pheromone == WorldObjectType.FOODPHEROMONE){
 			this.getBody().producePheromoneFood();
 		}
+	}
+	
+	
+	/**
+	 * Behaviour of the ant gatherer when it wants to return to its cave.
+	 */
+	private MotionInfluence returnCave(){
+		MotionInfluence influence = null;
+		
+		AbstractFrustrum frustrum = this.getBody().getCurrentFrustrum();
+		Iterator<Perception> objs = frustrum.objects();
+		
+		MyPoint2D goal = body.getPosition();
+		int nbAnts = 0;
+		HashMap<MyPoint2D,Integer> cells = new HashMap<MyPoint2D,Integer>();
+		
+		/* Search all the cell with ants from its tribe. */
+		while(objs.hasNext()){
+			Perception objectDetected = objs.next();
+			WorldObjectType type = objectDetected.object.getType();
+			
+			if(WorldObjectType.isAntBody(type)){
+				if(((AbstractBody) objectDetected.object).isFriend(body)){
+					
+					if(cells.containsKey(objectDetected.position)){
+						cells.put(objectDetected.position, cells.get(objectDetected.position) + 1);
+					}
+					else{
+						cells.put(objectDetected.position, 1);
+					}
+				}
+			}
+		}
+		
+		/* Search for the cell that contains the more ants from its tribe. */
+		//nbAnts = Collections.max(cells.values());
+		
+		Iterator it = cells.entrySet().iterator();
+		System.out.println(it.hasNext());
+		while (it.hasNext()) {
+	        HashMap.Entry pair = (HashMap.Entry)it.next();
+	        System.out.println(pair.getKey() + " = " + pair.getValue());
+	    }
+		
+		return influence;
 	}
 	
 	
