@@ -33,7 +33,7 @@ public class Simulator {
 	
 	public static InterfaceGatherer getVirtualGatherer() {
 		if (virtualGatherer == null)
-			virtualGatherer = (InterfaceGatherer) BodyFactory.BODY_INSTANCIATOR.get(WorldObjectType.ANTGATHERERBODY);
+			virtualGatherer = (InterfaceGatherer) BodyFactory.BODY_INSTANCIATOR.get(WorldObjectType.ANTGATHERERBODY).getNew();
 		
 		return virtualGatherer;
 	}
