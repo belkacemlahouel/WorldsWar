@@ -8,6 +8,6 @@ public class PickActionInstanciator extends AbstractActionInstanciator {
 	@Override
 	public PickAction getAction() {
 		PickInfluence infl = (PickInfluence) influence;
-		return new PickAction(infl.picker, infl.picked, infl.qty);
+		return new PickAction(infl.picker, infl.container, infl.picked, infl.qty);
 	}
 }

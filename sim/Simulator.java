@@ -139,6 +139,7 @@ public class Simulator {
 	 * @param motionInfluences List of motion influences to apply
 	 * @return List of actions to execute, later
 	 * TODO Maybe add some conflict solving with Bresenheim-lines?
+	 * TODO Check if the guy want to move in its reach?
 	 */
 	private LinkedList<MotionAction> solveMotionInfluences(List<MotionInfluence> motionInfluences) {
 		LinkedList<MotionAction> actions = new LinkedList<>();
