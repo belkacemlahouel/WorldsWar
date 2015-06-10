@@ -12,7 +12,6 @@ import sim.agent.AbstractAgent;
 import env2.action.MotionAction;
 import env2.api.AbstractAction;
 import env2.api.AbstractCell;
-import env2.api.InterfaceGatherer;
 import env2.api.InterfaceMother;
 import env2.env.GlobalEnvironment;
 import env2.influences.CreateBabyInfluence;
@@ -29,13 +28,27 @@ public class Simulator {
 	
 	/***/
 	
-	private static InterfaceGatherer virtualGatherer;
+	/* private static InterfaceGatherer virtualGatherer;
 	
 	public static InterfaceGatherer getVirtualGatherer() {
 		if (virtualGatherer == null)
 			virtualGatherer = (InterfaceGatherer) BodyFactory.BODY_INSTANCIATOR.get(WorldObjectType.ANTGATHERERBODY).getNew();
 		
 		return virtualGatherer;
+	} */
+	
+	private static AbstractCell pointedCell = null;
+	
+	public static void setPointedCell(AbstractCell cell) {
+		pointedCell = cell;
+	}
+	
+	public static void setPointedCell(int env, int i, int j) {
+		pointedCell = global.get(env).getCell(i, j);
+	}
+	
+	public static AbstractCell getPointedCell() {
+		return pointedCell;
 	}
 	
 	/***/
@@ -47,11 +60,11 @@ public class Simulator {
 	
 	/***/
 		
-	private LinkedList<AbstractAgent> agents;
-	private GlobalEnvironment global;
+	private static LinkedList<AbstractAgent> agents;
+	private static GlobalEnvironment global;
 	private GUI gui;
 	
-	private int nbStep = 0;
+	// private int nbStep = 0;
 	
 	/***/
 	

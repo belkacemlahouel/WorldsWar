@@ -403,16 +403,20 @@ public class GUI implements InterfaceObserver
 				AbstractEnvironment e = envList.get(envID);
 				int x = cellCoord[0], y = cellCoord[1];
 				
-				/* Get Gatherer and move him */
-				InterfaceGatherer gatherer = Simulator.getVirtualGatherer();
-				gatherer.move(e, new MyPoint2D(x, y));
-
-				/* Create resource */
+//				/* Get Gatherer and move him */
+//				InterfaceGatherer gatherer = Simulator.getVirtualGatherer();
+//				gatherer.move(e, new MyPoint2D(x, y));
+//
+//				/* Create resource */
+//				AbstractResource res = ResourceFactory.RESOURCE_INSTANCIATOR.get(defaultResourcesTypeAddedOnClick).getNew();
+//				res.add(defaultResourcesQtyAddedOnClick);
+//
+//				/* Add resource influence*/	
+//				e.getCell(x, y).addInfluence((AbstractInfluence) new PutInfluence(gatherer, res, 1));
+				
+				Simulator.setPointedCell(e.getCell(x, y));
 				AbstractResource res = ResourceFactory.RESOURCE_INSTANCIATOR.get(defaultResourcesTypeAddedOnClick).getNew();
-				res.add(defaultResourcesQtyAddedOnClick);
-
-				/* Add resource influence*/	
-				e.getCell(x, y).addInfluence((AbstractInfluence) new PutInfluence(gatherer, res, 1));
+				e.getCell(x, y).addInfluence(new PutInfluence(null, res, 5));
 			}
 		}
 	}

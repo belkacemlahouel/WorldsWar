@@ -1,8 +1,12 @@
 package env2.action;
 
+import java.util.Collection;
+
 import sim.Simulator;
 import env2.api.AbstractAction;
+import env2.api.AbstractCell;
 import env2.api.AbstractResource;
+import env2.api.AbstractWorldObject;
 import env2.api.InterfaceGatherer;
 
 /**
@@ -26,10 +30,27 @@ public class PutAction extends AbstractAction {
 	
 	public void doAction() {
 		if (actor == null) {
-			actor = Simulator.getVirtualGatherer();
-			// FIXME We assume the actor is already in the good position
+			// FIXME We assume the pointed cell is properly set before anything
+			AbstractCell cell = Simulator.getPointedCell();
+			AbstractResource tmpres = getResourceOfSameType(res, cell.getObjects());
+			if (tmpres == null)
+				cell.getObjects().add(res);
+			else
+				tmpres.add(qty);
+		} else actor.put(res, qty);
+	}
+	
+	/*
+	 * Taken from AntGathererBody...
+	 * FIXME
+	 */
+	private AbstractResource getResourceOfSameType(AbstractResource o, Collection<? extends AbstractWorldObject> container) {
+		for (AbstractWorldObject res : container) {
+			if (res.getType() == o.getType()) {
+				return ((AbstractResource) res);
+			}
 		}
 		
-		actor.put(res, qty);
+		return null;
 	}
 }
