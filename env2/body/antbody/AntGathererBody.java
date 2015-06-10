@@ -52,8 +52,8 @@ public final class AntGathererBody extends AntBody implements InterfaceGatherer 
 		AbstractResource res = getResourceOfSameType(o, getEnvironment().getCell(getPosition()).getObjects());
 		if (res == null)
 			getEnvironment().getCell(getPosition()).getObjects().add(o);
-		
-		res.add(qty);
+		else
+			res.add(qty);
 	}
 
 	@Override

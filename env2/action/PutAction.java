@@ -1,5 +1,6 @@
 package env2.action;
 
+import sim.Simulator;
 import env2.api.AbstractAction;
 import env2.api.AbstractResource;
 import env2.api.InterfaceGatherer;
@@ -24,6 +25,11 @@ public class PutAction extends AbstractAction {
 	}
 	
 	public void doAction() {
+		if (actor == null) {
+			actor = Simulator.getVirtualGatherer();
+			// FIXME We assume the actor is already in the good position
+		}
+		
 		actor.put(res, qty);
 	}
 }

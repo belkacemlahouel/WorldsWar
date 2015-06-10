@@ -12,6 +12,7 @@ import sim.agent.AbstractAgent;
 import env2.action.MotionAction;
 import env2.api.AbstractAction;
 import env2.api.AbstractCell;
+import env2.api.InterfaceGatherer;
 import env2.api.InterfaceMother;
 import env2.env.GlobalEnvironment;
 import env2.influences.CreateBabyInfluence;
@@ -25,6 +26,17 @@ public class Simulator {
 	
 	private final static String DEFAULT_FILENAME = "src/res/conf/environment.txt";
 	private static Simulator INSTANCE = null;
+	
+	/***/
+	
+	private static InterfaceGatherer virtualGatherer;
+	
+	public static InterfaceGatherer getVirtualGatherer() {
+		if (virtualGatherer == null)
+			virtualGatherer = (InterfaceGatherer) BodyFactory.BODY_INSTANCIATOR.get(WorldObjectType.ANTGATHERERBODY);
+		
+		return virtualGatherer;
+	}
 	
 	/***/
 	
