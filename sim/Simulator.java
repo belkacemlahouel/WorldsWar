@@ -118,10 +118,19 @@ public class Simulator {
 		for (AbstractAction action : actions) {
 			action.doAction();
 		}
+		
+		/***/
+		
+		for (AbstractAgent agt : agents) {
+			agt.getBody().applyLifeVariation(-agt.getBody().getLifeLoss());
+		}
 
+		/***/
+		
 		createBabies();
 	
-		/***/				
+		/***/
+		
 		gui.refresh();
 	}
 	

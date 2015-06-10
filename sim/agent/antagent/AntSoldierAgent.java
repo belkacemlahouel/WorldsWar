@@ -36,6 +36,11 @@ public final class AntSoldierAgent extends AntAgent {
 	public MotionInfluence live() {
 		AbstractBody body = this.getBody();
 		MotionInfluence influence = null;
+		
+		if (body.isDead()) {
+			System.out.println("I'm dead: " + body.getPosition());
+			return null;
+		}
 
 		if(body.isBaby(Time.getTime())){
 			
@@ -44,6 +49,9 @@ public final class AntSoldierAgent extends AntAgent {
 				
 				AbstractFrustrum frustrum = this.getBody().getCurrentFrustrum();
 				Iterator<Perception> objs = frustrum.objects();
+				
+				if (objs == null || !objs.hasNext())
+					return wander();
 				
 				boolean mission = false;
 				/* The goal could represent an enemy or a DANGERPHEROMONE */

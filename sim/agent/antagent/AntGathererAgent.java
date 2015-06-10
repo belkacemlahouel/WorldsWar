@@ -6,6 +6,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import math.MyPoint2D;
+import env2.type.EffectType;
 import env2.type.Time;
 import env2.type.WorldObjectType;
 import env2.api.AbstractBody;
@@ -23,7 +24,11 @@ import env2.influences.PickInfluence;
 
 /**
  * Implementation of an gatherer ant.
- * The priorities in its behavior are basically the followings : get food, follow food pheromones, avoid danger (other agent first, and pheromones in second), randomly search food.
+ * The priorities in its behavior are basically the following:
+ * 		get food,
+ * 		follow food pheromones,
+ * 		avoid danger (other agent first, and pheromones in second),
+ * 		randomly search food.
  */
 public final class AntGathererAgent extends AntAgent {
 
@@ -36,13 +41,23 @@ public final class AntGathererAgent extends AntAgent {
 	 */
 	public MotionInfluence live() {
 		MotionInfluence influence = null;
-
+		
+		System.out.println(body.isBaby(Time.getTime()) ? "I'm a baby" : "I'm not a baby");
+		
+		if (body.isDead()) {
+			System.out.println("I'm dead: " + body.getPosition());
+			return null;
+		}
+		
 		if(!body.isBaby(Time.getTime())){
 			//test if the cell is a portal
 			if(!body.getEnvironment().getCell(body.getPosition()).isPortal()){
 			
 				AbstractFrustrum frustrum = this.getBody().getCurrentFrustrum();
 				Iterator<Perception> objs = frustrum.objects();
+				
+				if (objs == null || !objs.hasNext())
+					return wander();
 	
 				/* The mission of the gatherer is to find food. If it finds one resource eatable, it directly goes to it. */
 				boolean mission = false;
@@ -55,19 +70,10 @@ public final class AntGathererAgent extends AntAgent {
 					/* obj is a resource */
 					if(WorldObjectType.canBeFood(obj.getType()))
 					{
-						switch(this.getBody().getEffect(obj)){
-							case GOOD:
-								goal = objWithPos;
-								mission = true;
-								dropPheromone(WorldObjectType.FOODPHEROMONE);
-								break;
-							case VERYGOOD:
-								goal = objWithPos;
-								mission = true;
-								dropPheromone(WorldObjectType.FOODPHEROMONE);
-								break;
-							default:
-								break;
+						if (body.getEffect(obj).value >= EffectType.GOOD.value) {
+							goal = objWithPos;
+							mission = true;
+							dropPheromone(WorldObjectType.FOODPHEROMONE);
 						}
 					}else if(WorldObjectType.isPheromone(obj.getType())){
 						/* obj is a pheromon*/
