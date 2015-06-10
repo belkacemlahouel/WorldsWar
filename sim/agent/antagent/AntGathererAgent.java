@@ -6,6 +6,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import math.MyPoint2D;
+import env2.type.EffectType;
 import env2.type.Time;
 import env2.type.WorldObjectType;
 import env2.api.AbstractBody;
@@ -17,13 +18,16 @@ import env2.body.antbody.AntGathererBody;
 import env2.env.PortalCell;
 import env2.frustrum.AbstractFrustrum;
 import env2.frustrum.Perception;
-import env2.influences.EatInfluence;
 import env2.influences.MotionInfluence;
 import env2.influences.PickInfluence;
 
 /**
  * Implementation of an gatherer ant.
- * The priorities in its behavior are basically the followings : get food, follow food pheromones, avoid danger (other agent first, and pheromones in second), randomly search food.
+ * The priorities in its behavior are basically the following:
+ * 		get food,
+ * 		follow food pheromones,
+ * 		avoid danger (other agent first, and pheromones in second),
+ * 		randomly search food.
  */
 public final class AntGathererAgent extends AntAgent {
 
@@ -36,13 +40,41 @@ public final class AntGathererAgent extends AntAgent {
 	 */
 	public MotionInfluence live() {
 		MotionInfluence influence = null;
-
+		
+		if (body.isBaby(Time.getTime())) {
+			System.out.println("I'm a baby :)");
+			return null;
+		}
+		
+		if (body.isDead()) {
+			System.out.println("I'm dead: " + body.getPosition());
+			return null;
+		}
+		
 		if(!body.isBaby(Time.getTime())){
 			//test if the cell is a portal
 			if(!body.getEnvironment().getCell(body.getPosition()).isPortal()){
-			
+				
+				
+				for (AbstractWorldObject o : body.getCell().getObjects()) {
+					if (WorldObjectType.canBeFood(o.getType())) {
+						if (body.getEffect(o).value >= EffectType.GOOD.value) {
+							PickInfluence pickInfluence = new PickInfluence((InterfaceGatherer) body,
+															body.getCell().getObjects(),
+															(AbstractResource) o,
+															((InterfaceGatherer) body).getStdTakeQty());
+							body.addInfluenceHere(pickInfluence);
+							return null;
+						}
+					}
+				}
+				
+				
 				AbstractFrustrum frustrum = this.getBody().getCurrentFrustrum();
 				Iterator<Perception> objs = frustrum.objects();
+				
+				if (objs == null || !objs.hasNext())
+					return wander();
 	
 				/* The mission of the gatherer is to find food. If it finds one resource eatable, it directly goes to it. */
 				boolean mission = false;
@@ -55,19 +87,10 @@ public final class AntGathererAgent extends AntAgent {
 					/* obj is a resource */
 					if(WorldObjectType.canBeFood(obj.getType()))
 					{
-						switch(this.getBody().getEffect(obj)){
-							case GOOD:
-								goal = objWithPos;
-								mission = true;
-								dropPheromone(WorldObjectType.FOODPHEROMONE);
-								break;
-							case VERYGOOD:
-								goal = objWithPos;
-								mission = true;
-								dropPheromone(WorldObjectType.FOODPHEROMONE);
-								break;
-							default:
-								break;
+						if (body.getEffect(obj).value >= EffectType.GOOD.value) {
+							goal = objWithPos;
+							mission = true;
+							dropPheromone(WorldObjectType.FOODPHEROMONE);
 						}
 					}else if(WorldObjectType.isPheromone(obj.getType())){
 						/* obj is a pheromon*/
@@ -102,16 +125,17 @@ public final class AntGathererAgent extends AntAgent {
 						}
 					}
 					
-					/* Behavior in function of the result of parsing the frustrum. */
-					if(goal == null){
-						influence = wander();
-					}
-					else if (goal.object.getType()==WorldObjectType.DANGERPHEROMONE){
-						influence = avoidDanger(goal);
-					}
-					else{
-						influence = reachGoal(goal);
-					}
+				}
+				
+				/* Behavior in function of the result of parsing the frustrum. */
+				if(goal == null){
+					influence = wander();
+				}
+				else if (goal.object.getType()==WorldObjectType.DANGERPHEROMONE){
+					influence = avoidDanger(goal);
+				}
+				else{
+					influence = reachGoal(goal);
 				}
 			}else{
 				//The cell is a portal
@@ -148,12 +172,13 @@ public final class AntGathererAgent extends AntAgent {
 			influence = null;
 			
 			InterfaceGatherer interfaceGath = (InterfaceGatherer)body;
-			Collection<AbstractResource> collectionResources = this.getResourceCollection();		
+			// Collection<AbstractResource> collectionResources = this.getResourceCollection(); // FIXME Check container
 			
-			EatInfluence eat = new EatInfluence(body, collectionResources, (AbstractResource) goal.object, interfaceGath.getStdTakeQty());
-			PickInfluence pick = new PickInfluence(interfaceGath, (AbstractResource) goal.object, interfaceGath.getStdTakeQty());
+			// EatInfluence eat = new EatInfluence(body, collectionResources, (AbstractResource) goal.object, interfaceGath.getStdTakeQty());
 			
-			body.addInfluenceHere(eat);
+			PickInfluence pick = new PickInfluence(interfaceGath, getBody().getEnvironment().getCell(getBody().getPosition()).getObjects(), (AbstractResource) goal.object, interfaceGath.getStdTakeQty());
+			
+			// body.addInfluence(eat);
 			body.addInfluenceHere(pick);
 		}else{
 			//move to goal
@@ -169,6 +194,9 @@ public final class AntGathererAgent extends AntAgent {
 	 * @param pheromone, the type of pheromone to drop.
 	 */
 	private void dropPheromone(WorldObjectType pheromone){
+		
+		// FIXME Drop influence of droping!
+		
 		if (pheromone == WorldObjectType.DANGERPHEROMONE){
 			this.getBody().producePheromoneDanger();
 		}else if (pheromone == WorldObjectType.FOODPHEROMONE){

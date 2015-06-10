@@ -18,7 +18,7 @@ public abstract class AbstractCell {
 	
 	/***/
 	
-	private List<AbstractInfluence> myinfluences;
+	private List<AbstractInfluence> myinfluences = new LinkedList<>();
 	
 	public List<AbstractAction> solveInfluences() {
 		List<AbstractAction> actions = new LinkedList<>();

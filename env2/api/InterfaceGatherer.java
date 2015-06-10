@@ -15,4 +15,6 @@ public interface InterfaceGatherer {
 	public abstract AbstractEnvironment getEnvironment();
 	
 	public abstract int getStrength();
+	
+	public abstract boolean move(AbstractEnvironment newenv, MyPoint2D newpos);
 }

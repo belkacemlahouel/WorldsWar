@@ -36,6 +36,11 @@ public final class AntNurseAgent extends AntAgent {
 		AbstractBody target = null;
 		MotionInfluence influence = null;
 		
+		if (body.isDead()) {
+			System.out.println("I'm dead: " + body.getPosition());
+			return null;
+		}
+		
 		if(!body.isBaby(Time.getTime())){
 			//test if the cell is a portal
 			if(!body.getEnvironment().getCell(body.getPosition()).isPortal()){
@@ -46,6 +51,9 @@ public final class AntNurseAgent extends AntAgent {
 				/* The mission of the nurse is to heal injured ants and to feed babies. */
 				boolean mission = false;
 				Perception goal = null;
+				
+				if (objs == null || !objs.hasNext())
+					return wander();
 				
 				while(objs.hasNext() && mission==false){
 					AbstractWorldObject obj = objs.next().object;
