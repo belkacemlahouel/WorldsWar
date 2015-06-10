@@ -41,7 +41,7 @@ public final class AntGathererAgent extends AntAgent {
 	public MotionInfluence live() {
 		MotionInfluence influence = null;
 		
-		if (body.isBaby(Time.getTime())) {
+		/*if (body.isBaby(Time.getTime())) {
 			System.out.println("I'm a baby :)");
 			return null;
 		}
@@ -49,6 +49,10 @@ public final class AntGathererAgent extends AntAgent {
 		if (body.isDead()) {
 			System.out.println("I'm dead: " + body.getPosition());
 			return null;
+		}*/
+		
+		if(body.getTransportCapacity()==0){
+			System.out.println("I'm full !");
 		}
 		
 		if(!body.isBaby(Time.getTime())){

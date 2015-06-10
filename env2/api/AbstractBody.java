@@ -233,6 +233,15 @@ public abstract class AbstractBody extends AbstractMobileWorldObject implements 
 		return getAge(TIME) < ADULT_AGE;
 	}
 	
+	/**
+	 * Check if a body carries its maximal weight.
+	 * @return boolean
+	 */
+	public boolean isFull(){
+		List<AbstractResource> resourcesCarried = this.getCargo();
+		return false;
+	}
+	
 	/* this method only takes care of moving the body to the arrival case
 	 * nothing else is done here
 	 * (influences solving/distance checking etc)
