@@ -18,6 +18,7 @@ public class PickInfluence extends AbstractInfluence {
 	public PickInfluence(InterfaceGatherer body, List<AbstractWorldObject> list, AbstractResource resource, int qty) {
 		picker = body;
 		picked = resource;
+		picked.incrNbPicker();
 		this.qty = qty;
 		this.container = list;
 	}

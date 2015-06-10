@@ -54,7 +54,22 @@ public final class AntGathererAgent extends AntAgent {
 		if(!body.isBaby(Time.getTime())){
 			//test if the cell is a portal
 			if(!body.getEnvironment().getCell(body.getPosition()).isPortal()){
-			
+				
+				
+				for (AbstractWorldObject o : body.getCell().getObjects()) {
+					if (WorldObjectType.canBeFood(o.getType())) {
+						if (body.getEffect(o).value >= EffectType.GOOD.value) {
+							PickInfluence pickInfluence = new PickInfluence((InterfaceGatherer) body,
+															body.getCell().getObjects(),
+															(AbstractResource) o,
+															((InterfaceGatherer) body).getStdTakeQty());
+							body.addInfluenceHere(pickInfluence);
+							return null;
+						}
+					}
+				}
+				
+				
 				AbstractFrustrum frustrum = this.getBody().getCurrentFrustrum();
 				Iterator<Perception> objs = frustrum.objects();
 				
