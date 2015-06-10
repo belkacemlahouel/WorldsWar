@@ -18,7 +18,7 @@ public abstract class AbstractCell {
 	
 	/***/
 	
-	private List<AbstractInfluence> myinfluences;
+	private List<AbstractInfluence> myinfluences = new LinkedList<AbstractInfluence>();
 	
 	public List<AbstractAction> solveInfluences() {
 		List<AbstractAction> actions = new LinkedList<>();
@@ -65,6 +65,7 @@ public abstract class AbstractCell {
 	
 	public void addInfluence(AbstractInfluence influence) {
 		myinfluences.add(influence);
+		System.out.println(myinfluences.size());
 	}
 	
 	/***/

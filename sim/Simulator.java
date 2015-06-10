@@ -39,6 +39,8 @@ public class Simulator {
 	private GlobalEnvironment global;
 	private GUI gui;
 	
+	private int nbStep = 0;
+	
 	/***/
 	
 	public static Simulator getInstance() {
@@ -121,8 +123,12 @@ public class Simulator {
 
 		createBabies();
 	
-		/***/				
-		gui.refresh();
+		/***/	
+		nbStep++;
+		if(nbStep%10 == 0)
+	 		System.out.println(agents.size());
+		
+		gui.refresh(true);
 	}
 	
 	/**

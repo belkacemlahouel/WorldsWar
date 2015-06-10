@@ -15,16 +15,16 @@ public class EnvironmentViewport extends JPanel
 	private static final long serialVersionUID = 706657421606903524L;
 
 	/* Constants */
-	private static final Color defaultCellBackgroundColor = Color.GREEN;	
-	private static final Color portalCellBackgroundColor = new Color(139,69,19);	
+	private static final Color defaultVPBackgroundColor = new Color(240, 255, 240);
+	
+	private static final Color defaultCellBackgroundColor = new Color(0, 255, 0);		
+	private static final Color portalCellBackgroundColor = new Color(193, 143, 0);	
 	
 	/* Attributes */ 
 	private int id;
 	
 	private Camera camera;
 	private AbstractEnvironment env;
-	
-	private Color cellBgColor;	
 	
 	/* Constructors */ 
 	public EnvironmentViewport(int viewportID, AbstractEnvironment e, Camera cam) {
@@ -49,12 +49,14 @@ public class EnvironmentViewport extends JPanel
 	/* Scaling functions */ 
 	
 	/* Drawing functions */ 
-	@Override
+	
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
-		this.setBackground(Color.PINK);
+		this.setBackground(defaultVPBackgroundColor);
 		
 		/* Get limits */
+		int minI = this.camera.getLogicX(this.id);
+		int minJ = this.camera.getLogicY(this.id);
 		int maxI = this.env.getWidth();
 		int maxJ = this.env.getHeight();
 
@@ -63,13 +65,12 @@ public class EnvironmentViewport extends JPanel
 		Rectangle cellRect;
 
 		/* Display */
-		/* TODO : remove grid for optimization later */
-		for(int i=0; i<maxI; i++)
+		for(int i=minI; i<maxI; i++)
 		{
-			for(int j=0; j<maxJ; j++)
+			for(int j=minJ; j<maxJ; j++)
 			{
-				tmpCell = this.env.getCell(i, j);
-
+				tmpCell = env.getCell(i, j);
+				
 				/* Compute cell relative position */
 				cellRect = this.camera.logical2relativePixel(id, i, j);
 				
@@ -82,7 +83,6 @@ public class EnvironmentViewport extends JPanel
 					g.setColor(portalCellBackgroundColor); 
 				else
 					g.setColor(defaultCellBackgroundColor); 
-					
 				g.fillRect(cellRect.x+1, cellRect.y+1, cellRect.width-1, cellRect.height-1);
 			}
 		}

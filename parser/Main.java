@@ -23,7 +23,7 @@ class Main {
 		
 		while(true)
 		{
-			GUI.getInstance().refresh();
+			GUI.getInstance().refresh(true);
 		}
 	}
 }

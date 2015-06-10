@@ -33,6 +33,7 @@ public class DataToGlobalEnvironment {
 			
 			final EnvironmentParser DATAS = new EnvironmentParser(filename);
 			DATAS.parseEnvDatas();
+			DATAS.print();
 			
 			final int NB_GROUNDS = DATAS.getNbGrounds();
 			
@@ -43,6 +44,7 @@ public class DataToGlobalEnvironment {
 			
 			for (PortalInfo info : DATAS.getPortalInfos()) {
 				GroundSquared e = (GroundSquared) grounds.get(info.env1);
+				
 				e.addPortal(info.posEnv1[0], info.posEnv1[1],
 						grounds.get(info.env2), info.posEnv2[0], info.posEnv2[1]);
 			}
@@ -54,9 +56,6 @@ public class DataToGlobalEnvironment {
 				
 				e = grounds.get(info.env);
 				e.getCell(info.posX, info.posY).addObject(res);
-
-				System.out.println(info.env + " -> " + info.posX + " : " + info.posY);
-				GUI.getInstance().createRessourceGUI(res, new MyPoint2D(info.posX, info.posY), e);
 			}
 			
 			GUI.getInstance().setEnvironmentList(grounds);

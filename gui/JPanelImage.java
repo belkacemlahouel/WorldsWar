@@ -10,10 +10,17 @@ public class JPanelImage extends JPanel {
 	
 	private BufferedImage img = null;
     
+	/* Constructor */
     public JPanelImage(BufferedImage image) {
 		this.img = image;
 	}
 
+    /* Setter */
+    public void setImage(BufferedImage newImage){
+    	this.img = newImage;
+    }
+
+    /* Core function */
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         

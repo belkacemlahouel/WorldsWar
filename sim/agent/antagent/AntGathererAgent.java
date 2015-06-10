@@ -14,6 +14,7 @@ import env2.api.AbstractResource;
 import env2.api.AbstractWorldObject;
 import env2.api.InterfaceGatherer;
 import env2.body.antbody.AntGathererBody;
+import env2.env.PortalCell;
 import env2.frustrum.AbstractFrustrum;
 import env2.frustrum.Perception;
 import env2.influences.EatInfluence;
@@ -36,78 +37,86 @@ public final class AntGathererAgent extends AntAgent {
 	public MotionInfluence live() {
 		MotionInfluence influence = null;
 
-		if(!this.getBody().isBaby(Time.getTime())){
-			AbstractFrustrum frustrum = this.getBody().getCurrentFrustrum();
-			Iterator<Perception> objs = frustrum.objects();
-
-			/* The mission of the gatherer is to find food. If it finds one resource eatable, it directly goes to it. */
-			boolean mission = false;
-			Perception goal = null;
+		if(!body.isBaby(Time.getTime())){
+			//test if the cell is a portal
+			if(!body.getEnvironment().getCell(body.getPosition()).isPortal()){
 			
-			while(objs.hasNext() && mission==false){
-				Perception objWithPos = objs.next();
-				AbstractWorldObject obj = objWithPos.object;
+				AbstractFrustrum frustrum = this.getBody().getCurrentFrustrum();
+				Iterator<Perception> objs = frustrum.objects();
+	
+				/* The mission of the gatherer is to find food. If it finds one resource eatable, it directly goes to it. */
+				boolean mission = false;
+				Perception goal = null;
 				
-				/* obj is a resource */
-				if(WorldObjectType.canBeFood(obj.getType()))
-				{
-					switch(this.getBody().getEffect(obj)){
-						case GOOD:
-							goal = objWithPos;
-							mission = true;
-							dropPheromone(WorldObjectType.FOODPHEROMONE);
-							break;
-						case VERYGOOD:
-							goal = objWithPos;
-							mission = true;
-							dropPheromone(WorldObjectType.FOODPHEROMONE);
-							break;
-						default:
-							break;
-					}
-				}else if(WorldObjectType.isPheromone(obj.getType())){
-					/* obj is a pheromon*/
-					switch(obj.getType()){
-						case DANGERPHEROMONE:
-							if(goal==null)
-							{
+				while(objs.hasNext() && mission==false){
+					Perception objWithPos = objs.next();
+					AbstractWorldObject obj = objWithPos.object;
+					
+					/* obj is a resource */
+					if(WorldObjectType.canBeFood(obj.getType()))
+					{
+						switch(this.getBody().getEffect(obj)){
+							case GOOD:
 								goal = objWithPos;
-							}
-							break;
-						case FOODPHEROMONE:
-							if(goal==null)
-							{
+								mission = true;
+								dropPheromone(WorldObjectType.FOODPHEROMONE);
+								break;
+							case VERYGOOD:
 								goal = objWithPos;
-							}
-							else if(goal.object.getType() == WorldObjectType.DANGERPHEROMONE){
+								mission = true;
+								dropPheromone(WorldObjectType.FOODPHEROMONE);
+								break;
+							default:
+								break;
+						}
+					}else if(WorldObjectType.isPheromone(obj.getType())){
+						/* obj is a pheromon*/
+						switch(obj.getType()){
+							case DANGERPHEROMONE:
+								if(goal==null)
+								{
+									goal = objWithPos;
+								}
+								break;
+							case FOODPHEROMONE:
+								if(goal==null)
+								{
+									goal = objWithPos;
+								}
+								else if(goal.object.getType() == WorldObjectType.DANGERPHEROMONE){
+									goal = objWithPos;
+								}
+								break;
+							default:
+								break;
+						}
+					}else if(WorldObjectType.isAntBody(obj.getType()) || WorldObjectType.isTermiteBody(obj.getType())){
+						if(!((AbstractBody) obj).isFriend(this.getBody())){
+							if(goal == null){
 								goal = objWithPos;
+								dropPheromone(WorldObjectType.DANGERPHEROMONE);
+							}else if (!WorldObjectType.canBeFood(goal.object.getType()) || goal.object.getType() != WorldObjectType.FOODPHEROMONE){
+								goal = objWithPos;
+								dropPheromone(WorldObjectType.DANGERPHEROMONE);
 							}
-							break;
-						default:
-							break;
-					}
-				}else if(WorldObjectType.isAntBody(obj.getType()) || WorldObjectType.isTermiteBody(obj.getType())){
-					if(!((AbstractBody) obj).isFriend(this.getBody())){
-						if(goal == null){
-							goal = objWithPos;
-							dropPheromone(WorldObjectType.DANGERPHEROMONE);
-						}else if (!WorldObjectType.canBeFood(goal.object.getType()) || goal.object.getType() != WorldObjectType.FOODPHEROMONE){
-							goal = objWithPos;
-							dropPheromone(WorldObjectType.DANGERPHEROMONE);
 						}
 					}
+					
+					/* Behavior in function of the result of parsing the frustrum. */
+					if(goal == null){
+						influence = wander();
+					}
+					else if (goal.object.getType()==WorldObjectType.DANGERPHEROMONE){
+						influence = avoidDanger(goal);
+					}
+					else{
+						influence = reachGoal(goal);
+					}
 				}
-				
-				/* Behavior in function of the result of parsing the frustrum. */
-				if(goal == null){
-					influence = wander();
-				}
-				else if (goal.object.getType()==WorldObjectType.DANGERPHEROMONE){
-					influence = avoidDanger(goal);
-				}
-				else{
-					influence = reachGoal(goal);
-				}
+			}else{
+				//The cell is a portal
+				PortalCell cell = (PortalCell) body.getEnvironment().getCell(body.getPosition());
+				influence = new MotionInfluence(body, cell.getArrivalPosition(), cell.getArrivalEnvironment());
 			}
 		}
 		
