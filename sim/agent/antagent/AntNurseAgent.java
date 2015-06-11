@@ -44,7 +44,8 @@ public final class AntNurseAgent extends AntAgent {
 		if(!body.isBaby(Time.getTime())){
 			//test if the cell is a portal
 			if(!body.getEnvironment().getCell(body.getPosition()).isPortal()){
-
+				
+				body.buildNewFrustrum();
 				AbstractFrustrum frustrum = this.getBody().getCurrentFrustrum();
 				Iterator<Perception> objs = frustrum.objects();
 	

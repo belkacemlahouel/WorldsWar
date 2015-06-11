@@ -78,7 +78,7 @@ public final class AntGathererAgent extends AntAgent {
 					}
 				}
 				
-				
+				body.buildNewFrustrum();
 				AbstractFrustrum frustrum = this.getBody().getCurrentFrustrum();
 				Iterator<Perception> objs = frustrum.objects();
 				
@@ -220,8 +220,10 @@ public final class AntGathererAgent extends AntAgent {
 	private MotionInfluence returnCave(){
 		MotionInfluence influence = null;
 		
-		AbstractFrustrum frustrum = this.getBody().getCurrentFrustrum();
+		body.buildNewFrustrum();
+		AbstractFrustrum frustrum = body.getCurrentFrustrum();
 		Iterator<Perception> objs = frustrum.objects();
+		System.out.println(objs.hasNext());
 		
 		MyPoint2D goal = body.getPosition();
 		int nbAnts = 0;
@@ -231,7 +233,7 @@ public final class AntGathererAgent extends AntAgent {
 		while(objs.hasNext()){
 			Perception objectDetected = objs.next();
 			WorldObjectType type = objectDetected.object.getType();
-			
+			System.out.println(type);
 			if(WorldObjectType.isAntBody(type)){
 				if(((AbstractBody) objectDetected.object).isFriend(body)){
 					
@@ -246,14 +248,13 @@ public final class AntGathererAgent extends AntAgent {
 		}
 		
 		/* Search for the cell that contains the more ants from its tribe. */
-		//nbAnts = Collections.max(cells.values());
-		
-		Iterator it = cells.entrySet().iterator();
-		System.out.println(it.hasNext());
-		while (it.hasNext()) {
-	        HashMap.Entry pair = (HashMap.Entry)it.next();
-	        System.out.println(pair.getKey() + " = " + pair.getValue());
-	    }
+		//System.out.println("Return cave : ");
+		for (HashMap.Entry<MyPoint2D, Integer> entry : cells.entrySet())
+		{
+		    System.out.println(entry.getKey() + "/" + entry.getValue());
+		}
+
+
 		
 		return influence;
 	}
