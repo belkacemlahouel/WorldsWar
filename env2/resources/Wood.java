@@ -10,6 +10,7 @@ public final class Wood extends CommonResource {
 
 	@Override
 	public Wood pick(int quantity) {
+		this.add(-quantity);
 		return new Wood(quantity);
 	}
 

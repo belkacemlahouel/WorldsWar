@@ -10,6 +10,7 @@ public final class Leaf extends CommonResource {
 
 	@Override
 	public Leaf pick(int quantity) {
+		this.add(-quantity);
 		return new Leaf(quantity);
 	}
 
