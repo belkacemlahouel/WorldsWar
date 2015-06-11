@@ -49,6 +49,7 @@ public final class AntGathererAgent extends AntAgent {
 			return null;
 		}*/
 		
+		
 		if (body.isDead()) {
 			System.out.println("I'm dead: " + body.getPosition());
 			return null;
