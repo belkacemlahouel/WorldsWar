@@ -223,7 +223,6 @@ public final class AntGathererAgent extends AntAgent {
 		body.buildNewFrustrum();
 		AbstractFrustrum frustrum = body.getCurrentFrustrum();
 		Iterator<Perception> objs = frustrum.objects();
-		System.out.println(objs.hasNext());
 		
 		MyPoint2D goal = body.getPosition();
 		int nbAnts = 0;
@@ -233,7 +232,7 @@ public final class AntGathererAgent extends AntAgent {
 		while(objs.hasNext()){
 			Perception objectDetected = objs.next();
 			WorldObjectType type = objectDetected.object.getType();
-			System.out.println(type);
+			System.out.println(type + " in " + objectDetected.position);
 			if(WorldObjectType.isAntBody(type)){
 				if(((AbstractBody) objectDetected.object).isFriend(body)){
 					
@@ -254,7 +253,7 @@ public final class AntGathererAgent extends AntAgent {
 		    System.out.println(entry.getKey() + "/" + entry.getValue());
 		}
 
-
+		System.out.println("End cave loop");
 		
 		return influence;
 	}
