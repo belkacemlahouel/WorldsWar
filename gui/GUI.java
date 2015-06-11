@@ -414,9 +414,13 @@ public class GUI implements InterfaceObserver
 //				/* Add resource influence*/	
 //				e.getCell(x, y).addInfluence((AbstractInfluence) new PutInfluence(gatherer, res, 1));
 				
-				Simulator.setPointedCell(e.getCell(x, y));
+				AbstractCell cell = e.getCell(x, y);
+				
+				Simulator.setPointedCell(cell);
 				AbstractResource res = ResourceFactory.RESOURCE_INSTANCIATOR.get(defaultResourcesTypeAddedOnClick).getNew();
-				e.getCell(x, y).addInfluence(new PutInfluence(null, res, 5));
+				cell.addInfluence(new PutInfluence(null, res, defaultResourcesQtyAddedOnClick));
+				
+				Simulator.getInstance().addInfluencedByGUICell(cell);
 			}
 		}
 	}
@@ -427,7 +431,7 @@ public class GUI implements InterfaceObserver
 		
 	/* Repaint function */
  	public void refresh(boolean lookForResources)
-	{
+	{ 		
  		if(lookForResources){
  	 		this.addNewResources(); 			
  			this.worldObjectPanel.revalidate();

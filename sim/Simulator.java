@@ -51,12 +51,22 @@ public class Simulator {
 		return pointedCell;
 	}
 	
+	public void addInfluencedByGUICell(AbstractCell c)
+	{		
+		if(c != null){
+			synchronized (influencedByGUICells) {
+				this.influencedByGUICells.add(c);	
+			}
+		}
+	}
+	
 	/***/
 	
 	private LinkedList<MotionInfluence> motionInfluences;
 	private LinkedList<AbstractAction> actions;
 	private HashMap<InterfaceMother, List<CreateBabyInfluence>> mothers;
 	private LinkedList<AbstractCell> influencedCells;
+	private LinkedList<AbstractCell> influencedByGUICells;
 	
 	/***/
 		
@@ -102,6 +112,7 @@ public class Simulator {
 		motionInfluences = new LinkedList<>();
 		actions = new LinkedList<>();
 		influencedCells = new LinkedList<>();
+		influencedByGUICells = new LinkedList<>();
 	}
 	
 	/***/
@@ -126,6 +137,11 @@ public class Simulator {
 			
 			// TODO Check that all agents act then move <=> They act in this current cell
 			influencedCells.add(agt.getBody().getEnvironment().getCell(agt.getBody().getPosition()));
+		}
+		
+		synchronized (influencedByGUICells) {
+			this.influencedCells.addAll(this.influencedByGUICells);
+			this.influencedByGUICells.clear();			
 		}
 		
 		/***/

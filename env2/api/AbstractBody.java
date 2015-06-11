@@ -154,7 +154,6 @@ public abstract class AbstractBody extends AbstractMobileWorldObject implements 
 	}
 	
 	public void applyLifeVariation(int var) {
-		System.out.println("Var");
 		mylife += var;
 		if (mylife > MAX_LIFE)
 			mylife = var;

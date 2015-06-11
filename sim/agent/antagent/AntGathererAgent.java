@@ -42,12 +42,12 @@ public final class AntGathererAgent extends AntAgent {
 		MotionInfluence influence = null;
 		
 		if (body.isBaby(Time.getTime())) {
-			System.out.println("I'm a baby :)");
+			//System.out.println("I'm a baby :)");
 			return null;
 		}
 		
 		if (body.isDead()) {
-			System.out.println("I'm dead: " + body.getPosition());
+			//System.out.println("I'm dead: " + body.getPosition());
 			return null;
 		}
 		
