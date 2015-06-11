@@ -12,4 +12,8 @@ public class Perception {
 		this.object = object;
 		this.position = position;
 	}
+	
+	public String toString() {
+		return "" + object + " at " + position;
+	}
 }

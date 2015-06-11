@@ -1,13 +1,11 @@
 package sim.agent.antagent;
 
 import java.util.Collection;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
-import parser.ConfParameters;
 import math.MyPoint2D;
 import env2.type.EffectType;
 import env2.type.Time;
@@ -81,8 +79,13 @@ public final class AntGathererAgent extends AntAgent {
 				}
 				
 				body.buildNewFrustrum();
-				AbstractFrustrum frustrum = this.getBody().getCurrentFrustrum();
+				AbstractFrustrum frustrum = body.getCurrentFrustrum();
 				Iterator<Perception> objs = frustrum.objects();
+				
+//				System.out.println("***" + body.getPosition() + " " + body.getType());
+//				while (objs.hasNext()) {
+//					System.out.println("\t" + objs.next());
+//				}
 				
 				if (objs == null || !objs.hasNext())
 					return wander();
@@ -249,12 +252,12 @@ public final class AntGathererAgent extends AntAgent {
 		
 		/* Search for the cell that contains the more ants from its tribe. */
 		//System.out.println("Return cave : ");
-		for (HashMap.Entry<MyPoint2D, Integer> entry : cells.entrySet())
-		{
-		    System.out.println(entry.getKey() + "/" + entry.getValue());
-		}
-
-		System.out.println("End cave loop");
+//		for (HashMap.Entry<MyPoint2D, Integer> entry : cells.entrySet())
+//		{
+//		    System.out.println(entry.getKey() + "/" + entry.getValue());
+//		}
+//
+//		System.out.println("End cave loop");
 		
 		return influence;
 	}

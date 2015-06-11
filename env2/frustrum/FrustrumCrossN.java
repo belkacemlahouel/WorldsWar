@@ -61,7 +61,11 @@ public class FrustrumCrossN extends AbstractFrustrum {
 		/***/
 		
 		public boolean hasNext() {
-			return !next.isEmpty() && x <= ex && y <= ey;
+			while (next.isEmpty() && x <= ex && y <= ey) {
+				searchNexts();
+			}
+			
+			return !next.isEmpty() || (next.isEmpty() && x <= ex && y <= ey);
 		}
 		
 		private void searchNexts() {
