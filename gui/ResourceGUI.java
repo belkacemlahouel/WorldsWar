@@ -21,7 +21,6 @@ import env2.api.AbstractEnvironment;
 import env2.api.AbstractResource;
 
 
-
 public class ResourceGUI {
 	public JPanelImage container;
 	public AbstractResource resource;
@@ -34,11 +33,25 @@ public class ResourceGUI {
 	private final float startX;
 	private final float startY;
 	
+	/* Images */
+	private static BufferedImage ROCK_IMAGE;
+	private static BufferedImage WOOD_IMAGE;
+	private static BufferedImage LEAF_IMAGE;
+	private static BufferedImage MEAT_IMAGE;
+	private static BufferedImage SUGAR_IMAGE;
+	private static BufferedImage FRUIT_IMAGE;
+	private static BufferedImage POISON_IMAGE;
+	private static BufferedImage GAS_IMAGE;
+	
+	private static boolean hasBeenLoaded = false;
+	
 	/*
 	 * Constructor of the class AgentBodyGUI
 	 */
 	public ResourceGUI(AbstractResource newResource, GUI gui, MyPoint2D position, AbstractEnvironment envContainer)
 	{
+		this.loadAllImages();
+		
 		this.resource = newResource;
 		this.gui = gui;
 		this.coordinates = position;
@@ -58,28 +71,28 @@ public class ResourceGUI {
 		switch(resource.getType())
 		{
 			case ROCK :
-				resourceRepr = loadImage("src/res/gui/stone.png");
+				resourceRepr = ROCK_IMAGE;
 				break;
 			case WOOD:
-				resourceRepr = loadImage("src/res/gui/wood.png");
+				resourceRepr = WOOD_IMAGE;
 				break;
 			case LEAF :
-				resourceRepr = loadImage("src/res/gui/leaf.png");
+				resourceRepr = LEAF_IMAGE;
 				break;
 			case MEAT:
-				resourceRepr = loadImage("src/res/gui/meat.png");
+				resourceRepr = MEAT_IMAGE;
 				break;
 			case SUGAR :
-				resourceRepr = loadImage("src/res/gui/sugar.png");
+				resourceRepr = SUGAR_IMAGE;
 				break;
 			case FRUIT:
-				resourceRepr = loadImage("src/res/gui/fruit.png");
+				resourceRepr = FRUIT_IMAGE;
 				break;
 			case POISON :
-				resourceRepr = loadImage("src/res/gui/poison.png");
+				resourceRepr = POISON_IMAGE;
 				break;
 			case GAS:
-				resourceRepr = loadImage("src/res/gui/gas.png");
+				resourceRepr = GAS_IMAGE;
 				break;
 			default :
 				break;
@@ -192,5 +205,21 @@ public class ResourceGUI {
 		}
 		
 		return img;
+	}
+	private void loadAllImages()
+	{
+		if(!hasBeenLoaded)
+		{
+			ROCK_IMAGE = loadImage("src/res/gui/stone.png");
+			WOOD_IMAGE = loadImage("src/res/gui/wood.png");
+			LEAF_IMAGE = loadImage("src/res/gui/leaf.png");
+			MEAT_IMAGE = loadImage("src/res/gui/meat.png");
+			SUGAR_IMAGE = loadImage("src/res/gui/sugar.png");
+			FRUIT_IMAGE = loadImage("src/res/gui/fruit.png");
+			POISON_IMAGE = loadImage("src/res/gui/poison.png");
+			GAS_IMAGE = loadImage("src/res/gui/gas.png");
+			
+			hasBeenLoaded = true;
+		}
 	}
 }

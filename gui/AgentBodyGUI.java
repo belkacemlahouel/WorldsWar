@@ -31,11 +31,21 @@ public class AgentBodyGUI {
 	private final float startX;
 	private final float startY;
 	
+	/* Images */
+	private static BufferedImage ANT_IMAGE;
+	private static BufferedImage ANT_DEAD_IMAGE;
+	private static BufferedImage SPIDER_IMAGE;
+	private static BufferedImage TERMITE_IMAGE;
+	
+	private static boolean hasBeenLoaded = false;
+	
 	/*
 	 * Constructor of the class AgentBodyGUI
 	 */
 	public AgentBodyGUI(String species, GUI gui, AbstractBody body)
 	{
+		this.loadAllImages();
+		
 		this.gui = gui;
 		
 		agentBody = body;
@@ -49,19 +59,19 @@ public class AgentBodyGUI {
 		
 		if(species.equalsIgnoreCase("Ant"))
 		{
-			bodyRepr = loadImage("src/res/gui/ant.png");
+			bodyRepr = ANT_IMAGE;
 		}
 		else if(species.equalsIgnoreCase("Termine"))
 		{
-			bodyRepr = loadImage("src/res/gui/termite.png");
+			bodyRepr = TERMITE_IMAGE;
 		}
 		else if(species.equalsIgnoreCase("Spider"))
 		{
-			bodyRepr = loadImage("src/res/gui/spider.png");
+			bodyRepr = SPIDER_IMAGE;
 		}
-		else
-			bodyRepr = loadImage("src/res/gui/ant.png");
-
+		else{
+			bodyRepr = ANT_IMAGE;
+		}
 		container = new JPanelImage(bodyRepr);
 		
 		/* Use the camera to put the agent body gui at the right place */
@@ -144,8 +154,7 @@ public class AgentBodyGUI {
 		}
 		
 		if(agentBody.isDead()){
-			bodyRepr = loadImage("src/res/gui/dead_ant.png");
-			container.setImage(bodyRepr);
+			container.setImage(ANT_DEAD_IMAGE);
 		}
 		
 		//move the panel of the body's representation
@@ -162,5 +171,17 @@ public class AgentBodyGUI {
 		}
 		
 		return img;
+	}
+	private void loadAllImages()
+	{
+		if(!hasBeenLoaded)
+		{
+			ANT_IMAGE = loadImage("src/res/gui/ant.png");
+			ANT_DEAD_IMAGE = loadImage("src/res/gui/dead_ant.png");
+			SPIDER_IMAGE = loadImage("src/res/gui/spider.png");
+			TERMITE_IMAGE = loadImage("src/res/gui/termite.png");
+			
+			hasBeenLoaded = true;
+		}
 	}
 }

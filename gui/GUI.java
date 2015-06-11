@@ -11,19 +11,31 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SpringLayout;
 
+import sim.Simulator;
 import math.MyMath;
 import math.MyPoint2D;
 import env2.api.AbstractBody;
+import env2.api.AbstractCell;
 import env2.api.AbstractEnvironment;
+import env2.api.AbstractInfluence;
 import env2.api.AbstractResource;
+import env2.api.AbstractWorldObject;
+import env2.api.InterfaceGatherer;
 import env2.api.InterfaceObservable;
 import env2.api.InterfaceObserver;
+import env2.influences.PutInfluence;
+import env2.instanciator.factory.ResourceFactory;
+import env2.type.InfluenceType;
 import env2.type.WorldObjectType;
 import gui.window.EnvironmentViewport;
 import gui.window.SimpleFrame;
 
 public class GUI implements InterfaceObserver
 {
+	/* Constants */
+	private final int defaultResourcesQtyAddedOnClick = 10;
+	private final WorldObjectType defaultResourcesTypeAddedOnClick = WorldObjectType.FRUIT;
+	
 	/* Attributes */
 	private SimpleFrame frame;
 	
@@ -38,9 +50,12 @@ public class GUI implements InterfaceObserver
 	private SpringLayout layout = null;
 	
 	private List<AgentBodyGUI> agentBodyList = new LinkedList<AgentBodyGUI>();
-	private List<ResourceGUI> resourcesList = new LinkedList<ResourceGUI>();
+	
+	private List<AbstractResource> resourcesList = new LinkedList<AbstractResource>();
+	private List<ResourceGUI> resourcesGUIList = new LinkedList<ResourceGUI>();
 	
 	private boolean hasEnvBeenInit = false;
+	private boolean hasViewportBeenModified = false;
 
 	/* Constructors */
 	private GUI()
@@ -73,32 +88,35 @@ public class GUI implements InterfaceObserver
 		this.setEnvironmentList(envList, 0);	
 	}	
 	public void setEnvironmentList(List<AbstractEnvironment> envList, int mainViewportID) {		
-		/* Attribute affectation */
-		this.envList = envList;	
-		this.vpList = new ArrayList<EnvironmentViewport>();
-
-		int envCount = envList.size();		
-		
-		/* Set the panels */		
-		this.initPanels();		
-		this.camera.setMainViewportID(MyMath.clamp(mainViewportID, 0, envCount));
-		
-		/* Create a viewport for each env and put it in the env panel */
-		EnvironmentViewport tmpVP;		
-		for(int i=0; i<envCount; i++)
+		if(!hasEnvBeenInit)
 		{
-			tmpVP = new EnvironmentViewport(i, this.envList.get(i), this.camera);
+			/* Attribute affectation */
+			this.envList = envList;	
+			this.vpList = new ArrayList<EnvironmentViewport>();
+	
+			int envCount = envList.size();		
 			
-			this.camera.addViewport(tmpVP, 0, 0);
-
-			this.vpList.add(tmpVP);			
-			this.mapPanel.add(tmpVP);
-			tmpVP.revalidate();
+			/* Set the panels */		
+			this.initPanels();		
+			this.camera.setMainViewportID(MyMath.clamp(mainViewportID, 0, envCount));
+			
+			/* Create a viewport for each env and put it in the env panel */
+			EnvironmentViewport tmpVP;		
+			for(int i=0; i<envCount; i++)
+			{
+				tmpVP = new EnvironmentViewport(i, this.envList.get(i), this.camera);
+				
+				this.camera.addViewport(tmpVP, 0, 0);
+	
+				this.vpList.add(tmpVP);			
+				this.mapPanel.add(tmpVP);
+				tmpVP.revalidate();
+			}
+			
+			/* Set the layout */
+			hasEnvBeenInit = true;
+			this.mainPanelLayoutSetting();
 		}
-		
-		/* Set the layout */
-		hasEnvBeenInit = true;
-		this.mainPanelLayoutSetting();
 	}
 	
 	private void initPanels()
@@ -211,12 +229,16 @@ public class GUI implements InterfaceObserver
 					}
 				}
 			}
-			this.refresh();			
+			hasViewportBeenModified = true;
+			this.refresh(false);			
 		}
+	}
+	public void refreshLayout(){
+		this.mainPanelLayoutSetting();
 	}	
 
 	/* Agents functions */
-	public void createAgentBody(AbstractBody a)
+	public void createAgentBodyGUI(AbstractBody a)
 	{
 		if(a != null)
 		{
@@ -224,13 +246,15 @@ public class GUI implements InterfaceObserver
 			
 			if(type != null)
 			{
-				if(WorldObjectType.isAntBody(type))					createAgentBody("Ant", a);
-				else if(WorldObjectType.isTermiteBody(type))		createAgentBody("Termite", a);
-				else if(WorldObjectType.isSpiderBody(type))			createAgentBody("Spider", a);
+				if(type.equals(WorldObjectType.ANTMOTHERBODY))		System.out.println("Mother spotted");
+					
+				if(WorldObjectType.isAntBody(type))					createAgentBodyGUI("Ant", a);
+				else if(WorldObjectType.isTermiteBody(type))		createAgentBodyGUI("Termite", a);
+				else if(WorldObjectType.isSpiderBody(type))			createAgentBodyGUI("Spider", a);
 			}
 		}
 	}
-	public void createAgentBody(String species, AbstractBody a)
+	public void createAgentBodyGUI(String species, AbstractBody a)
 	{
 		if(!species.isEmpty() && species != null && a != null)
 		{
@@ -241,10 +265,11 @@ public class GUI implements InterfaceObserver
 			this.worldObjectPanel.add(agentBody.container);
 		}
 	}
-	public void deleteAgentBody(AbstractBody a)
+	public void deleteAgentBodyGUI(AbstractBody a)
 	{
 		if(a != null)
 		{
+			System.out.println("DELETE");
 			AgentBodyGUI tmpBody;
 			Iterator<AgentBodyGUI> agentBodyIterator = this.agentBodyList.iterator();
 			
@@ -264,7 +289,7 @@ public class GUI implements InterfaceObserver
 		}
 	}
 	
-	public void createRessourceGUI(AbstractResource r, MyPoint2D pos, AbstractEnvironment env)
+	public void createResourceGUI(AbstractResource r, MyPoint2D pos, AbstractEnvironment env)
 	{
 		if(r != null)
 		{
@@ -276,70 +301,160 @@ public class GUI implements InterfaceObserver
 					ResourceGUI resourceGUI = new ResourceGUI(r, this, pos, env);
 					resourceGUI.move();
 
-					this.resourcesList.add(resourceGUI);
+					this.resourcesList.add(r);
+					this.resourcesGUIList.add(resourceGUI);
 					this.worldObjectPanel.add(resourceGUI.container);
 				}
 			}
 		}
 	}
-	public void deleteRessourceGUI(AbstractResource a)
+	public void deleteResourceGUI(AbstractResource a)
 	{
 		if(a != null)
 		{
 			ResourceGUI tmpResource;
-			Iterator<ResourceGUI> resourceIterator = this.resourcesList.iterator();
+			Iterator<ResourceGUI> resourceIterator = this.resourcesGUIList.iterator();
 			
 			boolean resourceFound = false;
 			
-			while(resourceIterator.hasNext() && !resourceFound)
+			if(this.resourcesList.remove(a))
 			{
-				tmpResource = resourceIterator.next();
-				if(tmpResource.resource.equals(a))
-				{					
-					this.worldObjectPanel.remove(tmpResource.container);
-					
-					resourceIterator.remove();	
-					resourceFound = true;
+				while(resourceIterator.hasNext() && !resourceFound)
+				{
+					tmpResource = resourceIterator.next();
+					if(tmpResource.resource.equals(a))
+					{					
+						this.worldObjectPanel.remove(tmpResource.container);
+						
+						resourceIterator.remove();	
+						resourceFound = true;
+					}
 				}
 			}
 		}
 	}
+	
+	private void cleanAllResources(){
+		/*for(ResourceGUI r : resourcesGUIList)
+			worldObjectPanel.remove(r.container);*/
 		
+		worldObjectPanel.removeAll();
+		agentBodyList.clear();
+		
+		resourcesGUIList.clear();
+		resourcesList.clear();		
+	}
+	private void addNewResources(){
+		AbstractCell c;
+		WorldObjectType t;
+		int i, j, width, height;
+		
+		this.cleanAllResources();
+		
+		for(AbstractEnvironment e : this.envList)
+		{
+			width = e.getWidth();
+			height = e.getHeight();
+			
+			for(i=0; i<width; i++)
+			{
+	 			for(j=0; j<height; j++)
+	 			{
+	 				c = e.getCell(i, j);
+	 				
+	 				for (AbstractWorldObject o : c.getObjects()) 
+	 				{
+	 					t = o.getType();
+						if(!WorldObjectType.isBody(t))
+							this.createResourceGUI((AbstractResource) o, new MyPoint2D(i, j), e);
+						else
+							this.createAgentBodyGUI((AbstractBody) o);
+					}
+	 			}
+			}
+		}
+	}
+	
 	/* Controller functions */
 	private void initController()
 	{
 		/* Add a GUIController : zoom + translate */
 		this.controller = new GUIController(this);
+		frame.addComponentListener(this.controller);	
+		worldObjectPanel.addMouseListener(this.controller);	
 		frame.addKeyListener(this.controller);		
-		frame.addComponentListener(this.controller);		
 	}
 	
 	public void translateCamera(int dx, int dy){
-		/*this.vpList.get(currentVP).translate(dx, dy);
-		this.repaint();*/
+		this.camera.translateMainViewport(dx, dy);
 	}
 	public void zoomCamera(int dz){
 		/*this.vpList.get(currentVP).zoom(dz);
 		this.repaint();*/
 	}
 	
-	public void refreshLayout(){
-		this.mainPanelLayoutSetting();
+	public void addResouceOnPointer(int pointerX, int pointerY){
+		int envID = this.camera.findEnvPointed(pointerX, pointerY);
+		if(envID != -1)
+		{
+			int cellCoord[] = this.camera.findCellPointed(envID, pointerX, pointerY);			
+			if(cellCoord[0] != -1 && cellCoord[1] != -1)
+			{
+				AbstractEnvironment e = envList.get(envID);
+				int x = cellCoord[0], y = cellCoord[1];
+				
+//				/* Get Gatherer and move him */
+//				InterfaceGatherer gatherer = Simulator.getVirtualGatherer();
+//				gatherer.move(e, new MyPoint2D(x, y));
+//
+//				/* Create resource */
+//				AbstractResource res = ResourceFactory.RESOURCE_INSTANCIATOR.get(defaultResourcesTypeAddedOnClick).getNew();
+//				res.add(defaultResourcesQtyAddedOnClick);
+//
+//				/* Add resource influence*/	
+//				e.getCell(x, y).addInfluence((AbstractInfluence) new PutInfluence(gatherer, res, 1));
+				
+				AbstractCell cell = e.getCell(x, y);
+				
+				Simulator.setPointedCell(cell);
+				AbstractResource res = ResourceFactory.RESOURCE_INSTANCIATOR.get(defaultResourcesTypeAddedOnClick).getNew();
+				cell.addInfluence(new PutInfluence(null, res, defaultResourcesQtyAddedOnClick));
+				
+				Simulator.getInstance().addInfluencedByGUICell(cell);
+			}
+		}
 	}
-
+	public void setMainViewportID(int mainViewportID) {
+		if(this.camera.setMainViewportID(mainViewportID))
+			this.refreshLayout();
+	}
+		
 	/* Repaint function */
-	public void refresh()
-	{
-		this.moveAllObjects();	
-		this.worldObjectPanel.revalidate();
+ 	public void refresh(boolean lookForResources)
+	{ 		
+ 		if(lookForResources){
+ 	 		this.addNewResources(); 			
+ 			this.worldObjectPanel.revalidate();
+ 		}
+ 		
+ 		if(hasViewportBeenModified)
+ 		{
+ 			this.moveAllObjects();
+ 			this.worldObjectPanel.repaint(); 
+ 			hasViewportBeenModified = false;
+ 		}
 		this.worldObjectPanel.repaint();
 	}
 	private void moveAllObjects()
 	{
 		for(AgentBodyGUI a : agentBodyList)
-			a.move();
-		for(ResourceGUI r : resourcesList)
-			r.move();
+			a.move();		
+		
+		if(hasViewportBeenModified)	
+		{
+			for(ResourceGUI r : resourcesGUIList)
+				r.move();		
+		}
 	}
 	
 	/* Observer interface function */
@@ -350,13 +465,13 @@ public class GUI implements InterfaceObserver
     		/* Agent created */
     		if(eventCode == 10)
     		{
-	    		createAgentBody((AbstractBody) caller);
+	    		createAgentBodyGUI((AbstractBody) caller);
     		}
     		
     		/* Undertaker wants to take his due */
     		if(eventCode == 20)
     		{
-	    		deleteAgentBody((AbstractBody) caller);
+	    		deleteAgentBodyGUI((AbstractBody) caller);
     		}
     	}
     }

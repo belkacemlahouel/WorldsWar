@@ -12,9 +12,7 @@ import sim.agent.AbstractAgent;
 import env2.action.MotionAction;
 import env2.api.AbstractAction;
 import env2.api.AbstractCell;
-import env2.api.AbstractResource;
 import env2.api.AbstractWorldObject;
-import env2.api.InterfaceGatherer;
 import env2.api.InterfaceMother;
 import env2.env.GlobalEnvironment;
 import env2.influences.CreateBabyInfluence;
@@ -32,13 +30,36 @@ public class Simulator {
 	
 	/***/
 	
-	private static InterfaceGatherer virtualGatherer;
+	/* private static InterfaceGatherer virtualGatherer;
 	
 	public static InterfaceGatherer getVirtualGatherer() {
 		if (virtualGatherer == null)
-			virtualGatherer = (InterfaceGatherer) BodyFactory.BODY_INSTANCIATOR.get(WorldObjectType.ANTGATHERERBODY);
+			virtualGatherer = (InterfaceGatherer) BodyFactory.BODY_INSTANCIATOR.get(WorldObjectType.ANTGATHERERBODY).getNew();
 		
 		return virtualGatherer;
+	} */
+	
+	private static AbstractCell pointedCell = null;
+	
+	public static void setPointedCell(AbstractCell cell) {
+		pointedCell = cell;
+	}
+	
+	public static void setPointedCell(int env, int i, int j) {
+		pointedCell = global.get(env).getCell(i, j);
+	}
+	
+	public static AbstractCell getPointedCell() {
+		return pointedCell;
+	}
+	
+	public void addInfluencedByGUICell(AbstractCell c)
+	{		
+		if(c != null){
+			synchronized (influencedByGUICells) {
+				this.influencedByGUICells.add(c);	
+			}
+		}
 	}
 	
 	/***/
@@ -47,12 +68,15 @@ public class Simulator {
 	private LinkedList<AbstractAction> actions;
 	private HashMap<InterfaceMother, List<CreateBabyInfluence>> mothers;
 	private LinkedList<AbstractCell> influencedCells;
+	private LinkedList<AbstractCell> influencedByGUICells;
 	
 	/***/
 		
-	private LinkedList<AbstractAgent> agents;
-	private GlobalEnvironment global;
+	private static LinkedList<AbstractAgent> agents;
+	private static GlobalEnvironment global;
 	private GUI gui;
+	
+	// private int nbStep = 0;
 	
 	/***/
 	
@@ -90,6 +114,7 @@ public class Simulator {
 		motionInfluences = new LinkedList<>();
 		actions = new LinkedList<>();
 		influencedCells = new LinkedList<>();
+		influencedByGUICells = new LinkedList<>();
 	}
 	
 	/***/
@@ -114,6 +139,11 @@ public class Simulator {
 			
 			// TODO Check that all agents act then move <=> They act in this current cell
 			influencedCells.add(agt.getBody().getEnvironment().getCell(agt.getBody().getPosition()));
+		}
+		
+		synchronized (influencedByGUICells) {
+			this.influencedCells.addAll(this.influencedByGUICells);
+			this.influencedByGUICells.clear();			
 		}
 		
 		/***/
@@ -153,9 +183,12 @@ public class Simulator {
 		
 		createBabies();
 	
-		/***/
+		/***/	
+		/*nbStep++;
+		if(nbStep%10 == 0)
+	 		System.out.println(agents.size());*/
 		
-		gui.refresh();
+		gui.refresh(true);
 	}
 	
 	/**

@@ -103,16 +103,16 @@ public abstract class AbstractBody extends AbstractMobileWorldObject implements 
 							Direction dir,
 							MyPoint2D pos) {
 		
-		TRANSPORT_CAPA = transport_capa + MyMath.random(-DELTA_TRANSPORT_CAPA/100 * transport_capa, DELTA_TRANSPORT_CAPA/100 * transport_capa);
-		EATING_CAPA = eating_capa + MyMath.random(-DELTA_EATING_CAPA/100 * eating_capa, DELTA_EATING_CAPA/100 * eating_capa);
+		TRANSPORT_CAPA = transport_capa + MyMath.random((int)(-DELTA_TRANSPORT_CAPA/100.0f * transport_capa), (int)(DELTA_TRANSPORT_CAPA/100.0f * transport_capa));
+		EATING_CAPA = eating_capa + MyMath.random((int)(-DELTA_EATING_CAPA/100.0f * eating_capa), (int)(DELTA_EATING_CAPA/100.0f * eating_capa));
 		MOVING_REACH = moving_reach;
 		VISION_REACH = vision_reach;
-		STRENGTH = strength + MyMath.random(-DELTA_STRENGTH/100 * strength, DELTA_STRENGTH/100 * strength);
-		DEFENSE = defense + MyMath.random(-DELTA_DEFENSE/100 * defense, DELTA_DEFENSE/100 * defense);
-		ADULT_AGE = adult_age + MyMath.random(-DELTA_ADULT_AGE/100 * adult_age, DELTA_ADULT_AGE/100 * adult_age);
-		MAX_AGE = max_age + MyMath.random(-DELTA_MAX_AGE/100 * max_age, DELTA_MAX_AGE/100 * max_age);
-		MAX_LIFE = max_life + MyMath.random(-DELTA_MAX_LIFE/100 * max_life, DELTA_MAX_LIFE/100 * max_life);
-		LIFE_LOSS = life_loss + MyMath.random(-DELTA_LIFE_LOSS/100 * life_loss, DELTA_LIFE_LOSS/100 * life_loss);
+		STRENGTH = strength + MyMath.random((int)(-DELTA_STRENGTH/100.0f * strength), (int)(DELTA_STRENGTH/100.0f * strength));
+		DEFENSE = defense + MyMath.random((int)(-DELTA_DEFENSE/100.0f * defense), (int)(DELTA_DEFENSE/100.0f * defense));
+		ADULT_AGE = adult_age + MyMath.random((int)(-DELTA_ADULT_AGE/100.0f * adult_age), (int)(DELTA_ADULT_AGE/100.0f * adult_age));
+		MAX_AGE = max_age + MyMath.random((int)(-DELTA_MAX_AGE/100.0f * max_age), (int)(DELTA_MAX_AGE/100.0f * max_age));
+		MAX_LIFE = max_life + MyMath.random((int)(-DELTA_MAX_LIFE/100.0f * max_life), (int)(DELTA_MAX_LIFE/100.0f * max_life));
+		LIFE_LOSS = life_loss + MyMath.random((int)(-DELTA_LIFE_LOSS/100.0f * life_loss), (int)(DELTA_LIFE_LOSS/100.0f * life_loss));
 		CREATION_TIME = creation_time;
 		TRIBE_ID = tribe_id;
 		MAX_BODY_SIZE = max_body_size;

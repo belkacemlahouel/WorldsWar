@@ -44,6 +44,7 @@ public final class AntGathererAgent extends AntAgent {
 	public MotionInfluence live() {
 		MotionInfluence influence = null;
 		
+
 		/*if (body.isBaby(Time.getTime())) {
 			System.out.println("I'm a baby :)");
 			return null;
@@ -51,7 +52,7 @@ public final class AntGathererAgent extends AntAgent {
 		
 		
 		if (body.isDead()) {
-			System.out.println("I'm dead: " + body.getPosition());
+			//System.out.println("I'm dead: " + body.getPosition());
 			return null;
 		}
 		
@@ -134,7 +135,6 @@ public final class AntGathererAgent extends AntAgent {
 							}
 						}
 					}
-					
 				}
 				
 				/* Behavior in function of the result of parsing the frustrum. */

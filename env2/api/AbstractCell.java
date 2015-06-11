@@ -4,6 +4,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import env2.influences.PickInfluence;
+import env2.influences.PutInfluence;
 import env2.instanciator.actions.AbstractActionInstanciator;
 import env2.instanciator.factory.ActionFactory;
 import env2.type.InfluenceType;
@@ -17,7 +18,6 @@ public abstract class AbstractCell {
 	public abstract boolean isPortal();
 	
 	/***/
-	
 	private List<AbstractInfluence> myinfluences = new LinkedList<>();
 	
 	public List<AbstractAction> solveInfluences() {

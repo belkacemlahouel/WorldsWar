@@ -56,9 +56,6 @@ public class DataToGlobalEnvironment {
 				
 				e = grounds.get(info.env);
 				e.getCell(info.posX, info.posY).addObject(res);
-
-				System.out.println(info.env + " -> " + info.posX + " : " + info.posY);
-				GUI.getInstance().createRessourceGUI(res, new MyPoint2D(info.posX, info.posY), e);
 			}
 			
 			GUI.getInstance().setEnvironmentList(grounds);
