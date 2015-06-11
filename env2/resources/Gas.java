@@ -10,6 +10,7 @@ public final class Gas extends CommonResource {
 
 	@Override
 	public Gas pick(int quantity) {
+		this.add(-quantity);
 		return new Gas(quantity);
 	}
 

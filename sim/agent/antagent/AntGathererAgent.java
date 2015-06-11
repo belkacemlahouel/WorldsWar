@@ -19,6 +19,7 @@ import env2.body.antbody.AntGathererBody;
 import env2.env.PortalCell;
 import env2.frustrum.AbstractFrustrum;
 import env2.frustrum.Perception;
+import env2.influences.EatInfluence;
 import env2.influences.MotionInfluence;
 import env2.influences.PickInfluence;
 
@@ -68,11 +69,19 @@ public final class AntGathererAgent extends AntAgent {
 				for (AbstractWorldObject o : body.getCell().getObjects()) {
 					if (WorldObjectType.canBeFood(o.getType())) {
 						if (body.getEffect(o).value >= EffectType.GOOD.value) {
-							PickInfluence pickInfluence = new PickInfluence((InterfaceGatherer) body,
-															body.getCell().getObjects(),
-															(AbstractResource) o,
-															((InterfaceGatherer) body).getStdTakeQty());
-							body.addInfluenceHere(pickInfluence);
+							int danger = body.getMaxLife()/2;
+							if(body.getLife()<=danger){
+								InterfaceGatherer interfaceGath = (InterfaceGatherer)body;
+								System.out.println("eat");
+								EatInfluence eat = new EatInfluence(body, getBody().getEnvironment().getCell(getBody().getPosition()).getObjects(), (AbstractResource) o, interfaceGath.getStdTakeQty());
+								body.addInfluence(eat);
+							}else{
+								PickInfluence pickInfluence = new PickInfluence((InterfaceGatherer) body,
+																body.getCell().getObjects(),
+																(AbstractResource) o,
+																((InterfaceGatherer) body).getStdTakeQty());
+								body.addInfluenceHere(pickInfluence);
+							}
 							return null;
 						}
 					}
@@ -183,16 +192,17 @@ public final class AntGathererAgent extends AntAgent {
 		
 		if(goodPosition){
 			influence = null;
-			
 			InterfaceGatherer interfaceGath = (InterfaceGatherer)body;
-			// Collection<AbstractResource> collectionResources = this.getResourceCollection(); // FIXME Check container
+			int danger = body.getMaxLife()/2;
 			
-			// EatInfluence eat = new EatInfluence(body, collectionResources, (AbstractResource) goal.object, interfaceGath.getStdTakeQty());
+			if(body.getLife()<=body.getMaxLife()){
+				EatInfluence eat = new EatInfluence(body, getBody().getEnvironment().getCell(getBody().getPosition()).getObjects(), (AbstractResource) goal.object, interfaceGath.getStdTakeQty());
+				body.addInfluence(eat);
+			}else{
+				PickInfluence pick = new PickInfluence(interfaceGath, getBody().getEnvironment().getCell(getBody().getPosition()).getObjects(), (AbstractResource) goal.object, interfaceGath.getStdTakeQty());
+				body.addInfluenceHere(pick);
+			}
 			
-			PickInfluence pick = new PickInfluence(interfaceGath, getBody().getEnvironment().getCell(getBody().getPosition()).getObjects(), (AbstractResource) goal.object, interfaceGath.getStdTakeQty());
-			
-			// body.addInfluence(eat);
-			body.addInfluenceHere(pick);
 		}else{
 			//move to goal
 			MyPoint2D goalPos = goal.position;

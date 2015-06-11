@@ -10,6 +10,7 @@ public final class Poison extends CommonResource {
 
 	@Override
 	public Poison pick(int quantity) {
+		this.add(-quantity);
 		return new Poison(quantity);
 	}
 

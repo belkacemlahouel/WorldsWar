@@ -10,6 +10,7 @@ public final class Fruit extends CommonResource {
 
 	@Override
 	public Fruit pick(int quantity) {
+		this.add(-quantity);
 		return new Fruit(quantity);
 	}
 

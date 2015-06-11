@@ -34,6 +34,7 @@ public abstract class AbstractResource extends AbstractWorldObject{
 	}
 	
 	/***/
+
 	
 	/* public AbstractResource getShare() {
 		return pick();

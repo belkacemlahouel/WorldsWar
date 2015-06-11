@@ -10,6 +10,7 @@ public final class Meat extends CommonResource {
 
 	@Override
 	public Meat pick(int quantity) {
+		this.add(-quantity);
 		return new Meat(quantity);
 	}
 
