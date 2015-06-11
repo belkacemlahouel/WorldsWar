@@ -22,6 +22,7 @@ import env2.frustrum.Perception;
 import env2.influences.EatInfluence;
 import env2.influences.MotionInfluence;
 import env2.influences.PickInfluence;
+import env2.influences.PutInfluence;
 
 /**
  * Implementation of an gatherer ant.
@@ -246,10 +247,22 @@ public final class AntGathererAgent extends AntAgent {
 		while(objs.hasNext()){
 			Perception objectDetected = objs.next();
 			WorldObjectType type = objectDetected.object.getType();
-			System.out.println(type + " in " + objectDetected.position);
+			//System.out.println(type + " in " + objectDetected.position);
+			
 			if(WorldObjectType.isAntBody(type)){
 				if(((AbstractBody) objectDetected.object).isFriend(body)){
 					
+					/* The perceived ant is the queen, it must put the resources here. */
+					if(type==WorldObjectType.ANTMOTHERBODY){
+						//put resources on the ground
+						InterfaceGatherer interfaceGath = (InterfaceGatherer)body;
+						PutInfluence put = new PutInfluence(interfaceGath,body.getCargo().get(0),body.getTransportCapacity());
+						body.addInfluenceHere(put);
+						System.out.println("PUT!");
+						return null;
+					}
+					
+					/* The perceived ant is a friend */
 					if(cells.containsKey(objectDetected.position)){
 						cells.put(objectDetected.position, cells.get(objectDetected.position) + 1);
 					}
