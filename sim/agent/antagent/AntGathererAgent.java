@@ -261,13 +261,17 @@ public final class AntGathererAgent extends AntAgent {
 		}
 		
 		/* Search for the cell that contains the more ants from its tribe. */
-		//System.out.println("Return cave : ");
-//		for (HashMap.Entry<MyPoint2D, Integer> entry : cells.entrySet())
-//		{
-//		    System.out.println(entry.getKey() + "/" + entry.getValue());
-//		}
-//
-//		System.out.println("End cave loop");
+		int tmp;
+		for (MyPoint2D key : cells.keySet())
+		{
+		    tmp = cells.get(key);
+		    if(tmp>nbAnts){
+		    	goal = key;
+		    	nbAnts = tmp;
+		    }
+		}
+		//System.out.println("Move to : "+goal.getX()+","+goal.getY());
+		influence = new MotionInfluence(body, goal, body.getEnvironment());
 		
 		return influence;
 	}
