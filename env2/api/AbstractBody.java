@@ -12,6 +12,7 @@ import env2.frustrum.FrustrumCircleN;
 import env2.frustrum.FrustrumCrossN;
 import env2.instanciator.actions.AbstractActionInstanciator;
 import env2.instanciator.factory.ActionFactory;
+import env2.resources.CommonResource;
 import env2.type.Direction;
 import env2.type.EffectType;
 import env2.type.FrustrumType;
@@ -231,6 +232,30 @@ public abstract class AbstractBody extends AbstractMobileWorldObject implements 
 	
 	public boolean isBaby(float TIME) {
 		return getAge(TIME) < ADULT_AGE;
+	}
+	
+	/**
+	 * Check if a body carries its maximal weight.
+	 * /!\ Warning ! The quantities of resources carried are negatives.
+	 * @return boolean
+	 */
+	public boolean isFull(){
+		List<AbstractResource> resourcesCarried = this.getCargo();
+		
+		int capacity = this.getTransportCapacity();
+		
+		for(AbstractWorldObject object : this.getCargo()){
+			capacity = capacity + ( ((CommonResource)object).getQuantity()-100);
+		}
+		
+		if(capacity>0){
+			return false;
+		}
+		else
+		{
+			return true;
+		}
+		
 	}
 	
 	/* this method only takes care of moving the body to the arrival case

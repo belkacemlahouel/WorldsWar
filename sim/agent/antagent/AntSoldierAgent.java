@@ -47,6 +47,7 @@ public final class AntSoldierAgent extends AntAgent {
 			//test if the cell is a portal
 			if(!body.getEnvironment().getCell(body.getPosition()).isPortal()){
 				
+				body.buildNewFrustrum();
 				AbstractFrustrum frustrum = this.getBody().getCurrentFrustrum();
 				Iterator<Perception> objs = frustrum.objects();
 				

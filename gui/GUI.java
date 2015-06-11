@@ -238,7 +238,7 @@ public class GUI implements InterfaceObserver
 	}	
 
 	/* Agents functions */
-	public void createAgentBodyGUI(AbstractBody a)
+	private void createAgentBodyGUI(AbstractBody a)
 	{
 		if(a != null)
 		{
@@ -246,30 +246,28 @@ public class GUI implements InterfaceObserver
 			
 			if(type != null)
 			{
-				if(type.equals(WorldObjectType.ANTMOTHERBODY))		System.out.println("Mother spotted");
-					
 				if(WorldObjectType.isAntBody(type))					createAgentBodyGUI("Ant", a);
 				else if(WorldObjectType.isTermiteBody(type))		createAgentBodyGUI("Termite", a);
 				else if(WorldObjectType.isSpiderBody(type))			createAgentBodyGUI("Spider", a);
 			}
 		}
 	}
-	public void createAgentBodyGUI(String species, AbstractBody a)
+	private void createAgentBodyGUI(String species, AbstractBody a)
 	{
 		if(!species.isEmpty() && species != null && a != null)
 		{
 			AgentBodyGUI agentBody = new AgentBodyGUI(species, this, a);
 			agentBody.move();
-
+			
 			this.agentBodyList.add(agentBody);
 			this.worldObjectPanel.add(agentBody.container);
+			this.hasViewportBeenModified = true;
 		}
 	}
-	public void deleteAgentBodyGUI(AbstractBody a)
+	private void deleteAgentBodyGUI(AbstractBody a)
 	{
 		if(a != null)
 		{
-			System.out.println("DELETE");
 			AgentBodyGUI tmpBody;
 			Iterator<AgentBodyGUI> agentBodyIterator = this.agentBodyList.iterator();
 			
@@ -284,6 +282,8 @@ public class GUI implements InterfaceObserver
 					
 					agentBodyIterator.remove();	
 					agentBodyFound = true;
+					
+					this.hasViewportBeenModified = true;
 				}
 			}
 		}
@@ -304,6 +304,8 @@ public class GUI implements InterfaceObserver
 					this.resourcesList.add(r);
 					this.resourcesGUIList.add(resourceGUI);
 					this.worldObjectPanel.add(resourceGUI.container);
+
+					hasViewportBeenModified = true;
 				}
 			}
 		}
@@ -328,6 +330,8 @@ public class GUI implements InterfaceObserver
 						
 						resourceIterator.remove();	
 						resourceFound = true;
+						
+						hasViewportBeenModified = true;
 					}
 				}
 			}
@@ -335,11 +339,10 @@ public class GUI implements InterfaceObserver
 	}
 	
 	private void cleanAllResources(){
-		/*for(ResourceGUI r : resourcesGUIList)
-			worldObjectPanel.remove(r.container);*/
-		
-		worldObjectPanel.removeAll();
-		agentBodyList.clear();
+		for(ResourceGUI r : resourcesGUIList)
+		{
+			worldObjectPanel.remove(r.container);
+		}
 		
 		resourcesGUIList.clear();
 		resourcesList.clear();		
@@ -367,8 +370,6 @@ public class GUI implements InterfaceObserver
 	 					t = o.getType();
 						if(!WorldObjectType.isBody(t))
 							this.createResourceGUI((AbstractResource) o, new MyPoint2D(i, j), e);
-						else
-							this.createAgentBodyGUI((AbstractBody) o);
 					}
 	 			}
 			}
@@ -431,26 +432,28 @@ public class GUI implements InterfaceObserver
 		
 	/* Repaint function */
  	public void refresh(boolean lookForResources)
-	{ 		
+	{ 		 		
  		if(lookForResources){
- 	 		this.addNewResources(); 			
- 			this.worldObjectPanel.revalidate();
+ 	 		this.addNewResources(); 		
  		}
  		
- 		if(hasViewportBeenModified)
+ 		if(this.hasViewportBeenModified)
  		{
  			this.moveAllObjects();
- 			this.worldObjectPanel.repaint(); 
- 			hasViewportBeenModified = false;
+ 			this.worldObjectPanel.revalidate();	
+ 			this.hasViewportBeenModified = false;
  		}
+
 		this.worldObjectPanel.repaint();
 	}
 	private void moveAllObjects()
 	{
 		for(AgentBodyGUI a : agentBodyList)
+		{
 			a.move();		
+		}
 		
-		if(hasViewportBeenModified)	
+		if(this.hasViewportBeenModified)	
 		{
 			for(ResourceGUI r : resourcesGUIList)
 				r.move();		

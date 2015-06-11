@@ -158,7 +158,7 @@ public class AgentBodyGUI {
 		}
 		
 		//move the panel of the body's representation
-		container.setSize((int) rectPos.getWidth(), (int) rectPos.getHeight());		
+		container.setSize((int) rectPos.getWidth(), 200);		
 		container.setLocation(x,y);
 	}
 	
@@ -175,7 +175,7 @@ public class AgentBodyGUI {
 	private void loadAllImages()
 	{
 		if(!hasBeenLoaded)
-		{
+		{			
 			ANT_IMAGE = loadImage("src/res/gui/ant.png");
 			ANT_DEAD_IMAGE = loadImage("src/res/gui/dead_ant.png");
 			SPIDER_IMAGE = loadImage("src/res/gui/spider.png");
