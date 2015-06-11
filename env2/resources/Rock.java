@@ -10,6 +10,7 @@ public final class Rock extends CommonResource {
 
 	@Override
 	public Rock pick(int quantity) {
+		this.add(-quantity);
 		return new Rock(quantity);
 	}
 

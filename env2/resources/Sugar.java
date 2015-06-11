@@ -10,6 +10,7 @@ public final class Sugar extends CommonResource {
 
 	@Override
 	public Sugar pick(int quantity) {
+		this.add(-quantity);
 		return new Sugar(quantity);
 	}
 
