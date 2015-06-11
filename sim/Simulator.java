@@ -12,12 +12,14 @@ import sim.agent.AbstractAgent;
 import env2.action.MotionAction;
 import env2.api.AbstractAction;
 import env2.api.AbstractCell;
+import env2.api.AbstractWorldObject;
 import env2.api.InterfaceMother;
 import env2.env.GlobalEnvironment;
 import env2.influences.CreateBabyInfluence;
 import env2.influences.MotionInfluence;
 import env2.instanciator.bodies.AbstractBodyInstanciator;
 import env2.instanciator.factory.BodyFactory;
+import env2.resources.CommonResource;
 import env2.type.WorldObjectType;
 import gui.GUI;
 
@@ -151,6 +153,15 @@ public class Simulator {
 		}
 
 		for (AbstractCell c : influencedCells) {
+			/**----------------------*/
+			 List<AbstractWorldObject> objs = c.getObjects();
+			 for(AbstractWorldObject o : objs){
+				 if(WorldObjectType.canBeFood( o.getType())){
+					 System.out.println(o.getType()+" : " +((CommonResource) o).getQuantity());
+				 }
+			 }
+			 /**--------------------*/
+			
 			actions.addAll(c.solveInfluences());
 		}
 		

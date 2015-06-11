@@ -1,10 +1,13 @@
 package sim.agent.antagent;
 
 import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
+import parser.ConfParameters;
 import math.MyPoint2D;
 import env2.type.EffectType;
 import env2.type.Time;
@@ -41,14 +44,22 @@ public final class AntGathererAgent extends AntAgent {
 	public MotionInfluence live() {
 		MotionInfluence influence = null;
 		
-		if (body.isBaby(Time.getTime())) {
-			//System.out.println("I'm a baby :)");
+
+		/*if (body.isBaby(Time.getTime())) {
+			System.out.println("I'm a baby :)");
 			return null;
-		}
+		}*/
+		
 		
 		if (body.isDead()) {
 			//System.out.println("I'm dead: " + body.getPosition());
 			return null;
+		}
+		
+		if(body.isFull()){
+			System.out.println("I'm full !");
+			dropPheromone(WorldObjectType.FOODPHEROMONE);
+			return returnCave();
 		}
 		
 		if(!body.isBaby(Time.getTime())){
@@ -69,7 +80,7 @@ public final class AntGathererAgent extends AntAgent {
 					}
 				}
 				
-				
+				body.buildNewFrustrum();
 				AbstractFrustrum frustrum = this.getBody().getCurrentFrustrum();
 				Iterator<Perception> objs = frustrum.objects();
 				
@@ -114,7 +125,7 @@ public final class AntGathererAgent extends AntAgent {
 								break;
 						}
 					}else if(WorldObjectType.isAntBody(obj.getType()) || WorldObjectType.isTermiteBody(obj.getType())){
-						if(!((AbstractBody) obj).isFriend(this.getBody())){
+						if(!((AbstractBody) obj).isFriend(body)){
 							if(goal == null){
 								goal = objWithPos;
 								dropPheromone(WorldObjectType.DANGERPHEROMONE);
@@ -201,6 +212,51 @@ public final class AntGathererAgent extends AntAgent {
 		}else if (pheromone == WorldObjectType.FOODPHEROMONE){
 			this.getBody().producePheromoneFood();
 		}
+	}
+	
+	
+	/**
+	 * Behaviour of the ant gatherer when it wants to return to its cave.
+	 */
+	private MotionInfluence returnCave(){
+		MotionInfluence influence = null;
+		
+		body.buildNewFrustrum();
+		AbstractFrustrum frustrum = body.getCurrentFrustrum();
+		Iterator<Perception> objs = frustrum.objects();
+		
+		MyPoint2D goal = body.getPosition();
+		int nbAnts = 0;
+		HashMap<MyPoint2D,Integer> cells = new HashMap<MyPoint2D,Integer>();
+		
+		/* Search all the cell with ants from its tribe. */
+		while(objs.hasNext()){
+			Perception objectDetected = objs.next();
+			WorldObjectType type = objectDetected.object.getType();
+			System.out.println(type + " in " + objectDetected.position);
+			if(WorldObjectType.isAntBody(type)){
+				if(((AbstractBody) objectDetected.object).isFriend(body)){
+					
+					if(cells.containsKey(objectDetected.position)){
+						cells.put(objectDetected.position, cells.get(objectDetected.position) + 1);
+					}
+					else{
+						cells.put(objectDetected.position, 1);
+					}
+				}
+			}
+		}
+		
+		/* Search for the cell that contains the more ants from its tribe. */
+		//System.out.println("Return cave : ");
+		for (HashMap.Entry<MyPoint2D, Integer> entry : cells.entrySet())
+		{
+		    System.out.println(entry.getKey() + "/" + entry.getValue());
+		}
+
+		System.out.println("End cave loop");
+		
+		return influence;
 	}
 	
 	

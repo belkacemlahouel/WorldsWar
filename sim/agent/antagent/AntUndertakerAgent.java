@@ -21,7 +21,8 @@ public final class AntUndertakerAgent extends AntAgent {
 		if (body.isBaby(Time.getTime())) {
 			return null;
 		}
-		
-		return wander();
+		//body.buildNewFrustrum();
+		//return wander();
+		return null;
 	}
 }

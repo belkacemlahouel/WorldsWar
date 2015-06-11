@@ -25,7 +25,7 @@ public class PickAction extends AbstractAction {
 	public PickAction(InterfaceGatherer body, List<AbstractWorldObject> container, AbstractResource resource, int qty) {
 		picker = body;
 		picked = resource;
-		this.qty = qty;
+		this.qty = -qty;
 		if (resource.getQuantity() <= 0)
 			container.remove(resource);
 	}
