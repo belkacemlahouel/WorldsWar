@@ -26,6 +26,7 @@ public class JPanelImage extends JPanel {
         
         if(this.img != null){
         	g.drawImage(img, 0, 0, null);
+        	//g.drawImage(img,0, 0, getWidth(), getHeight(), this);
         }
     }
 }
