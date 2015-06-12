@@ -44,24 +44,20 @@ public final class AntGathererAgent extends AntAgent {
 	public MotionInfluence live() {
 		MotionInfluence influence = null;
 		
-
-		/*if (body.isBaby(Time.getTime())) {
-			System.out.println("I'm a baby :)");
-			return null;
-		}*/
-		
-		
+		// Test if the ant is dead
 		if (body.isDead()) {
 			//System.out.println("I'm dead: " + body.getPosition());
 			return null;
 		}
 		
+		// Test if the ant is full
 		if(body.isFull()){
-			System.out.println("I'm full !");
+			//System.out.println("I'm full !");
 			dropPheromone(WorldObjectType.FOODPHEROMONE);
 			return returnCave();
 		}
 		
+		//If the ant is a baby, it can't do anything.
 		if(!body.isBaby(Time.getTime())){
 			//test if the cell is a portal
 			if(!body.getEnvironment().getCell(body.getPosition()).isPortal()){
