@@ -192,7 +192,7 @@ public final class AntGathererAgent extends AntAgent {
 			InterfaceGatherer interfaceGath = (InterfaceGatherer)body;
 			int danger = body.getMaxLife()/2;
 			
-			if(body.getLife()<=body.getMaxLife()){
+			if(body.getLife()<=danger){
 				EatInfluence eat = new EatInfluence(body, getBody().getEnvironment().getCell(getBody().getPosition()).getObjects(), (AbstractResource) goal.object, interfaceGath.getStdTakeQty());
 				body.addInfluence(eat);
 			}else{

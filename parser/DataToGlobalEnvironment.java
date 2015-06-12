@@ -70,12 +70,13 @@ public class DataToGlobalEnvironment {
 				AbstractBodyInstanciator.POS = new MyPoint2D(info.pos[0], info.pos[1]);
 				AbstractBodyInstanciator.ENV = grounds.get(info.env);
 				AbstractBodyInstanciator.TRIBE_ID = info.tribeId;
-							
+				AbstractAgent agt=null;			
 				for (int i = 0; i < info.quantity; ++i) {
 					BodyFactory.BODY_INSTANCIATOR.get(info.function).getNew();
-					AbstractAgent agt = BodyFactory.BODY_INSTANCIATOR.get(info.function).getAgent();
+					agt = BodyFactory.BODY_INSTANCIATOR.get(info.function).getAgent();
 					AGENTS.add(agt);
 				}
+				agt.getBody().getCell().addObject(agt.getBody());
 			}
 			
 			GLOBAL = new GlobalEnvironment(grounds);

@@ -149,6 +149,11 @@ public class Simulator {
 		/***/
 
 		for (AbstractAgent agt : agents) {
+			/*List<AbstractWorldObject> list =agt.getBody().getCell().getObjects();
+			for(int i=0; i<list.size();++i){
+				System.out.println(list.get(i));
+			}*/
+			//System.out.println(agt.getBody());
 			actions.addAll(agt.getBody().solveInfluences());
 		}
 
