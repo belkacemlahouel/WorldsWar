@@ -154,12 +154,12 @@ public class Simulator {
 
 		for (AbstractCell c : influencedCells) {
 			/**----------------------*/
-			 List<AbstractWorldObject> objs = c.getObjects();
+			 /*List<AbstractWorldObject> objs = c.getObjects();
 			 for(AbstractWorldObject o : objs){
 				 if(WorldObjectType.canBeFood( o.getType())){
 					 System.out.println(o.getType()+" : " +((CommonResource) o).getQuantity());
 				 }
-			 }
+			 }*/
 			 /**--------------------*/
 			
 			actions.addAll(c.solveInfluences());

@@ -117,7 +117,7 @@ public abstract class AbstractAgent{
 		
 		while(goodPosition==false && iterator.hasNext()){
 			iterator.next();
-			goodPosition = iterator.equals(object);
+			goodPosition = goodPosition || iterator.equals(object);
 		}
 		
 		return goodPosition;
