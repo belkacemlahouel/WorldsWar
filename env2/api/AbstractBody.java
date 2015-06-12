@@ -404,14 +404,11 @@ public abstract class AbstractBody extends AbstractMobileWorldObject implements 
 				return actions;
 			
 			case BURY_DEAD:
-				if (isDead()) {
 					myinfluences.clear();
 					actions.clear();
 					AbstractActionInstanciator.influence = influence;
 					actions.add(ActionFactory.ACTION_INSTANCIATOR.get(InfluenceType.BURY_DEAD).getAction());
 					return actions;
-				}
-				break;
 			
 			default:
 				System.out.println("Influence on body not treated: " + influence);

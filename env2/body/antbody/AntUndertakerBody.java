@@ -16,6 +16,6 @@ public final class AntUndertakerBody extends AntBody implements InterfaceUnderta
 	@Override
 	public void buryDead(AbstractBody b) {
 		// TODO Auto-generated method stub
-		b.fireEvent(10);
+		b.fireEvent(20);
 	}
 }
