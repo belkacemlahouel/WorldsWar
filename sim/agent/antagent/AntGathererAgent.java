@@ -22,6 +22,7 @@ import env2.frustrum.Perception;
 import env2.influences.EatInfluence;
 import env2.influences.MotionInfluence;
 import env2.influences.PickInfluence;
+import env2.influences.PutInfluence;
 
 /**
  * Implementation of an gatherer ant.
@@ -43,24 +44,20 @@ public final class AntGathererAgent extends AntAgent {
 	public MotionInfluence live() {
 		MotionInfluence influence = null;
 		
-
-		/*if (body.isBaby(Time.getTime())) {
-			System.out.println("I'm a baby :)");
-			return null;
-		}*/
-		
-		
+		// Test if the ant is dead
 		if (body.isDead()) {
 			//System.out.println("I'm dead: " + body.getPosition());
 			return null;
 		}
 		
+		// Test if the ant is full
 		if(body.isFull()){
-			System.out.println("I'm full !");
+			//System.out.println("I'm full !");
 			dropPheromone(WorldObjectType.FOODPHEROMONE);
 			return returnCave();
 		}
 		
+		//If the ant is a baby, it can't do anything.
 		if(!body.isBaby(Time.getTime())){
 			//test if the cell is a portal
 			if(!body.getEnvironment().getCell(body.getPosition()).isPortal()){
@@ -195,7 +192,7 @@ public final class AntGathererAgent extends AntAgent {
 			InterfaceGatherer interfaceGath = (InterfaceGatherer)body;
 			int danger = body.getMaxLife()/2;
 			
-			if(body.getLife()<=body.getMaxLife()){
+			if(body.getLife()<=danger){
 				EatInfluence eat = new EatInfluence(body, getBody().getEnvironment().getCell(getBody().getPosition()).getObjects(), (AbstractResource) goal.object, interfaceGath.getStdTakeQty());
 				body.addInfluence(eat);
 			}else{
@@ -246,10 +243,22 @@ public final class AntGathererAgent extends AntAgent {
 		while(objs.hasNext()){
 			Perception objectDetected = objs.next();
 			WorldObjectType type = objectDetected.object.getType();
-			System.out.println(type + " in " + objectDetected.position);
+			//System.out.println(type + " in " + objectDetected.position);
+			
 			if(WorldObjectType.isAntBody(type)){
 				if(((AbstractBody) objectDetected.object).isFriend(body)){
 					
+					/* The perceived ant is the queen, it must put the resources here. */
+					if(type==WorldObjectType.ANTMOTHERBODY){
+						//put resources on the ground
+						InterfaceGatherer interfaceGath = (InterfaceGatherer)body;
+						PutInfluence put = new PutInfluence(interfaceGath,body.getCargo().get(0),body.getTransportCapacity());
+						body.addInfluenceHere(put);
+						System.out.println("PUT!");
+						return null;
+					}
+					
+					/* The perceived ant is a friend */
 					if(cells.containsKey(objectDetected.position)){
 						cells.put(objectDetected.position, cells.get(objectDetected.position) + 1);
 					}
@@ -261,13 +270,17 @@ public final class AntGathererAgent extends AntAgent {
 		}
 		
 		/* Search for the cell that contains the more ants from its tribe. */
-		//System.out.println("Return cave : ");
-//		for (HashMap.Entry<MyPoint2D, Integer> entry : cells.entrySet())
-//		{
-//		    System.out.println(entry.getKey() + "/" + entry.getValue());
-//		}
-//
-//		System.out.println("End cave loop");
+		int tmp;
+		for (MyPoint2D key : cells.keySet())
+		{
+		    tmp = cells.get(key);
+		    if(tmp>nbAnts){
+		    	goal = key;
+		    	nbAnts = tmp;
+		    }
+		}
+		//System.out.println("Move to : "+goal.getX()+","+goal.getY());
+		influence = new MotionInfluence(body, goal, body.getEnvironment());
 		
 		return influence;
 	}

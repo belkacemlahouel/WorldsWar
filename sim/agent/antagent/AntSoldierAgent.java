@@ -38,7 +38,7 @@ public final class AntSoldierAgent extends AntAgent {
 		MotionInfluence influence = null;
 		
 		if (body.isDead()) {
-			System.out.println("I'm dead: " + body.getPosition());
+			//System.out.println("I'm dead: " + body.getPosition());
 			return null;
 		}
 

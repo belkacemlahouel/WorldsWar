@@ -9,6 +9,7 @@ import env2.api.InterfaceMother;
 import env2.body.antbody.AntMotherBody;
 import env2.influences.CreateBabyInfluence;
 import env2.influences.MotionInfluence;
+import env2.type.Time;
 import env2.type.WorldObjectType;
 
 public final class AntMotherAgent extends AntAgent {
@@ -37,6 +38,10 @@ public final class AntMotherAgent extends AntAgent {
 		 */
 		
 		int nb_babies = MyMath.random(MIN_BABIES, MAX_BABIES);
+		
+		if(body.isBaby(Time.getTime())){
+			return null;
+		}
 		
 		for (int i = 0; i < nb_babies; ++i) {
 			int proba = MyMath.random(1, 101);
