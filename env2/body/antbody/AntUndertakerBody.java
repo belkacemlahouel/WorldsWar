@@ -5,6 +5,7 @@ import env2.api.AbstractBody;
 import env2.api.AbstractEnvironment;
 import env2.api.InterfaceUndertaker;
 import env2.type.Direction;
+import env2.type.WorldObjectType;
 
 public final class AntUndertakerBody extends AntBody implements InterfaceUndertaker {
 
@@ -17,5 +18,9 @@ public final class AntUndertakerBody extends AntBody implements InterfaceUnderta
 	public void buryDead(AbstractBody b) {
 		// TODO Auto-generated method stub
 		b.fireEvent(10);
+	}
+	
+	public WorldObjectType getType() {
+		return WorldObjectType.ANTUNDERTAKERBODY;
 	}
 }

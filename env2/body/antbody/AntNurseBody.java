@@ -6,6 +6,7 @@ import env2.api.AbstractBody;
 import env2.api.AbstractEnvironment;
 import env2.api.InterfaceNurse;
 import env2.type.Direction;
+import env2.type.WorldObjectType;
 
 public final class AntNurseBody extends AntBody implements InterfaceNurse {
 	
@@ -31,5 +32,9 @@ public final class AntNurseBody extends AntBody implements InterfaceNurse {
 	@Override
 	public final int getTotCure() {
 		return getStdCure() + MyMath.random(-getRndCure(), getRndCure());
+	}
+	
+	public WorldObjectType getType() {
+		return WorldObjectType.ANTNURSEBODY;
 	}
 }

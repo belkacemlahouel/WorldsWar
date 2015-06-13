@@ -56,6 +56,9 @@ public final class AntMotherAgent extends AntAgent {
 			else
 				type = WorldObjectType.ANTMOTHERBODY;
 			
+//			if (type == WorldObjectType.ANTUNDERTAKERBODY)
+//				System.out.println("Mon bébé est un tueur.");
+			
 			addMyBaby(new CreateBabyInfluence((InterfaceMother) getBody(), type));
 		}
 		

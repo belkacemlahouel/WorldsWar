@@ -4,6 +4,7 @@ import math.MyPoint2D;
 import env2.api.AbstractEnvironment;
 import env2.api.InterfaceMother;
 import env2.type.Direction;
+import env2.type.WorldObjectType;
 
 public final class AntMotherBody extends AntBody implements InterfaceMother {
 
@@ -30,5 +31,9 @@ public final class AntMotherBody extends AntBody implements InterfaceMother {
 	@Override
 	public int hashCode() {
 		return _getTribeID();
+	}
+	
+	public WorldObjectType getType() {
+		return WorldObjectType.ANTMOTHERBODY;
 	}
 }

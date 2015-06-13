@@ -6,6 +6,7 @@ import env2.api.AbstractBody;
 import env2.api.AbstractEnvironment;
 import env2.api.InterfaceSoldier;
 import env2.type.Direction;
+import env2.type.WorldObjectType;
 
 public final class AntSoldierBody extends AntBody implements InterfaceSoldier {
 
@@ -31,5 +32,9 @@ public final class AntSoldierBody extends AntBody implements InterfaceSoldier {
 	@Override
 	public int getTotDmg() {
 		return getStdDmg() + MyMath.random(-getRndDmg(), getRndDmg());
+	}
+	
+	public WorldObjectType getType() {
+		return WorldObjectType.ANTSOLDIERBODY;
 	}
 }

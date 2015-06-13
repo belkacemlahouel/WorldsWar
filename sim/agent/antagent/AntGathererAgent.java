@@ -93,12 +93,12 @@ public final class AntGathererAgent extends AntAgent {
 				
 //				System.out.println("***" + body.getPosition() + " " + body.getType());
 //				while (objs.hasNext()) {
-//					System.out.println("\t" + objs.next());
+//					System.out.print(((objs.next().object.getType() == WorldObjectType.ANTUNDERTAKERBODY) ? "\t+\n" : ""));
 //				}
 				
 				if (objs == null || !objs.hasNext())
 					return wander();
-	
+				
 				/* The mission of the gatherer is to find food. If it finds one resource eatable, it directly goes to it. */
 				boolean mission = false;
 				Perception goal = null;

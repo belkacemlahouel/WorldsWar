@@ -123,7 +123,7 @@ public class Simulator {
 		return agents == null || agents.isEmpty();
 	}
 	
-	public void doStep() {		
+	public void doStep() {
 		if (agents == null)
 			throw new NoSuchElementException("NO AGENT FOUND!");
 		

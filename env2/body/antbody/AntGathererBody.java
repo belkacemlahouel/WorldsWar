@@ -9,6 +9,7 @@ import env2.api.AbstractResource;
 import env2.api.AbstractWorldObject;
 import env2.api.InterfaceGatherer;
 import env2.type.Direction;
+import env2.type.WorldObjectType;
 
 /**
  * Some methods only might be overriden here
@@ -69,5 +70,9 @@ public final class AntGathererBody extends AntBody implements InterfaceGatherer 
 	@Override
 	public int getTotTakeQty() {
 		return getStdTakeQty() + MyMath.random(-getRndTakeQty(), getRndTakeQty());
+	}
+	
+	public WorldObjectType getType() {
+		return WorldObjectType.ANTGATHERERBODY;
 	}
 }
