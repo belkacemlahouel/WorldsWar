@@ -122,8 +122,23 @@ public class Simulator {
 	public boolean isFinished() {
 		return agents == null || agents.isEmpty();
 	}
-	
+		
 	public void doStep() {
+		
+		System.out.println("" + agents.get(0).getBody().getPosition() + agents.get(0).getBody().getEnvironment());
+		
+//		if (stp = false) {
+//			stp = true;
+//			System.out.println("" + agents.get(0).getBody().getPosition() + agents.get(0).getBody().getEnvironment());
+//			agents.get(0).getBody().move(global.get(1), new MyPoint2D(2, 2));
+//			System.out.println("" + agents.get(0).getBody().getPosition() + agents.get(0).getBody().getEnvironment());
+//		} else {
+//			stp = false;
+//			System.out.println("" + agents.get(0).getBody().getPosition() + agents.get(0).getBody().getEnvironment());
+//			agents.get(0).getBody().move(global.get(0), new MyPoint2D(3, 3));
+//			System.out.println("" + agents.get(0).getBody().getPosition() + agents.get(0).getBody().getEnvironment());
+//		}
+		
 		if (agents == null)
 			throw new NoSuchElementException("NO AGENT FOUND!");
 		

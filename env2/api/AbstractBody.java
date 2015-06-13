@@ -273,6 +273,7 @@ public abstract class AbstractBody extends AbstractMobileWorldObject implements 
 	public boolean move(AbstractEnvironment newenv, MyPoint2D newpos) {
 		newenv.getCell(newpos.getX(), newpos.getY()).addObject(this);
 		myenv.getCell(mypos.getX(), mypos.getY()).removeObject(this);
+		myenv = newenv;
 		mypos = newpos;
 		return true;
 	}

@@ -431,21 +431,22 @@ public class GUI implements InterfaceObserver
 	}
 		
 	/* Repaint function */
- 	public void refresh(boolean lookForResources)
-	{ 		 		
- 		if(lookForResources){
- 	 		this.addNewResources(); 		
- 		}
- 		
- 		if(this.hasViewportBeenModified)
- 		{
- 			this.moveAllObjects();
- 			this.worldObjectPanel.revalidate();	
- 			this.hasViewportBeenModified = false;
- 		}
+	public void refresh(boolean lookForResources)
+    {      
+      if(lookForResources){
+        this.addNewResources();   
+      }
+      
+      if(this.hasViewportBeenModified)
+      {
+       this.worldObjectPanel.revalidate(); 
+       this.hasViewportBeenModified = false;
+      }
 
-		this.worldObjectPanel.repaint();
-	}
+     this.moveAllObjects();
+     this.worldObjectPanel.repaint();
+    }
+	
 	private void moveAllObjects()
 	{
 		for(AgentBodyGUI a : agentBodyList)
