@@ -125,7 +125,7 @@ public class Simulator {
 		
 	public void doStep() {
 		
-		System.out.println("" + agents.get(0).getBody().getPosition() + agents.get(0).getBody().getEnvironment());
+//		System.out.println("" + agents.get(0).getBody().getPosition() + agents.get(0).getBody().getEnvironment());
 		
 //		if (stp = false) {
 //			stp = true;

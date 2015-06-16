@@ -3,6 +3,7 @@ package env2.instanciator.bodies.ant;
 import sim.agent.antagent.AntNurseAgent;
 import env2.body.antbody.AntNurseBody;
 import env2.instanciator.bodies.AbstractBodyInstanciator;
+import env2.type.Direction;
 import env2.type.Time;
 
 public final class AntNurseInstanciator extends AbstractBodyInstanciator {
@@ -12,6 +13,7 @@ public final class AntNurseInstanciator extends AbstractBodyInstanciator {
 	
 	@Override
 	public AntNurseBody getNew() {
+		DIR = Direction.random();
 		body = new AntNurseBody(Time.getTime(), TRIBE_ID, ENV, DIR, POS);
 		agent = new AntNurseAgent(body, TRIBE_ID);
 		return body;

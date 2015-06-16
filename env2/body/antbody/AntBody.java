@@ -40,8 +40,8 @@ public abstract class AntBody extends AbstractBody {
 				3,						// strength
 				1,						// defense
 				10,						// adult_age
-				100,					// max_age
-				70, 					// max_life
+				1000,					// max_age
+				700, 					// max_life
 				2,						// life_loss
 				TIME,					// creation_time
 				tribe_id,				// tribe_id

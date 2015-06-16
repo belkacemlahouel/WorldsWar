@@ -3,6 +3,7 @@ package env2.instanciator.bodies.ant;
 import sim.agent.antagent.AntUndertakerAgent;
 import env2.body.antbody.AntUndertakerBody;
 import env2.instanciator.bodies.AbstractBodyInstanciator;
+import env2.type.Direction;
 import env2.type.Time;
 
 public final class AntUndertakerInstanciator extends AbstractBodyInstanciator {
@@ -12,6 +13,7 @@ public final class AntUndertakerInstanciator extends AbstractBodyInstanciator {
 	
 	@Override
 	public AntUndertakerBody getNew() {
+		DIR = Direction.random();
 		body = new AntUndertakerBody(Time.getTime(), TRIBE_ID, ENV, DIR, POS);
 		agent = new AntUndertakerAgent(body, TRIBE_ID);
 		return body;
