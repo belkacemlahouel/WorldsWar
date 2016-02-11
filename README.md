@@ -42,7 +42,7 @@ With Eclipse IDE:
 *    git ci -m namefile "Message." OR git ci -am "Message" // git commit  
 *    git push github branchname  
 (6)    If you want to update with the Github version:  
-*    *    git pull github master  
+*        git pull github master  
 
 Regarding Java versions, we will use Java 7 (JDK 1.7).  
 We may use Java 8 (JDK 1.8) if you want to use multi-inheritance.  
